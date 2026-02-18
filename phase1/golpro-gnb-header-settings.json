@@ -1,0 +1,242 @@
+{
+  "settings": [
+    {
+      "type": "TAB",
+      "label": "콘텐츠"
+    },
+    {
+      "type": "TITLE",
+      "label": "🏷️ 로고 설정"
+    },
+    {
+      "id": "logoType",
+      "type": "RADIO",
+      "label": "로고 타입",
+      "options": [
+        {
+          "label": "텍스트 (자이언츠체)",
+          "value": "text"
+        },
+        {
+          "label": "이미지",
+          "value": "image"
+        }
+      ],
+      "description": "이 값은 헤더에 표시될 로고의 유형을 변경합니다.\n권장: 브랜드 이미지가 있으면 '이미지', 없으면 '텍스트'를 선택하세요.\n문제가 생기면 '텍스트'로 되돌리세요.\n선택 즉시 로고가 전환됩니다."
+    },
+    {
+      "id": "logoText",
+      "type": "TEXT",
+      "label": "로고 텍스트",
+      "isVisible": "property.logoType === 'text'",
+      "description": "이 값은 헤더 좌측에 표시되는 텍스트 로고를 변경합니다.\n권장: 'GOLPRO' (대문자, 자이언츠체 자동 적용).\n문제가 생기면 'GOLPRO'로 되돌리세요.\n짧고 임팩트 있는 브랜드명을 입력하세요."
+    },
+    {
+      "id": "logoImage",
+      "type": "IMAGE_PICKER",
+      "label": "로고 이미지",
+      "isVisible": "property.logoType === 'image'",
+      "description": "이 값은 헤더 좌측에 표시되는 로고 이미지를 변경합니다.\n권장: SVG 또는 PNG (투명 배경, 가로형).\n문제가 생기면 이미지를 제거하고 텍스트 로고로 전환하세요.\n권장 높이: 데스크탑 28px 이내."
+    },
+    {
+      "id": "logoAlt",
+      "type": "TEXT",
+      "label": "로고 이미지 대체 텍스트",
+      "isVisible": "property.logoType === 'image'",
+      "description": "이 값은 이미지 로고의 접근성 설명(alt 텍스트)을 변경합니다.\n권장: '골프로 로고' 또는 브랜드명을 입력하세요.\n문제가 생기면 '골프로'로 되돌리세요.\n시각 장애인 스크린리더에 읽히는 텍스트입니다."
+    },
+    {
+      "type": "TITLE",
+      "label": "🔑 로그인 버튼 설정"
+    },
+    {
+      "id": "showAuthBtn",
+      "type": "CHECKBOX",
+      "label": "로그인 버튼 표시",
+      "description": "이 값은 헤더 우측의 로그인 버튼 표시 여부를 변경합니다.\n권장: 켜짐 (회원 유입 유도).\n문제가 생기면 켜짐으로 되돌리세요.\n모바일에서는 메뉴 하단에도 표시됩니다."
+    },
+    {
+      "id": "authBtnText",
+      "type": "TEXT",
+      "label": "버튼 텍스트",
+      "isVisible": "property.showAuthBtn === true",
+      "description": "이 값은 로그인 버튼에 표시되는 텍스트를 변경합니다.\n권장: '로그인'.\n문제가 생기면 '로그인'으로 되돌리세요.\n4자 이내로 간결하게 입력하세요."
+    },
+    {
+      "type": "TAB",
+      "label": "디자인"
+    },
+    {
+      "id": "developerMode",
+      "type": "CHECKBOX",
+      "label": "⚙️ 개발자 모드 (디자인 옵션 활성화)",
+      "description": "이 값은 디자인 세부 설정 옵션의 표시 여부를 변경합니다.\n권장: 평소에는 꺼짐 유지.\n문제가 생기면 꺼짐으로 되돌리세요.\n켜면 색상·크기·여백 등 고급 옵션이 나타납니다."
+    },
+    {
+      "type": "TITLE",
+      "label": "🎨 색상",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "logoColor",
+      "type": "COLOR_PICKER",
+      "label": "로고 텍스트 색상",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 텍스트 로고의 색상을 변경합니다.\n권장: #1B3A2D (딥 포레스트 그린).\n문제가 생기면 #1B3A2D로 되돌리세요.\n브랜드 포인트 컬러와 일치시키세요."
+    },
+    {
+      "id": "accentColor",
+      "type": "COLOR_PICKER",
+      "label": "포인트 컬러 (호버·버튼·서브메뉴 강조)",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 메뉴 호버, 로그인 버튼, 서브메뉴 강조 색상을 변경합니다.\n권장: #1B3A2D (딥 포레스트 그린).\n문제가 생기면 #1B3A2D로 되돌리세요.\n사이트 전체 포인트 컬러와 통일하세요."
+    },
+    {
+      "id": "progressColor",
+      "type": "COLOR_PICKER",
+      "label": "스크롤 프로그레스 바 색상",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 헤더 하단 스크롤 진행 인디케이터의 색상을 변경합니다.\n권장: #1B3A2D (포인트 컬러와 통일).\n문제가 생기면 #1B3A2D로 되돌리세요.\n단색으로 심플하게 유지하세요."
+    },
+    {
+      "type": "TITLE",
+      "label": "📐 헤더 높이",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "headerHeightDesktop",
+      "type": "RANGE",
+      "label": "헤더 높이 (데스크탑)",
+      "min": 56,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 데스크탑 화면에서 헤더의 세로 높이를 변경합니다.\n권장: 72px.\n문제가 생기면 72로 되돌리세요.\n너무 작으면 로고와 메뉴가 겹칠 수 있습니다."
+    },
+    {
+      "id": "headerHeightMobile",
+      "type": "RANGE",
+      "label": "헤더 높이 (모바일)",
+      "min": 48,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 모바일 화면에서 헤더의 세로 높이를 변경합니다.\n권장: 60px.\n문제가 생기면 60으로 되돌리세요.\n모바일 터치 영역 확보를 위해 60 이상을 권장합니다."
+    },
+    {
+      "type": "TITLE",
+      "label": "↔️ 좌우 여백",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "paddingDesktop",
+      "type": "RANGE",
+      "label": "좌우 여백 (데스크탑)",
+      "min": 16,
+      "max": 80,
+      "step": 8,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 데스크탑 헤더 내부 콘텐츠의 좌우 여백을 변경합니다.\n권장: 40px.\n문제가 생기면 40으로 되돌리세요.\n최대 너비(1280px) 내에서 적용됩니다."
+    },
+    {
+      "id": "paddingMobile",
+      "type": "RANGE",
+      "label": "좌우 여백 (모바일)",
+      "min": 12,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 모바일 헤더 내부 콘텐츠의 좌우 여백을 변경합니다.\n권장: 16px.\n문제가 생기면 16으로 되돌리세요.\n너무 크면 로고와 햄버거가 좁아집니다."
+    },
+    {
+      "type": "TITLE",
+      "label": "🔠 로고 크기",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "logoSizeDesktop",
+      "type": "RANGE",
+      "label": "로고 크기 (데스크탑)",
+      "min": 18,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 데스크탑에서 텍스트 로고의 폰트 크기(또는 이미지 높이)를 변경합니다.\n권장: 26px.\n문제가 생기면 26으로 되돌리세요.\n헤더 높이보다 작게 유지하세요."
+    },
+    {
+      "id": "logoSizeMobile",
+      "type": "RANGE",
+      "label": "로고 크기 (모바일)",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 모바일에서 텍스트 로고의 폰트 크기(또는 이미지 높이)를 변경합니다.\n권장: 22px.\n문제가 생기면 22로 되돌리세요.\n모바일 헤더 높이 대비 35% 이내를 권장합니다."
+    },
+    {
+      "type": "TITLE",
+      "label": "📊 프로그레스 바",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "progressHeight",
+      "type": "RANGE",
+      "label": "프로그레스 바 두께",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 헤더 하단 스크롤 진행 바의 두께를 변경합니다.\n권장: 3px (심플하고 세련된 두께).\n문제가 생기면 3으로 되돌리세요.\n너무 두꺼우면 헤더 디자인과 충돌할 수 있습니다."
+    },
+    {
+      "type": "TAB",
+      "label": "개발자"
+    },
+    {
+      "type": "DESCRIPTION",
+      "label": "⚙️ 고급 설정을 보려면 '디자인' 탭에서 개발자 모드를 켜주세요."
+    },
+    {
+      "type": "TITLE",
+      "label": "🔧 고급 설정",
+      "isVisible": "property.developerMode === true"
+    },
+    {
+      "id": "zIndex",
+      "type": "RANGE",
+      "label": "Z-index (헤더 레이어 순서)",
+      "min": 100,
+      "max": 9999,
+      "step": 100,
+      "isVisible": "property.developerMode === true",
+      "description": "이 값은 헤더가 다른 요소들과 겹칠 때의 우선 순위(레이어 순서)를 변경합니다.\n권장: 1000.\n문제가 생기면 1000으로 되돌리세요.\n팝업·모달과 겹칠 경우에만 조정하세요."
+    }
+  ],
+  "property": {
+    "logoType": "text",
+    "logoText": "GOLPRO",
+    "logoImage": "",
+    "logoAlt": "골프로",
+    "showAuthBtn": true,
+    "authBtnText": "로그인",
+    "developerMode": false,
+    "logoColor": "#1B3A2D",
+    "accentColor": "#1B3A2D",
+    "progressColor": "#1B3A2D",
+    "headerHeightDesktop": 72,
+    "headerHeightMobile": 60,
+    "paddingDesktop": 40,
+    "paddingMobile": 16,
+    "logoSizeDesktop": 26,
+    "logoSizeMobile": 22,
+    "progressHeight": 3,
+    "zIndex": 1000
+  }
+}

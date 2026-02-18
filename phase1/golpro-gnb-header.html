@@ -1,0 +1,511 @@
+<template>
+  <div class="gnb-sentinel" aria-hidden="true"></div>
+  <div class="gnb-overlay" aria-hidden="true" role="presentation"></div>
+
+  <header class="gnb-header" role="banner">
+    <div class="gnb-inner">
+
+      <!-- ① 로고 -->
+      <a class="gnb-logo" href="/" aria-label="골프로 홈으로 이동">
+        {{#if (eq property.logoType "image")}}
+          {{#if property.logoImage}}
+            <img class="gnb-logo-img" src="{{property.logoImage}}" alt="{{property.logoAlt}}" loading="eager" />
+          {{else}}
+            <span class="gnb-logo-text">GOLPRO</span>
+          {{/if}}
+        {{else}}
+          <span class="gnb-logo-text">{{property.logoText}}</span>
+        {{/if}}
+      </a>
+
+      <!-- ② 데스크탑 내비게이션 -->
+      <nav class="gnb-nav" aria-label="주 메뉴">
+        <ul class="gnb-nav-list" role="menubar">
+
+          <li class="gnb-nav-item gnb-nav-item--sub" role="none">
+            <a class="gnb-nav-link" href="/community" role="menuitem" aria-haspopup="true">커뮤니티
+              <svg class="gnb-nav-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="gnb-dropdown" role="menu">
+              <ul class="gnb-dropdown-list">
+                <li><a href="/community/free" role="menuitem">자유게시판</a></li>
+                <li><a href="/community/gear" role="menuitem">내 장비 자랑</a></li>
+                <li><a href="/community/live" role="menuitem">라이브스레드</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gnb-nav-item gnb-nav-item--sub" role="none">
+            <a class="gnb-nav-link" href="/cc-review" role="menuitem" aria-haspopup="true">골프장 리뷰
+              <svg class="gnb-nav-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="gnb-dropdown" role="menu">
+              <ul class="gnb-dropdown-list">
+                <li><a href="/cc-review/ranking" role="menuitem">CC 랭킹</a></li>
+                <li><a href="/cc-review/board" role="menuitem">CC 리얼 후기</a></li>
+                <li><a href="/cc-review/yardage" role="menuitem">야디지북</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gnb-nav-item gnb-nav-item--sub" role="none">
+            <a class="gnb-nav-link" href="/witb" role="menuitem" aria-haspopup="true">선수 장비
+              <svg class="gnb-nav-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="gnb-dropdown" role="menu">
+              <ul class="gnb-dropdown-list">
+                <li><a href="/witb/pga" role="menuitem">PGA 투어</a></li>
+                <li><a href="/witb/lpga" role="menuitem">LPGA 투어</a></li>
+                <li><a href="/witb/kpga" role="menuitem">KPGA</a></li>
+                <li><a href="/witb/klpga" role="menuitem">KLPGA</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gnb-nav-item gnb-nav-item--sub" role="none">
+            <a class="gnb-nav-link" href="/events" role="menuitem" aria-haspopup="true">이벤트/공지
+              <svg class="gnb-nav-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="gnb-dropdown" role="menu">
+              <ul class="gnb-dropdown-list">
+                <li><a href="/events/notice" role="menuitem">공지사항</a></li>
+                <li><a href="/events/current" role="menuitem">진행 중인 이벤트</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gnb-nav-item gnb-nav-item--sub" role="none">
+            <a class="gnb-nav-link" href="/contact" role="menuitem" aria-haspopup="true">연락하기
+              <svg class="gnb-nav-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="gnb-dropdown" role="menu">
+              <ul class="gnb-dropdown-list">
+                <li><a href="/contact/ad" role="menuitem">광고/제휴</a></li>
+                <li><a href="/contact/report" role="menuitem">정보 제보/저작권</a></li>
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- ③ 우측 영역 -->
+      <div class="gnb-right">
+        {{#if property.showAuthBtn}}
+          <a class="gnb-auth-btn" href="/login">{{property.authBtnText}}</a>
+        {{/if}}
+        <button class="gnb-hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb-mobile-menu">
+          <span class="gnb-bar"></span>
+          <span class="gnb-bar"></span>
+          <span class="gnb-bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ④ 모바일 메뉴 패널 -->
+    <div class="gnb-mobile-menu" id="gnb-mobile-menu" aria-hidden="true" role="dialog" aria-label="모바일 메뉴">
+      <div class="gnb-mobile-inner">
+        <nav aria-label="모바일 주 메뉴">
+          <ul class="gnb-mobile-list">
+
+            <li class="gnb-mobile-item gnb-mobile-item--sub">
+              <button class="gnb-mobile-btn" aria-expanded="false">커뮤니티
+                <svg class="gnb-mobile-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="gnb-mobile-sub" aria-hidden="true">
+                <li><a href="/community/free">자유게시판</a></li>
+                <li><a href="/community/gear">내 장비 자랑</a></li>
+                <li><a href="/community/live">라이브스레드</a></li>
+              </ul>
+            </li>
+
+            <li class="gnb-mobile-item gnb-mobile-item--sub">
+              <button class="gnb-mobile-btn" aria-expanded="false">골프장 리뷰
+                <svg class="gnb-mobile-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="gnb-mobile-sub" aria-hidden="true">
+                <li><a href="/cc-review/ranking">CC 랭킹</a></li>
+                <li><a href="/cc-review/board">CC 리얼 후기</a></li>
+                <li><a href="/cc-review/yardage">야디지북</a></li>
+              </ul>
+            </li>
+
+            <li class="gnb-mobile-item gnb-mobile-item--sub">
+              <button class="gnb-mobile-btn" aria-expanded="false">선수 장비 (WITB)
+                <svg class="gnb-mobile-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="gnb-mobile-sub" aria-hidden="true">
+                <li><a href="/witb/pga">PGA 투어</a></li>
+                <li><a href="/witb/lpga">LPGA 투어</a></li>
+                <li><a href="/witb/kpga">KPGA</a></li>
+                <li><a href="/witb/klpga">KLPGA</a></li>
+              </ul>
+            </li>
+
+            <li class="gnb-mobile-item gnb-mobile-item--sub">
+              <button class="gnb-mobile-btn" aria-expanded="false">이벤트/공지
+                <svg class="gnb-mobile-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="gnb-mobile-sub" aria-hidden="true">
+                <li><a href="/events/notice">공지사항</a></li>
+                <li><a href="/events/current">진행 중인 이벤트</a></li>
+              </ul>
+            </li>
+
+            <li class="gnb-mobile-item gnb-mobile-item--sub">
+              <button class="gnb-mobile-btn" aria-expanded="false">연락하기
+                <svg class="gnb-mobile-arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="gnb-mobile-sub" aria-hidden="true">
+                <li><a href="/contact/ad">광고/제휴</a></li>
+                <li><a href="/contact/report">정보 제보/저작권</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+        {{#if property.showAuthBtn}}
+          <div class="gnb-mobile-auth">
+            <a class="gnb-mobile-auth-btn" href="/login">{{property.authBtnText}}</a>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <!-- ⑤ 스크롤 프로그레스 바 -->
+    <div class="gnb-progress" role="progressbar" aria-label="페이지 스크롤 진행도" aria-valuemin="0" aria-valuemax="100"></div>
+
+  </header>
+</template>
+
+<style>
+/* ── 자이언츠체 폰트 ──────────────────────────────────── */
+@font-face {
+  font-family: 'Giants';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/giants/Giants-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/webfontworld/giants/Giants-Bold.woff') format('woff');
+}
+
+/* ── 리셋 ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { text-decoration: none; color: inherit; }
+button { background: none; border: none; cursor: pointer; font-family: inherit; padding: 0; }
+
+/* ── 센티넬 ──────────────────────────────────────────── */
+.gnb-sentinel {
+  position: absolute; top: 0; left: 0;
+  width: 1px; height: 1px;
+  pointer-events: none; visibility: hidden;
+}
+
+/* ── 오버레이 (모바일 메뉴 배경) ─────────────────────── */
+.gnb-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+.gnb-overlay.is-active { opacity: 1; pointer-events: auto; }
+
+/* ── 헤더 기본 (모바일 퍼스트) ───────────────────────── */
+.gnb-header {
+  position: sticky; top: 0;
+  z-index: {{property.zIndex}};
+  width: 100%;
+  background: #ffffff;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+.gnb-header.is-scrolled {
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 #E2E8E2, 0 4px 24px rgba(0,0,0,0.07);
+}
+
+/* ── 내부 레이아웃 ────────────────────────────────────── */
+.gnb-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: {{property.headerHeightMobile}}px;
+  padding: 0 {{property.paddingMobile}}px;
+  max-width: 1280px; margin: 0 auto; position: relative;
+}
+
+/* ── 로고 ─────────────────────────────────────────────── */
+.gnb-logo { display: flex; align-items: center; flex-shrink: 0; z-index: 1; }
+.gnb-logo-text {
+  font-family: 'Giants', var(--font-family-heading), 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: {{property.logoSizeMobile}}px;
+  color: {{property.logoColor}};
+  letter-spacing: -0.01em; line-height: 1;
+}
+.gnb-logo-img { height: {{property.logoSizeMobile}}px; width: auto; object-fit: contain; }
+
+/* ── 데스크탑 내비 (모바일 숨김) ─────────────────────── */
+.gnb-nav { display: none; }
+
+/* ── 우측 영역 ────────────────────────────────────────── */
+.gnb-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* 로그인 버튼 (모바일 숨김) */
+.gnb-auth-btn { display: none; }
+
+/* ── 햄버거 버튼 ──────────────────────────────────────── */
+.gnb-hamburger {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  gap: 5px; width: 44px; height: 44px; border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+.gnb-hamburger:hover, .gnb-hamburger:focus-visible { background: #F7F8F5; outline: none; }
+.gnb-bar {
+  display: block; width: 22px; height: 2px;
+  background: #1C1C1E; border-radius: 2px; transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease, width 0.25s ease;
+}
+.gnb-header.menu-open .gnb-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.gnb-header.menu-open .gnb-bar:nth-child(2) { opacity: 0; width: 0; }
+.gnb-header.menu-open .gnb-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── 모바일 메뉴 패널 ─────────────────────────────────── */
+.gnb-mobile-menu {
+  position: fixed;
+  top: {{property.headerHeightMobile}}px; right: 0; bottom: 0;
+  width: min(320px, 85vw);
+  background: #ffffff;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  overflow-y: auto; overflow-x: hidden;
+  box-shadow: -6px 0 32px rgba(0,0,0,0.1);
+  z-index: 999; -webkit-overflow-scrolling: touch;
+}
+.gnb-mobile-menu[aria-hidden="false"] { transform: translateX(0); }
+.gnb-mobile-inner { padding: 0 0 48px; }
+
+/* 모바일 메뉴 항목 */
+.gnb-mobile-list { border-top: 1px solid #E2E8E2; }
+.gnb-mobile-item { border-bottom: 1px solid #E2E8E2; }
+.gnb-mobile-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 16px 20px;
+  font-size: 15px; font-weight: 600; color: #1C1C1E;
+  font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+  transition: color 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.gnb-mobile-btn:hover, .gnb-mobile-btn:focus-visible {
+  color: {{property.accentColor}}; background: #F7F8F5; outline: none;
+}
+.gnb-mobile-btn[aria-expanded="true"] { color: {{property.accentColor}}; }
+.gnb-mobile-arrow {
+  width: 14px; height: 14px; flex-shrink: 0;
+  opacity: 0.45; transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.gnb-mobile-btn[aria-expanded="true"] .gnb-mobile-arrow { transform: rotate(180deg); opacity: 1; }
+
+/* 서브메뉴 아코디언 */
+.gnb-mobile-sub {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+  background: #F7F8F5;
+}
+.gnb-mobile-item.sub-open .gnb-mobile-sub { max-height: 360px; }
+.gnb-mobile-sub li a {
+  display: block; padding: 13px 20px 13px 34px;
+  font-size: 14px; font-weight: 400; color: #4A5568;
+  font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+  border-bottom: 1px solid #E2E8E2;
+  transition: color 0.15s ease, background 0.15s ease, padding-left 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.gnb-mobile-sub li:last-child a { border-bottom: none; }
+.gnb-mobile-sub li a:hover { color: {{property.accentColor}}; background: #EEF2EE; padding-left: 40px; }
+
+/* 모바일 로그인 버튼 */
+.gnb-mobile-auth { padding: 20px 20px 0; }
+.gnb-mobile-auth-btn {
+  display: block; text-align: center; padding: 14px;
+  background: {{property.accentColor}}; color: #ffffff; border-radius: 8px;
+  font-size: 15px; font-weight: 600;
+  font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+  transition: background 0.2s ease; -webkit-tap-highlight-color: transparent;
+}
+.gnb-mobile-auth-btn:hover { background: #2D6A4F; }
+
+/* ── 스크롤 프로그레스 바 ────────────────────────────── */
+.gnb-progress {
+  position: absolute; bottom: 0; left: 0; width: 100%;
+  height: {{property.progressHeight}}px;
+  background: {{property.progressColor}};
+  transform-origin: left center; transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .gnb-progress {
+    animation: gnb-progress-grow linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes gnb-progress-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+}
+
+/* ── 태블릿 (768px+) ──────────────────────────────────── */
+@media (min-width: 768px) {
+  .gnb-inner { padding: 0 24px; }
+}
+
+/* ── 데스크탑 (1024px+) ───────────────────────────────── */
+@media (min-width: 1024px) {
+  .gnb-inner {
+    height: {{property.headerHeightDesktop}}px;
+    padding: 0 {{property.paddingDesktop}}px;
+  }
+  .gnb-logo-text { font-size: {{property.logoSizeDesktop}}px; }
+  .gnb-logo-img  { height: {{property.logoSizeDesktop}}px; }
+
+  /* 내비 표시 */
+  .gnb-nav { display: flex; align-items: center; flex: 1; justify-content: center; }
+  .gnb-nav-list { display: flex; align-items: center; gap: 2px; }
+  .gnb-nav-item { position: relative; }
+  .gnb-nav-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 9px 14px; font-size: 14px; font-weight: 600;
+    color: #1C1C1E; font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+    border-radius: 7px; white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease; position: relative;
+  }
+  .gnb-nav-link::after {
+    content: ''; position: absolute; bottom: 4px; left: 14px; right: 14px;
+    height: 2px; background: {{property.accentColor}}; border-radius: 2px;
+    transform: scaleX(0); transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .gnb-nav-item:hover .gnb-nav-link,
+  .gnb-nav-item:focus-within .gnb-nav-link { color: {{property.accentColor}}; background: #F7F8F5; }
+  .gnb-nav-item:hover .gnb-nav-link::after,
+  .gnb-nav-item:focus-within .gnb-nav-link::after { transform: scaleX(1); }
+  .gnb-nav-arrow { width: 10px; height: 10px; opacity: 0.45; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .gnb-nav-item:hover .gnb-nav-arrow,
+  .gnb-nav-item:focus-within .gnb-nav-arrow { transform: rotate(180deg); opacity: 1; }
+
+  /* 드롭다운 */
+  .gnb-dropdown {
+    position: absolute; top: calc(100% + 10px); left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    min-width: 168px; background: #ffffff;
+    border: 1px solid #E2E8E2; border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.04);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4,0,0.2,1), visibility 0.2s;
+    overflow: hidden; z-index: 200;
+  }
+  .gnb-dropdown::before {
+    content: ''; position: absolute; top: -5px; left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px; height: 10px; background: #ffffff;
+    border-left: 1px solid #E2E8E2; border-top: 1px solid #E2E8E2;
+  }
+  .gnb-nav-item:hover .gnb-dropdown,
+  .gnb-nav-item:focus-within .gnb-dropdown {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .gnb-dropdown-list { padding: 6px 0; }
+  .gnb-dropdown-list li a {
+    display: block; padding: 10px 18px; font-size: 13px; font-weight: 500;
+    color: #4A5568; font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+    white-space: nowrap; transition: color 0.15s ease, background 0.15s ease, padding-left 0.15s ease;
+  }
+  .gnb-dropdown-list li a:hover { color: {{property.accentColor}}; background: #F7F8F5; padding-left: 22px; }
+
+  /* 로그인 버튼 */
+  .gnb-auth-btn {
+    display: inline-flex; align-items: center;
+    padding: 9px 20px; border-radius: 7px; font-size: 13px; font-weight: 600;
+    font-family: var(--font-family-body), 'Noto Sans KR', sans-serif;
+    color: {{property.accentColor}}; border: 1.5px solid {{property.accentColor}};
+    white-space: nowrap; transition: background 0.2s ease, color 0.2s ease;
+  }
+  .gnb-auth-btn:hover { background: {{property.accentColor}}; color: #ffffff; }
+
+  /* 햄버거/모바일 숨김 */
+  .gnb-hamburger  { display: none; }
+  .gnb-mobile-menu { display: none; }
+  .gnb-overlay    { display: none; }
+}
+</style>
+
+<script>
+const container = bm.container;
+let scrollObserver = null;
+
+/* ── 스크롤 감지 초기화 ─────────────────────────────── */
+function initScrollObserver() {
+  if (scrollObserver) scrollObserver.disconnect();
+  const header   = container.querySelector('.gnb-header');
+  const sentinel = container.querySelector('.gnb-sentinel');
+  if (!header || !sentinel) return;
+  scrollObserver = new IntersectionObserver(
+    ([entry]) => { header.classList.toggle('is-scrolled', !entry.isIntersecting); },
+    { threshold: 0 }
+  );
+  scrollObserver.observe(sentinel);
+}
+
+/* ── 모바일 메뉴 열기/닫기 ──────────────────────────── */
+function toggleMobileMenu(forceOpen) {
+  const header     = container.querySelector('.gnb-header');
+  const mobileMenu = container.querySelector('.gnb-mobile-menu');
+  const hamburger  = container.querySelector('.gnb-hamburger');
+  const overlay    = container.querySelector('.gnb-overlay');
+  if (!header || !mobileMenu || !hamburger) return;
+  const isOpen = (typeof forceOpen === 'boolean')
+    ? forceOpen
+    : !header.classList.contains('menu-open');
+  header.classList.toggle('menu-open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  hamburger.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+  mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+  if (overlay) overlay.classList.toggle('is-active', isOpen);
+}
+
+/* ── 서브메뉴 아코디언 ──────────────────────────────── */
+function toggleSubMenu(btn) {
+  const item = btn.closest('.gnb-mobile-item--sub');
+  if (!item) return;
+  const isOpen = item.classList.toggle('sub-open');
+  btn.setAttribute('aria-expanded', String(isOpen));
+  const sub = item.querySelector('.gnb-mobile-sub');
+  if (sub) sub.setAttribute('aria-hidden', String(!isOpen));
+}
+
+/* ── 이벤트 위임 (컨테이너 단일 핸들러) ─────────────── */
+container.addEventListener('click', (e) => {
+  if (e.target.closest('.gnb-hamburger')) {
+    e.preventDefault();
+    toggleMobileMenu();
+    return;
+  }
+  if (e.target.closest('.gnb-overlay')) {
+    e.preventDefault();
+    toggleMobileMenu(false);
+    return;
+  }
+  if (e.target.closest('.gnb-mobile-btn')) {
+    e.preventDefault();
+    toggleSubMenu(e.target.closest('.gnb-mobile-btn'));
+    return;
+  }
+}, true);
+
+/* ── 초기화 및 라이프사이클 ─────────────────────────── */
+initScrollObserver();
+bm.onContextChange = () => { initScrollObserver(); };
+bm.onDestroy = () => { if (scrollObserver) scrollObserver.disconnect(); };
+</script>
