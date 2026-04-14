@@ -1,0 +1,661 @@
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Section Wrapper ── */
+.pd-section {
+  background: {{property.sectionBg}};
+  padding: {{property.paddingTopD}}px {{property.paddingHD}}px {{property.paddingBottomD}}px;
+}
+.pd-inner {
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════
+   ① HERO — 선수 프로필
+════════════════════════════ */
+.pd-hero {
+  position: relative;
+  border-radius: {{property.heroRadius}}px;
+  overflow: hidden;
+  margin-bottom: {{property.heroMbD}}px;
+  background: {{property.heroBg}};
+  min-height: {{property.heroHeightD}}px;
+  display: flex;
+  align-items: flex-end;
+}
+.pd-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-image: url('{{property.heroImage}}');
+  transition: transform 0.6s ease;
+}
+.pd-hero:hover .pd-hero-bg { transform: scale(1.03); }
+.pd-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.48) 40%,
+    rgba(0,0,0,0.12) 70%,
+    transparent 100%
+  );
+}
+.pd-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: {{property.heroPadD}}px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.pd-hero-left {}
+.pd-tour-badge {
+  display: inline-block;
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.pd-tour-badge.pga   { background: #1a3a5c; color: #fff; }
+.pd-tour-badge.lpga  { background: #6b1a5c; color: #fff; }
+.pd-tour-badge.kpga  { background: #1a4c2a; color: #fff; }
+.pd-tour-badge.klpga { background: #4c1a1a; color: #fff; }
+
+.pd-player-name {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.heroNameSizeD}}px;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.pd-player-name-en {
+  font-family: var(--font-family-body);
+  font-weight: 400;
+  font-size: {{property.heroNameEnSizeD}}px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+.pd-hero-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.pd-hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+.pd-hero-stat-label {
+  font-family: var(--font-family-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2px;
+}
+.pd-hero-stat-value {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.pd-hero-stat-value em {
+  color: {{property.accentColor}};
+  font-style: normal;
+}
+
+/* 우측 국적 플래그 */
+.pd-hero-right {
+  flex-shrink: 0;
+  text-align: center;
+}
+.pd-hero-flag {
+  font-size: 48px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+}
+.pd-hero-country {
+  font-family: var(--font-family-body);
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ════════════════════════════
+   ② 섹션 헤더 공통
+════════════════════════════ */
+.pd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: {{property.sectionHeaderMbD}}px;
+}
+.pd-section-dot {
+  width: 4px;
+  height: 28px;
+  background: {{property.accentColor}};
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.pd-section-title {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.sectionTitleSizeD}}px;
+  color: {{property.sectionTitleColor}};
+  letter-spacing: -0.01em;
+}
+.pd-section-subtitle {
+  font-family: var(--font-family-body);
+  font-size: 13px;
+  color: {{property.subtitleColor}};
+  margin-left: auto;
+}
+.pd-section-divider {
+  height: 1px;
+  background: {{property.dividerColor}};
+  margin-bottom: {{property.gearMbD}}px;
+}
+
+/* ════════════════════════════
+   ③ CURRENT GEAR — 현재 장비
+════════════════════════════ */
+.pd-gear-grid {
+  display: grid;
+  grid-template-columns: repeat({{property.gearColsD}}, 1fr);
+  gap: {{property.gearGapD}}px;
+  margin-bottom: {{property.currentGearMbD}}px;
+}
+
+.pd-gear-card {
+  background: {{property.gearCardBg}};
+  border: 1px solid {{property.gearCardBorder}};
+  border-radius: {{property.gearCardRadius}}px;
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(.25,.46,.45,.94), box-shadow 0.22s;
+  position: relative;
+}
+.pd-gear-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px {{property.gearShadowColor}};
+}
+
+/* 장비 카테고리 뱃지 */
+.pd-gear-cat {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: {{property.accentColor}};
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.25);
+  padding: 3px 7px;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+/* 장비 이미지 */
+.pd-gear-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: {{property.gearImgRatio}}%;
+  background: {{property.gearImgBg}};
+  overflow: hidden;
+}
+.pd-gear-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+  transition: transform 0.35s ease;
+}
+.pd-gear-card:hover .pd-gear-img { transform: scale(1.06); }
+
+/* 장비 정보 */
+.pd-gear-body {
+  padding: {{property.gearBodyPadV}}px {{property.gearBodyPadH}}px;
+  border-top: 1px solid {{property.gearCardBorder}};
+}
+.pd-gear-brand {
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: {{property.accentColor}};
+  margin-bottom: 4px;
+}
+.pd-gear-name {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.gearNameSizeD}}px;
+  color: {{property.gearNameColor}};
+  line-height: 1.25;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.pd-gear-spec {
+  font-family: var(--font-family-body);
+  font-size: 12px;
+  color: {{property.gearSpecColor}};
+  line-height: 1.45;
+  margin-bottom: 10px;
+  white-space: pre-line;
+}
+
+/* 구매 버튼 */
+.pd-gear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 12px;
+  background: {{property.gearBtnBg}};
+  color: {{property.gearBtnColor}};
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: {{property.gearBtnRadius}}px;
+  text-decoration: none;
+  border: 1.5px solid {{property.gearBtnBorderColor}};
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  cursor: pointer;
+}
+.pd-gear-btn:hover {
+  background: {{property.accentColor}};
+  color: #fff;
+  border-color: {{property.accentColor}};
+}
+.pd-gear-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ════════════════════════════
+   ④ ARCHIVE — 과거 장비
+════════════════════════════ */
+.pd-archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: {{property.archiveGapD}}px;
+}
+
+.pd-archive-item {
+  display: grid;
+  grid-template-columns: {{property.archiveImgSize}}px 1fr auto;
+  align-items: center;
+  gap: {{property.archiveItemGapH}}px;
+  background: {{property.archiveBg}};
+  border: 1px solid {{property.archiveBorder}};
+  border-radius: {{property.archiveRadius}}px;
+  padding: {{property.archivePadV}}px {{property.archivePadH}}px;
+  transition: border-color 0.18s, background 0.18s;
+}
+.pd-archive-item:hover {
+  border-color: {{property.accentColor}};
+  background: {{property.archiveHoverBg}};
+}
+
+.pd-archive-img-wrap {
+  width: {{property.archiveImgSize}}px;
+  height: {{property.archiveImgSize}}px;
+  background: {{property.gearImgBg}};
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pd-archive-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.pd-archive-info {}
+.pd-archive-year {
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: {{property.subtitleColor}};
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.pd-archive-cat {
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 10px;
+  color: {{property.accentColor}};
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.pd-archive-name {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.archiveNameSize}}px;
+  color: {{property.gearNameColor}};
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.pd-archive-spec {
+  font-family: var(--font-family-body);
+  font-size: 12px;
+  color: {{property.gearSpecColor}};
+  margin-top: 2px;
+}
+
+.pd-archive-action {
+  flex-shrink: 0;
+}
+.pd-archive-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  background: transparent;
+  color: {{property.accentColor}};
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 12px;
+  border: 1.5px solid {{property.accentColor}};
+  border-radius: {{property.gearBtnRadius}}px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s;
+}
+.pd-archive-btn:hover {
+  background: {{property.accentColor}};
+  color: #fff;
+}
+.pd-archive-btn svg { width: 11px; height: 11px; }
+
+/* ── Empty States ── */
+.pd-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: {{property.subtitleColor}};
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  border: 1px dashed {{property.dividerColor}};
+  border-radius: {{property.gearCardRadius}}px;
+  margin-bottom: {{property.currentGearMbD}}px;
+}
+
+/* ── Fade-up ── */
+.pd-fade { opacity: 0; transform: translateY(18px); }
+.pd-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.44s ease, transform 0.44s ease;
+}
+
+/* ════════════════════════════
+   MOBILE
+════════════════════════════ */
+@media (max-width: 767px) {
+  .pd-section {
+    padding: {{property.paddingTopM}}px {{property.paddingHM}}px {{property.paddingBottomM}}px;
+  }
+  .pd-hero {
+    min-height: {{property.heroHeightM}}px;
+    margin-bottom: {{property.heroMbM}}px;
+  }
+  .pd-hero-content {
+    padding: {{property.heroPadM}}px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .pd-hero-right { display: none; }
+  .pd-player-name { font-size: {{property.heroNameSizeM}}px; }
+  .pd-player-name-en { font-size: {{property.heroNameEnSizeM}}px; }
+  .pd-section-header { margin-bottom: {{property.sectionHeaderMbM}}px; }
+  .pd-section-title { font-size: {{property.sectionTitleSizeM}}px; }
+  .pd-gear-grid {
+    grid-template-columns: repeat({{property.gearColsM}}, 1fr);
+    gap: {{property.gearGapM}}px;
+  }
+  .pd-gear-name { font-size: {{property.gearNameSizeM}}px; }
+  .pd-archive-item {
+    grid-template-columns: {{property.archiveImgSizeM}}px 1fr;
+    gap: 10px;
+  }
+  .pd-archive-img-wrap {
+    width: {{property.archiveImgSizeM}}px;
+    height: {{property.archiveImgSizeM}}px;
+  }
+  .pd-archive-action { display: none; }
+  .pd-archive-name { font-size: {{property.archiveNameSizeM}}px; }
+  .pd-section-divider { margin-bottom: {{property.gearMbM}}px; }
+  .pd-gear-grid { margin-bottom: {{property.currentGearMbM}}px; }
+}
+</style>
+
+<template>
+<section class="pd-section">
+  <div class="pd-inner">
+
+    <!-- ① 선수 프로필 히어로 -->
+    <div class="pd-hero">
+      <div class="pd-hero-bg"></div>
+      <div class="pd-hero-overlay"></div>
+      <div class="pd-hero-content">
+        <div class="pd-hero-left">
+          {{#if property.tourId}}
+            <span class="pd-tour-badge {{property.tourId}}">{{toUpper property.tourId}}</span>
+          {{/if}}
+          <div class="pd-player-name">{{property.playerName}}</div>
+          {{#if property.playerNameEn}}
+            <div class="pd-player-name-en">{{property.playerNameEn}}</div>
+          {{/if}}
+          <!-- 선수 스탯 -->
+          <div class="pd-hero-stats">
+            {{#if property.statRanking}}
+              <div class="pd-hero-stat">
+                <span class="pd-hero-stat-label">세계 랭킹</span>
+                <span class="pd-hero-stat-value"><em>{{property.statRanking}}위</em></span>
+              </div>
+            {{/if}}
+            {{#if property.statWins}}
+              <div class="pd-hero-stat">
+                <span class="pd-hero-stat-label">통산 우승</span>
+                <span class="pd-hero-stat-value">{{property.statWins}}승</span>
+              </div>
+            {{/if}}
+            {{#if property.statSeason}}
+              <div class="pd-hero-stat">
+                <span class="pd-hero-stat-label">최근 성적</span>
+                <span class="pd-hero-stat-value">{{property.statSeason}}</span>
+              </div>
+            {{/if}}
+            {{#if property.statExtra}}
+              <div class="pd-hero-stat">
+                <span class="pd-hero-stat-label">{{property.statExtraLabel}}</span>
+                <span class="pd-hero-stat-value">{{property.statExtra}}</span>
+              </div>
+            {{/if}}
+          </div>
+        </div>
+        {{#if property.countryFlag}}
+          <div class="pd-hero-right">
+            <span class="pd-hero-flag">{{property.countryFlag}}</span>
+            {{#if property.countryName}}
+              <div class="pd-hero-country">{{property.countryName}}</div>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <!-- /히어로 -->
+
+    <!-- ② 현재 사용 장비 -->
+    <div class="pd-section-header">
+      <div class="pd-section-dot"></div>
+      <div class="pd-section-title">현재 사용 장비</div>
+      <div class="pd-section-subtitle">Current Gear</div>
+    </div>
+    <div class="pd-section-divider"></div>
+
+    {{#if property.currentGear.length}}
+      <div class="pd-gear-grid" id="pd-gear-grid">
+        {{#each property.currentGear}}
+          <div class="pd-gear-card pd-fade">
+            <!-- 카테고리 뱃지 -->
+            {{#if category}}
+              <div class="pd-gear-cat">{{category}}</div>
+            {{/if}}
+            <!-- 이미지 -->
+            <div class="pd-gear-img-wrap">
+              {{#if gearImage}}
+                <img class="pd-gear-img" src="{{gearImage}}" alt="{{gearName}}" loading="lazy"
+                     onerror="this.src='https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image1.jpg'">
+              {{else}}
+                <img class="pd-gear-img"
+                     src="https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/lifestyle/image{{add @index 1}}.jpg"
+                     alt="{{gearName}}" loading="lazy">
+              {{/if}}
+            </div>
+            <!-- 정보 -->
+            <div class="pd-gear-body">
+              {{#if brand}}<div class="pd-gear-brand">{{brand}}</div>{{/if}}
+              <div class="pd-gear-name">{{gearName}}</div>
+              {{#if spec}}<div class="pd-gear-spec">{{spec}}</div>{{/if}}
+              {{#if buyLink.value}}
+                <a class="pd-gear-btn" href="{{buyLink.value}}" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 1h2l1.5 7h5L11 4H4"/>
+                    <circle cx="5.5" cy="10.5" r=".75" fill="currentColor"/>
+                    <circle cx="9.5" cy="10.5" r=".75" fill="currentColor"/>
+                  </svg>
+                  {{#if ../property.buyBtnLabel}}{{../property.buyBtnLabel}}{{else}}최저가 보기{{/if}}
+                </a>
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="pd-empty">등록된 현재 사용 장비가 없습니다.<br>설정 패널에서 장비를 추가하세요.</div>
+    {{/if}}
+
+    <!-- ③ 과거 사용 장비 아카이브 -->
+    {{#if property.showArchive}}
+      <div class="pd-section-header">
+        <div class="pd-section-dot" style="background:{{property.archiveDotColor}};"></div>
+        <div class="pd-section-title">과거 사용 장비</div>
+        <div class="pd-section-subtitle">Gear Archive</div>
+      </div>
+      <div class="pd-section-divider"></div>
+
+      {{#if property.archiveGear.length}}
+        <div class="pd-archive-list" id="pd-archive-list">
+          {{#each property.archiveGear}}
+            <div class="pd-archive-item pd-fade">
+              <div class="pd-archive-img-wrap">
+                {{#if gearImage}}
+                  <img class="pd-archive-img" src="{{gearImage}}" alt="{{gearName}}" loading="lazy"
+                       onerror="this.src='https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/lifestyle/image1.jpg'">
+                {{else}}
+                  <img class="pd-archive-img"
+                       src="https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/lifestyle/image{{add @index 1}}.jpg"
+                       alt="{{gearName}}" loading="lazy">
+                {{/if}}
+              </div>
+              <div class="pd-archive-info">
+                {{#if usedYear}}<div class="pd-archive-year">{{usedYear}}</div>{{/if}}
+                {{#if category}}<div class="pd-archive-cat">{{category}}</div>{{/if}}
+                <div class="pd-archive-name">{{#if brand}}{{brand}} {{/if}}{{gearName}}</div>
+                {{#if spec}}<div class="pd-archive-spec">{{spec}}</div>{{/if}}
+              </div>
+              <div class="pd-archive-action">
+                {{#if buyLink.value}}
+                  <a class="pd-archive-btn" href="{{buyLink.value}}" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 1h2l1.5 7h5L11 4H4"/>
+                      <circle cx="5.5" cy="10.5" r=".75" fill="currentColor"/>
+                      <circle cx="9.5" cy="10.5" r=".75" fill="currentColor"/>
+                    </svg>
+                    최저가 보기
+                  </a>
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="pd-empty" style="margin-bottom:0;">등록된 과거 장비가 없습니다.<br>설정 패널에서 장비를 추가하세요.</div>
+      {{/if}}
+    {{/if}}
+
+  </div>
+</section>
+</template>
+
+<script>
+const container = bm.container;
+const context = bm.context;
+
+// ── 히어로 배경 이미지 설정 ──
+function setHeroBg() {
+  const bg = container.querySelector('.pd-hero-bg');
+  if (bg && context.property.heroImage) {
+    bg.style.backgroundImage = "url('" + context.property.heroImage + "')";
+  }
+}
+
+// ── Staggered Fade-up ──
+function initFadeUp() {
+  const items = container.querySelectorAll('.pd-fade');
+  if (!items.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 55);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  items.forEach(el => observer.observe(el));
+  bm.onDestroy = () => observer.disconnect();
+}
+
+// ── Init ──
+setHeroBg();
+initFadeUp();
+
+// ── Preview Sync ──
+bm.onContextChange = () => {
+  setHeroBg();
+  const items = container.querySelectorAll('.pd-fade');
+  items.forEach(el => {
+    el.classList.add('visible');
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  });
+};
+</script>

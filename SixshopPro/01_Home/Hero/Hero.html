@@ -1,0 +1,677 @@
+<template>
+<section class="gp-hero">
+
+  {{#if property.showSectionLabel}}
+  <p class="gp-hero__eyebrow">
+    <span class="gp-hero__dot"></span>{{property.sectionLabel}}
+  </p>
+  {{/if}}
+
+  <div class="gp-cards" role="tablist" aria-label="게시판 탭">
+    {{#each property.cards}}
+    <a
+      class="gp-card"
+      href="{{#if (and link link.value)}}{{link.value}}{{else}}#{{/if}}"
+      data-tab="{{tabKey}}"
+      data-is-link="{{#if (and link link.value)}}1{{else}}0{{/if}}"
+      role="tab"
+      aria-selected="false"
+      tabindex="0"
+    >
+      {{!-- OP.GG 구조: 이미지 그룹(overflow:visible) + 외부 레이블 --}}
+      <span class="gp-card__group">
+
+        {{!-- Layer 1: 배경 이미지 (CSS bg, 카드 크기에 클리핑) --}}
+        {{#if bgImage}}
+        <span class="gp-card__bg" style="background-image:url('{{bgImage}}')"></span>
+        {{/if}}
+
+        {{!-- Layer 2: 기본 캐릭터 (카드 너비, 평상시 표시) --}}
+        {{#if normalImage}}
+        <img class="gp-card__char gp-card__char--normal" src="{{normalImage}}" alt="{{title}}" loading="lazy" />
+        {{/if}}
+
+        {{!-- Layer 3: 호버 캐릭터 (카드 2배 너비, 호버 시 표시) --}}
+        {{#if hoverImage}}
+        <img class="gp-card__char gp-card__char--hover" src="{{hoverImage}}" alt="" loading="lazy" aria-hidden="true" />
+        {{/if}}
+
+        {{!-- 배지 --}}
+        {{#if badge}}
+          <span class="gp-card__badge">{{badge}}</span>
+        {{/if}}
+        {{#if isLive}}
+          <span class="gp-card__live"><span class="gp-card__live-dot"></span>LIVE</span>
+        {{/if}}
+
+        {{!-- 하단 그라데이션 (활성 탭 오버레이용) --}}
+        <span class="gp-card__overlay"></span>
+      </span>
+
+      {{!-- OP.GG 레이블 영역: 이미지 하단 외부 --}}
+      <span class="gp-card__label">
+        {{#if iconImage}}
+        <img class="gp-card__icon" src="{{iconImage}}" alt="" width="20" height="20" loading="lazy" />
+        {{/if}}
+        <span class="gp-card__title">{{title}}</span>
+      </span>
+
+      {{!-- v6에서 작동하던 탭 인디케이터 유지 --}}
+      <span class="gp-card__indicator"></span>
+    </a>
+    {{else}}
+    <p class="gp-cards__empty">설정 패널에서 카드를 추가해주세요.</p>
+    {{/each}}
+  </div>
+
+  {{!-- 모바일 캐러셀 인디케이터 dots --}}
+  <div class="gp-carousel-dots" role="tablist" aria-label="슬라이드 목록">
+    {{#each property.cards}}
+    <span
+      class="gp-carousel-dot"
+      data-dot="{{@index}}"
+      role="tab"
+      aria-label="{{add @index 1}}번째 카드"
+      tabindex="0"
+    ></span>
+    {{/each}}
+  </div>
+  {{!-- 스크린리더용 현재 위치 알림 --}}
+  <p class="gp-carousel-announce" aria-live="polite" aria-atomic="true"></p>
+
+</section>
+</template>
+
+<style>
+/* ---- 섹션 ---- */
+.gp-hero {
+  background: {{property.heroBg}};
+  padding: {{property.heroPadV}}px 0;
+}
+.gp-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 {{property.eyebrowGap}}px;
+  padding: 0 {{property.heroPadH}}px;
+  font-size: {{property.eyebrowSize}}px;
+  font-weight: 700;
+  color: {{property.eyebrowColor}};
+  letter-spacing: .04em;
+  font-family: var(--font-family-heading);
+}
+.gp-hero__dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: {{property.accentColor}};
+  flex-shrink: 0;
+}
+
+/* ---- 카드 트랙 ----
+   [문제1 해결] 카드가 컨테이너 너비를 균등 분배
+   overflow:visible: 호버 캐릭터가 트랙 밖으로 넘쳐야 함 */
+.gp-cards {
+  display: flex;
+  justify-content: center;
+  gap: {{property.cardGap}}px;
+  padding: {{property.cardPadTop}}px {{property.heroPadH}}px 0;
+  overflow: visible;
+  list-style: none;
+  margin: 0;
+}
+.gp-cards__empty {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+/* ---- 카드 래퍼 ----
+   [문제1 해결] flex:1 → 섹션 너비에 맞게 자동 균등 분배
+   고정 px 제거 → overflow:visible 유지 */
+.gp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: {{property.labelGap}}px;
+  flex: 1 1 0%;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  overflow: visible;
+}
+
+/* ---- 이미지 그룹 ----
+   [문제1 해결] width:100% → 카드 너비 그대로 채움
+   overflow:visible: 호버 캐릭터(2배 너비)가 좌우로 넘쳐야 함
+   border-radius는 bg span에만 적용 */
+.gp-card__group {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: {{property.cardH}}px;
+  overflow: visible;
+  background: {{property.cardNoImgBg}};
+  border-radius: {{property.cardRadius}}px;
+}
+
+/* ---- 배경 이미지 레이어 ----
+   border-radius + overflow:hidden을 이 레이어에만 적용
+   → 배경만 카드 모서리에 클리핑, 캐릭터는 넘칠 수 있음 */
+.gp-card__bg {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: {{property.cardRadius}}px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* ---- 캐릭터 이미지 공통 ---- */
+.gp-card__char {
+  position: absolute;
+  top: -20px;
+  pointer-events: none;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: center bottom;
+}
+
+/* ---- 기본 캐릭터 (Layer 2) ----
+   [문제1 해결] width:100% → 카드 너비에 자동 맞춤
+   transition: 0.15s / hover: scale(1.03) + opacity:0 */
+.gp-card__char--normal {
+  left: 0;
+  width: 100%;
+  height: {{property.charH}}px;
+  z-index: 10;
+  transition: transform 150ms cubic-bezier(0.4,0,0.2,1),
+              opacity  150ms cubic-bezier(0.4,0,0.2,1);
+}
+.gp-card:hover .gp-card__char--normal {
+  transform: scale(1.03);
+  opacity: 0;
+}
+/* [문제2 해결] 활성 카드에서도 호버 이미지 유지 */
+.gp-card.is-active .gp-card__char--normal {
+  transform: scale(1.03);
+  opacity: 0;
+}
+
+/* ---- 호버 캐릭터 (Layer 3) ----
+   [문제1 해결] width: {{property.hoverW}}px 고정 유지
+   (캐릭터 이미지 원본 비율 보존이 필요하므로 고정값 유지)
+   left:50% + translateX(-50%): 카드 중앙 기준 배치 */
+.gp-card__char--hover {
+  left: 50%;
+  width: {{property.hoverW}}px;
+  height: {{property.charH}}px;
+  transform: translateX(-50%) scale(1);
+  opacity: 0;
+  z-index: 30;
+  transition: transform 300ms cubic-bezier(0.4,0,0.2,1),
+              opacity  300ms cubic-bezier(0.4,0,0.2,1);
+}
+.gp-card:hover .gp-card__char--hover {
+  transform: translateX(-50%) scale(1.03);
+  opacity: 1;
+}
+/* [문제2 해결] 활성 카드에서도 호버 이미지 표시 */
+.gp-card.is-active .gp-card__char--hover {
+  transform: translateX(-50%) scale(1.03);
+  opacity: 1;
+}
+
+/* ---- 배지 / LIVE ---- */
+.gp-card__badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  z-index: 40;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: {{property.accentColor}};
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+.gp-card__live {
+  position: absolute;
+  top: 8px; right: 8px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+.gp-card__live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  animation: gp-blink 1.2s ease-in-out infinite;
+}
+@keyframes gp-blink {
+  0%,100% { opacity:1; } 50% { opacity:.25; }
+}
+
+/* ---- 그라데이션 오버레이 ----
+   [문제2 해결] is-active 시 별도 색 그라데이션 제거
+   기본 어두운 그라데이션만 유지 */
+.gp-card__overlay {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: {{property.cardRadius}}px;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(to top,
+    rgba(0,0,0,.5) 0%,
+    rgba(0,0,0,.08) 45%,
+    rgba(0,0,0,0) 100%);
+}
+
+/* ---- 레이블 (카드 외부 하단) ----
+   OP.GG 실측: inline-block w-full → a태그 flex gap-2
+   아이콘 24×24 + 흰색 텍스트 */
+.gp-card__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding: 0 2px;
+}
+.gp-card__icon {
+  width: 20px; height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 150ms ease;
+}
+.gp-card:hover .gp-card__icon,
+.gp-card.is-active .gp-card__icon { opacity: 1; }
+.gp-card__title {
+  font-size: {{property.cardTitleSize}}px;
+  font-weight: 700;
+  color: {{property.labelColor}};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-heading);
+  letter-spacing: -.01em;
+  transition: color 150ms ease;
+}
+.gp-card:hover .gp-card__title,
+.gp-card.is-active .gp-card__title { color: {{property.labelActiveColor}}; }
+
+/* ---- 탭 인디케이터 (v6에서 검증된 방식 유지) ---- */
+.gp-card__indicator {
+  display: block;
+  height: {{property.indicatorH}}px;
+  width: 100%;
+  background: transparent;
+  border-radius: 100px;
+  transition: background 150ms ease;
+}
+.gp-card.is-active .gp-card__indicator {
+  background: {{property.accentColor}};
+}
+
+/* ---- 비활성 카드 dim (JS has-hover 클래스 활용) ---- */
+.gp-cards.has-hover .gp-card:not(:hover) .gp-card__group { opacity: 0.72; transition: opacity 200ms ease; }
+.gp-cards.has-hover .gp-card:hover    .gp-card__group { opacity: 1; }
+
+/* ---- 캐러셀 dots + 자동재생 progress: 데스크탑 숨김 ---- */
+.gp-carousel-dots { display: none; }
+.gp-carousel-announce {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- 모바일: scroll-snap 캐러셀 ---- */
+@media (max-width: 768px) {
+  .gp-cards {
+    justify-content: flex-start;
+    /* overflow-y:clip = 스크롤에 영향 없이 세로만 클리핑 (hidden은 scroll을 막는 부작용) */
+    overflow-x: auto;
+    overflow-y: clip;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-top: {{property.cardPadTop}}px;
+    padding-bottom: 0;
+    padding-left: {{property.heroPadHMobile}}px;
+    padding-right: 0;
+    gap: {{property.cardGapMobile}}px;
+    scroll-padding-left: {{property.heroPadHMobile}}px;
+  }
+  .gp-cards::-webkit-scrollbar { display: none; }
+
+  .gp-card {
+    flex: 0 0 {{property.cardWMobile}}px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .gp-card:last-child { margin-right: {{property.heroPadHMobile}}px; }
+
+  .gp-card__group { width: {{property.cardWMobile}}px; height: {{property.cardHMobile}}px; }
+  .gp-card__char--normal { width: {{property.cardWMobile}}px; height: {{property.charHMobile}}px; }
+  .gp-card__char--hover  { width: {{property.hoverWMobile}}px; height: {{property.charHMobile}}px; }
+  .gp-card__title        { font-size: {{property.cardTitleSizeMobile}}px; }
+
+  /* ---- dots ---- */
+  .gp-carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 0 4px;
+  }
+  /* pill dot: 활성 시 가로 확장 */
+  .gp-carousel-dot {
+    display: block;
+    position: relative;
+    width: 6px;
+    height: 6px;
+    border-radius: 100px;
+    background: {{property.labelColor}};
+    opacity: 0.3;
+    transition: width 240ms cubic-bezier(0.4,0,0.2,1),
+                opacity 240ms ease,
+                background 240ms ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .gp-carousel-dot.is-active {
+    width: 20px;
+    opacity: 1;
+    background: {{property.labelColor}};
+  }
+  /* 자동재생 progress bar: 활성 dot 위에 포인트컬러 선이 채워짐 */
+  .gp-carousel-dot.is-active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0; top: 0;
+    height: 100%;
+    width: 0;
+    background: {{property.accentColor}};
+    border-radius: 100px;
+  }
+  /* JS가 .is-playing 클래스를 붙이면 animation 시작 */
+  .gp-carousel-dot.is-active.is-playing::after {
+    animation: gp-dot-progress var(--gp-interval, 4s) linear forwards;
+  }
+  @keyframes gp-dot-progress {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+
+  /* 자동재생 일시정지 시 progress 멈춤 */
+  .gp-carousel-dot.is-active.is-paused::after {
+    animation-play-state: paused;
+  }
+}
+</style>
+
+<script>
+(function () {
+  var container = bm.container;
+  var context   = bm.context;
+  var doc       = container.ownerDocument;
+
+  var EVT    = 'gp:tabChange';
+  var ACTIVE = 'is-active';
+  var current = '';
+
+  /* ---- 탭 전환 (v6 검증 로직 그대로) ---- */
+  function switchTab(tab) {
+    if (!tab || tab === current) return;
+    current = tab;
+    var cards = container.querySelectorAll('.gp-card[data-tab]');
+    for (var i = 0; i < cards.length; i++) {
+      var k  = (cards[i].getAttribute('data-tab') || '').trim();
+      var on = (k === tab);
+      cards[i].classList.toggle(ACTIVE, on);
+      cards[i].setAttribute('aria-selected', on ? 'true' : 'false');
+    }
+    try {
+      doc.dispatchEvent(new CustomEvent(EVT, { bubbles: true, detail: { tab: tab } }));
+    } catch (e) {}
+  }
+
+  function initTab() {
+    var def = String(context.property.defaultTab || 'free').trim();
+    current = '';
+    switchTab(def);
+  }
+
+  /* 클릭 */
+  container.addEventListener('click', function (e) {
+    var card = e.target && e.target.closest ? e.target.closest('.gp-card[data-tab]') : null;
+    if (!card) return;
+    if (card.getAttribute('data-is-link') === '1') return;
+    e.preventDefault();
+    e.stopPropagation();
+    switchTab((card.getAttribute('data-tab') || '').trim());
+  }, true);
+
+  /* 키보드 */
+  container.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var card = e.target && e.target.closest ? e.target.closest('.gp-card[data-tab]') : null;
+    if (!card || card.getAttribute('data-is-link') === '1') return;
+    e.preventDefault();
+    switchTab((card.getAttribute('data-tab') || '').trim());
+  }, true);
+
+  /* dim 효과 */
+  var track = container.querySelector('.gp-cards');
+  if (track) {
+    track.addEventListener('mouseover', function (e) {
+      if (e.target.closest && e.target.closest('.gp-card')) track.classList.add('has-hover');
+    });
+    track.addEventListener('mouseout', function (e) {
+      if (!track.contains(e.relatedTarget)) track.classList.remove('has-hover');
+    });
+  }
+
+  /* ════════════════════════════════════════════
+     모바일 캐러셀 + 자동재생
+     핵심 원칙:
+     - isMobile: matchMedia 사용 (iframe 너비 무관, 실제 CSS 미디어쿼리와 동기화)
+     - 스크롤: track.scrollLeft 직접 조작 (scrollIntoView는 부모 탐색 오류 가능)
+     - dots 동기화: getBoundingClientRect 기반 (offsetLeft+padding 오차 제거)
+     ════════════════════════════════════════════ */
+  var dotsWrap    = container.querySelector('.gp-carousel-dots');
+  var announce    = container.querySelector('.gp-carousel-announce');
+  var scrollTimer = null;
+  var autoTimer   = null;
+  var resumeTimer = null;
+  var touchStartX = 0;
+  var isTouching  = false;
+  var isPaused    = false;
+  var currentIdx  = 0;
+
+  /* matchMedia로 실제 CSS 미디어쿼리와 동기화 — iframe 너비 영향 없음 */
+  var mq = null;
+  try {
+    var mqDoc = (container.ownerDocument || document).defaultView || window;
+    mq = mqDoc.matchMedia('(max-width: 768px)');
+  } catch(e) {}
+  function isMobile() { return mq ? mq.matches : false; }
+
+  function getInterval() {
+    if (!context.property.autoPlay) return 0;
+    var v = parseInt(context.property.autoPlayInterval || '4', 10);
+    return (v > 0) ? v * 1000 : 0;
+  }
+
+  /* ---- dots 업데이트 ---- */
+  function updateDots(idx) {
+    if (!dotsWrap) return;
+    var dots = dotsWrap.querySelectorAll('.gp-carousel-dot');
+    var interval = getInterval();
+    for (var i = 0; i < dots.length; i++) {
+      var active = (i === idx);
+      dots[i].classList.toggle('is-active', active);
+      dots[i].classList.remove('is-playing', 'is-paused');
+      if (active && interval > 0) {
+        dots[i].style.setProperty('--gp-interval', (interval / 1000) + 's');
+        dots[i].classList.add(isPaused ? 'is-paused' : 'is-playing');
+      }
+    }
+    currentIdx = idx;
+    if (announce) {
+      var total = track ? track.querySelectorAll('.gp-card').length : 0;
+      announce.textContent = (idx + 1) + ' / ' + total;
+    }
+  }
+
+  /* ---- 현재 위치에서 가장 가까운 카드 인덱스
+     getBoundingClientRect 사용 → offsetLeft+padding 오차 없음 ---- */
+  function getNearestIdx() {
+    if (!track) return 0;
+    var cards = track.querySelectorAll('.gp-card');
+    if (!cards.length) return 0;
+    var trackLeft = track.getBoundingClientRect().left;
+    var best = 0, bestD = Infinity;
+    for (var i = 0; i < cards.length; i++) {
+      var cardLeft = cards[i].getBoundingClientRect().left;
+      var d = Math.abs(cardLeft - trackLeft);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    return best;
+  }
+
+  /* ---- 특정 카드로 이동 — scrollLeft 직접 조작 ---- */
+  function scrollToCard(idx) {
+    if (!track) return;
+    var cards = track.querySelectorAll('.gp-card');
+    if (!cards.length) return;
+    if (idx < 0)             idx = cards.length - 1;
+    if (idx >= cards.length) idx = 0;
+    if (!cards[idx]) return;
+    /* offsetLeft는 패딩 포함 부모 기준. scrollLeft로 패딩 보정 불필요:
+       cards[idx].offsetLeft - track의 paddingLeft = 실제 스크롤 목표 */
+    var style = (track.ownerDocument || document).defaultView.getComputedStyle(track);
+    var pl = parseInt(style.paddingLeft || '0', 10);
+    var targetLeft = cards[idx].offsetLeft - pl;
+    track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+    updateDots(idx);
+    var tab = (cards[idx].getAttribute('data-tab') || '').trim();
+    if (tab) switchTab(tab);
+  }
+
+  /* ---- 자동재생 — 모바일에서만 ---- */
+  function startAutoPlay() {
+    clearInterval(autoTimer);
+    if (!isMobile()) return;
+    var interval = getInterval();
+    if (!interval || !track) return;
+    autoTimer = setInterval(function () {
+      if (!isPaused) scrollToCard(currentIdx + 1);
+    }, interval);
+  }
+
+  function pauseAutoPlay(resumeAfterMs) {
+    isPaused = true;
+    var dot = dotsWrap && dotsWrap.querySelector('.gp-carousel-dot.is-active');
+    if (dot) { dot.classList.remove('is-playing'); dot.classList.add('is-paused'); }
+    clearTimeout(resumeTimer);
+    if (resumeAfterMs) resumeTimer = setTimeout(resumeAutoPlay, resumeAfterMs);
+  }
+
+  function resumeAutoPlay() {
+    isPaused = false;
+    var dot = dotsWrap && dotsWrap.querySelector('.gp-carousel-dot.is-active');
+    if (dot) {
+      dot.classList.remove('is-paused', 'is-playing');
+      void dot.offsetWidth;
+      dot.classList.add('is-playing');
+    }
+    startAutoPlay();
+  }
+
+  /* ---- 터치 이벤트 — 스와이프 = 네이티브 스크롤에 위임
+     touchstart/touchend 는 자동재생 일시정지 + 카드 snap 용도만 사용 ---- */
+  if (track) {
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+      isTouching  = true;
+      pauseAutoPlay();
+    }, { passive: true });
+
+    track.addEventListener('touchend', function (e) {
+      if (!isTouching) return;
+      isTouching = false;
+      var dx  = touchStartX - e.changedTouches[0].clientX;
+      var idx = getNearestIdx();
+      if (Math.abs(dx) > 30) idx = dx > 0 ? idx + 1 : idx - 1;
+      scrollToCard(idx);
+      pauseAutoPlay(3000);
+    }, { passive: true });
+
+    track.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var idx = getNearestIdx();
+        if (idx !== currentIdx) updateDots(idx);
+      }, 80);
+    }, { passive: true });
+
+    track.addEventListener('mouseenter', function () { if (!isMobile()) pauseAutoPlay(); });
+    track.addEventListener('mouseleave', function () { if (!isMobile()) resumeAutoPlay(); });
+  }
+
+  /* dots 클릭 */
+  if (dotsWrap) {
+    dotsWrap.addEventListener('click', function (e) {
+      var dot = e.target.closest ? e.target.closest('.gp-carousel-dot') : null;
+      if (!dot || !track) return;
+      scrollToCard(parseInt(dot.getAttribute('data-dot') || '0', 10));
+      pauseAutoPlay(3000);
+    });
+    dotsWrap.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var dot = e.target.closest ? e.target.closest('.gp-carousel-dot') : null;
+      if (!dot) return;
+      e.preventDefault();
+      scrollToCard(parseInt(dot.getAttribute('data-dot') || '0', 10));
+    });
+  }
+
+  updateDots(0);
+  startAutoPlay();
+
+  bm.onContextChange = function () {
+    initTab();
+    updateDots(0);
+    clearInterval(autoTimer);
+    startAutoPlay();
+  };
+  bm.onDestroy = function () {
+    clearInterval(autoTimer);
+    clearTimeout(scrollTimer);
+    clearTimeout(resumeTimer);
+  };
+  initTab();
+})();
+</script>

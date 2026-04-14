@@ -1,0 +1,260 @@
+<data value="$customer" />
+<style>
+.ccRankRoot{width:100%;box-sizing:border-box;padding:{{property.paddingTop}}px {{property.paddingRight}}px {{property.paddingBottom}}px {{property.paddingLeft}}px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccRankHeader{margin-bottom:{{property.headerGap}}px;}
+.ccRankHeader__eyebrow{font-family:var(--font-family-body);font-weight:var(--font-weight-body);font-size:{{property.eyebrowSize}}px;color:{{property.accentColor}};text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
+.ccRankHeader__title{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.titleSize}}px;color:{{property.titleColor}};margin:0 0 4px 0;line-height:1.2;}
+.ccRankHeader__subtitle{font-family:var(--font-family-body);font-weight:var(--font-weight-body);font-size:{{property.subtitleSize}}px;color:{{property.subtitleColor}};margin:0;line-height:1.5;}
+.ccRankToolbar{display:flex;align-items:center;gap:12px;margin-bottom:{{property.toolbarGap}}px;flex-wrap:wrap;}
+.ccRankToolbar__search{flex:1;min-width:200px;padding:10px 14px 10px 38px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);outline:none;transition:border-color 0.2s;box-sizing:border-box;}
+.ccRankToolbar__search:focus{border-color:{{property.accentColor}};}
+.ccRankToolbar__searchWrap{position:relative;flex:1;min-width:200px;}
+.ccRankToolbar__searchIcon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:0.5;pointer-events:none;}
+.ccRankToolbar__sort{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
+.ccRankToolbar__regionFilter{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
+.ccRankGrid{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
+.ccRankCarousel{position:relative;overflow:hidden;padding:0 48px;}
+.ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);will-change:transform;}
+.ccRankCarousel__track .ccCard{flex-shrink:0;min-width:0;box-sizing:border-box;}
+.ccRankCarousel__nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:{{property.accentColor}};color:#ffffff;border:none;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;opacity:0.9;transition:opacity 0.2s, transform 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.ccRankCarousel__nav:hover{opacity:1;transform:translateY(-50%) scale(1.08);}
+.ccRankCarousel__nav--prev{left:4px;}
+.ccRankCarousel__nav--next{right:4px;}
+.ccRankCarousel__nav--disabled{opacity:0.3;cursor:default;pointer-events:none;}
+.ccRankCarousel__dots{display:flex;justify-content:center;gap:8px;margin-top:16px;}
+.ccRankCarousel__dot{width:8px;height:8px;border-radius:50%;background:{{property.borderColor}};border:none;padding:0;cursor:pointer;transition:background 0.2s, transform 0.2s;}
+.ccRankCarousel__dot--active{background:{{property.accentColor}};transform:scale(1.3);}
+.ccCard{border-radius:{{property.cardRadius}}px;overflow:hidden;background:{{property.cardBg}};border:1px solid {{property.cardBorderColor}};transition:transform 0.25s ease, box-shadow 0.25s ease;display:flex;flex-direction:column;}
+.ccCard:hover{transform:translateY(-4px);box-shadow:0 8px 24px {{property.cardShadowColor}};}
+.ccCard__imgWrap{position:relative;overflow:hidden;background:{{property.cardImgPlaceholder}};}
+.ccCard__imgWrap--4_3{padding-top:75%;}
+.ccCard__imgWrap--16_9{padding-top:56.25%;}
+.ccCard__imgWrap--1_1{padding-top:100%;}
+.ccCard__img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
+.ccCard__rank{position:absolute;top:10px;left:10px;min-width:28px;height:28px;border-radius:6px;background:{{property.accentColor}};color:#ffffff;font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:13px;display:flex;align-items:center;justify-content:center;padding:0 6px;}
+.ccCard__region{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:4px;background:#00000066;color:#ffffff;font-size:11px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccCard__body{padding:{{property.cardPadding}}px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.ccCard__name{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.cardNameSize}}px;color:{{property.cardNameColor}};margin:0;line-height:1.3;}
+.ccCard__tags{font-size:12px;color:{{property.cardTagColor}};font-family:var(--font-family-body);font-weight:var(--font-weight-body);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ccCard__rating{display:flex;align-items:center;gap:8px;}
+.ccCard__stars{display:flex;gap:2px;}
+.ccCard__star{width:{{property.starSize}}px;height:{{property.starSize}}px;}
+.ccCard__star--filled{color:{{property.starFilledColor}};}
+.ccCard__star--empty{color:{{property.starEmptyColor}};}
+.ccCard__score{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.scoreSize}}px;color:{{property.scoreColor}};}
+.ccCard__reviewCount{font-size:12px;color:{{property.subtitleColor}};font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccCard__bars{display:flex;flex-direction:column;gap:4px;}
+.ccCard__barRow{display:flex;align-items:center;gap:8px;}
+.ccCard__barLabel{font-size:11px;color:{{property.subtitleColor}};width:72px;text-align:right;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccCard__barTrack{flex:1;height:{{property.barHeight}}px;background:{{property.barTrackColor}};border-radius:{{property.barRadius}}px;overflow:hidden;}
+.ccCard__barFill{height:100%;border-radius:{{property.barRadius}}px;background:{{property.accentColor}};transition:width 0.6s ease;}
+.ccCard__barValue{font-size:11px;color:{{property.cardNameColor}};width:24px;text-align:left;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccCard__actions{display:flex;gap:8px;margin-top:auto;padding-top:8px;}
+.ccCard__btn{flex:1;padding:{{property.btnPaddingY}}px {{property.btnPaddingX}}px;border-radius:{{property.btnRadius}}px;font-size:{{property.btnFontSize}}px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:opacity 0.2s;border:none;white-space:nowrap;}
+.ccCard__btn:hover{opacity:0.85;}
+.ccCard__btn--primary{background:{{property.accentColor}};color:#ffffff;}
+.ccCard__btn--secondary{background:transparent;color:{{property.accentColor}};border:1px solid {{property.accentColor}};}
+.ccCard__btn--rate{background:{{property.rateBtnBg}};color:{{property.rateBtnColor}};border:1px solid {{property.rateBtnBorderColor}};}
+.ccRankEmpty{text-align:center;padding:60px 20px;color:{{property.subtitleColor}};font-size:15px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccRankEmpty__icon{font-size:48px;margin-bottom:16px;opacity:0.4;}
+.ccRankEmpty__title{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:18px;color:{{property.titleColor}};margin-bottom:8px;}
+.ccRankSkeleton{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
+.ccRankSkeleton__card{border-radius:{{property.cardRadius}}px;overflow:hidden;background:{{property.cardBg}};border:1px solid {{property.cardBorderColor}};}
+.ccRankSkeleton__img{width:100%;padding-top:75%;background:{{property.cardImgPlaceholder}};animation:skeletonPulse 1s ease-in-out infinite;}
+.ccRankSkeleton__body{padding:{{property.cardPadding}}px;display:flex;flex-direction:column;gap:10px;}
+.ccRankSkeleton__line{height:14px;border-radius:4px;background:{{property.cardImgPlaceholder}};animation:skeletonPulse 1s ease-in-out infinite;}
+.ccRankSkeleton__line--title{width:60%;height:18px;}
+.ccRankSkeleton__line--tag{width:80%;}
+.ccRankSkeleton__line--star{width:50%;}
+.ccRankSkeleton__line--bar{width:100%;height:6px;}
+.ccRankSkeleton__line--btn{width:40%;height:32px;border-radius:{{property.btnRadius}}px;}
+@keyframes skeletonPulse{0%{opacity:0.6;}50%{opacity:0.3;}100%{opacity:0.6;}}
+@media (max-width:768px){
+.ccRankRoot{padding:{{property.paddingTopMobile}}px {{property.paddingRightMobile}}px {{property.paddingBottomMobile}}px {{property.paddingLeftMobile}}px;}
+.ccRankHeader__title{font-size:{{property.titleSizeMobile}}px;}
+.ccRankHeader__subtitle{font-size:{{property.subtitleSizeMobile}}px;}
+.ccRankToolbar{flex-direction:column;align-items:stretch;}
+.ccRankToolbar__searchWrap{min-width:100%;}
+.ccRankToolbar__sort, .ccRankToolbar__regionFilter{width:100%;}
+.ccRankGrid{grid-template-columns:repeat({{property.gridColsMobile}}, 1fr);gap:{{property.gridGapMobile}}px;}
+.ccRankCarousel{padding:0 36px;}
+.ccRankCarousel__nav{width:32px;height:32px;font-size:16px;}
+.ccCard__name{font-size:{{property.cardNameSizeMobile}}px;}
+.ccRankSkeleton{grid-template-columns:repeat({{property.gridColsMobile}}, 1fr);gap:{{property.gridGapMobile}}px;}
+}
+</style>
+<template>
+<div class="ccRankRoot">{{#if property.showHeader}}<div class="ccRankHeader">{{#if property.eyebrow}}<div class="ccRankHeader__eyebrow">{{property.eyebrow}}</div>{{/if}}{{#if property.headerTitle}}<h2 class="ccRankHeader__title">{{property.headerTitle}}</h2>{{/if}}{{#if property.headerSubtitle}}<p class="ccRankHeader__subtitle">{{property.headerSubtitle}}</p>{{/if}}</div>{{/if}}{{#if property.showToolbar}}<div class="ccRankToolbar"><div class="ccRankToolbar__searchWrap"><svg class="ccRankToolbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="ccRankToolbar__search" placeholder="골프장 검색..." data-action="search" /></div><select class="ccRankToolbar__sort" data-action="sort"><option value="rating">평점순</option><option value="name">이름순</option><option value="reviews">리뷰순</option></select><select class="ccRankToolbar__regionFilter" data-action="region"><option value="all">전체 지역</option></select></div>{{/if}}<div class="ccRankBody" data-mode="{{property.displayMode}}"></div></div>
+</template>
+<script>
+(function(){
+var container = bm.container;
+var context = bm.context;
+var prop = context.property;
+function log() { if (prop.debugLog) { var args = Array.prototype.slice.call(arguments); args.unshift('[CC Ranking]'); console.log.apply(console, args); } }
+function collectBridgeData() {
+var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); var allItems = [];
+for (var s = 0; s < stores.length; s++) { try { var raw = stores[s].textContent; if (!raw || raw.trim() === '') continue; var payload = JSON.parse(raw); if (payload && payload.items && Array.isArray(payload.items)) { for (var i = 0; i < payload.items.length; i++) { var item = payload.items[i]; if (item && item.ccId && item.isVisible !== false) allItems.push(item); } } } catch (err) { log('Bridge parse error:', err); } }
+return allItems;
+}
+function collectRatingData() {
+var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccRatingStore'); var allRatings = [];
+for (var s = 0; s < stores.length; s++) { try { var raw = stores[s].textContent; if (!raw || raw.trim() === '') continue; var payload = JSON.parse(raw); if (payload && payload.ratings && Array.isArray(payload.ratings)) { for (var i = 0; i < payload.ratings.length; i++) allRatings.push(payload.ratings[i]); } } catch (err) { log('Rating store parse error:', err); } }
+return allRatings;
+}
+function aggregate(allRatings, bridgeItems) {
+var wSt = prop.weightStrategy || 25, wCo = prop.weightCondition || 20, wSc = prop.weightScenery || 10, wSe = prop.weightService || 20, wFa = prop.weightFacility || 10, wPr = prop.weightPrice || 15;
+var wTotal = wSt + wCo + wSc + wSe + wFa + wPr; if (wTotal === 0) wTotal = 100;
+var m = prop.bayesianM || 30, C = (prop.bayesianC || 40) / 10;
+var recentMs = (prop.recentMonths || 12) * 30.44 * 24 * 60 * 60 * 1000, now = Date.now();
+var recent = []; for (var i = 0; i < allRatings.length; i++) { var ts = new Date(allRatings[i].createdAt).getTime(); if (!isNaN(ts) && (now - ts) <= recentMs) recent.push(allRatings[i]); }
+var userMap = {}; for (var j = 0; j < recent.length; j++) { var r = recent[j]; var key = r.userKey + '|' + r.ccId; if (!userMap[key] || new Date(r.createdAt) > new Date(userMap[key].createdAt)) userMap[key] = r; }
+var unique = []; for (var k in userMap) { if (userMap.hasOwnProperty(k)) unique.push(userMap[k]); }
+var ccGroups = {}; for (var u = 0; u < unique.length; u++) { var rating = unique[u]; if (!ccGroups[rating.ccId]) ccGroups[rating.ccId] = { strategy: [], condition: [], scenery: [], service: [], facility: [], price: [] }; var g = ccGroups[rating.ccId]; if (typeof rating.ratings.strategy === 'number') g.strategy.push(rating.ratings.strategy); if (typeof rating.ratings.condition === 'number') g.condition.push(rating.ratings.condition); if (typeof rating.ratings.scenery === 'number') g.scenery.push(rating.ratings.scenery); if (typeof rating.ratings.service === 'number') g.service.push(rating.ratings.service); if (typeof rating.ratings.facility === 'number') g.facility.push(rating.ratings.facility); if (typeof rating.ratings.price === 'number') g.price.push(rating.ratings.price); }
+function avg(arr) { if (arr.length === 0) return 0; var sum = 0; for (var a = 0; a < arr.length; a++) sum += arr[a]; return sum / arr.length; }
+var bridgeMap = {}; for (var b = 0; b < bridgeItems.length; b++) bridgeMap[bridgeItems[b].ccId] = bridgeItems[b];
+var results = []; for (var ccId in bridgeMap) { if (!bridgeMap.hasOwnProperty(ccId)) continue; var bridge = bridgeMap[ccId]; var grp = ccGroups[ccId]; var item = { ccId: bridge.ccId, ccName: bridge.ccName, region: bridge.region || '', tags: bridge.tags || '', image: bridge.image || null, imageRatio: bridge.imageRatio || '4_3', btn1Enabled: bridge.btn1Enabled, btn1Label: bridge.btn1Label || '', btn1Url: bridge.btn1Url || '', btn1NewTab: bridge.btn1NewTab, btn2Enabled: bridge.btn2Enabled, btn2Label: bridge.btn2Label || '', btn2Url: bridge.btn2Url || '', btn2NewTab: bridge.btn2NewTab }; if (grp) { var stAvg = avg(grp.strategy), coAvg = avg(grp.condition), scAvg = avg(grp.scenery), seAvg = avg(grp.service), faAvg = avg(grp.facility), prAvg = avg(grp.price); var rawOverall = (stAvg * wSt + coAvg * wCo + scAvg * wSc + seAvg * wSe + faAvg * wFa + prAvg * wPr) / wTotal; var v = grp.strategy.length; var adjusted = (v / (v + m)) * rawOverall + (m / (v + m)) * C; item.ratings = { strategy: stAvg, condition: coAvg, scenery: scAvg, service: seAvg, facility: faAvg, price: prAvg }; item.overall = adjusted; item.reviewCount = v; } else { item.ratings = { strategy: 0, condition: 0, scenery: 0, service: 0, facility: 0, price: 0 }; item.overall = 0; item.reviewCount = 0; } results.push(item); }
+results.sort(function(a, b) { return (b.overall || 0) - (a.overall || 0); }); return results;
+}
+function renderStars(score, size) {
+var html = '<div class="ccCard__stars">'; for (var i = 1; i <= 5; i++) { var pct = Math.min(100, Math.max(0, (score - (i - 1)) * 100)); if (pct >= 100) { html += '<svg class="ccCard__star ccCard__star--filled" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="currentColor"/></svg>'; } else if (pct <= 0) { html += '<svg class="ccCard__star ccCard__star--empty" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="currentColor"/></svg>'; } else { var uid = 's' + i + '_' + Math.random().toString(36).substr(2, 5); html += '<svg class="ccCard__star" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><defs><linearGradient id="' + uid + '"><stop offset="' + pct + '%" stop-color="' + prop.starFilledColor + '"/><stop offset="' + pct + '%" stop-color="' + prop.starEmptyColor + '"/></linearGradient></defs><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="url(#' + uid + ')"/></svg>'; } } html += '</div>'; return html;
+}
+var BAR_LABELS = { strategy: '코스 전략성', condition: '코스 컨디션', scenery: '경관', service: '서비스', facility: '시설', price: '가격 만족도' };
+function renderBars(ratings) { var html = '<div class="ccCard__bars">'; var keys = ['strategy', 'condition', 'scenery', 'service', 'facility', 'price']; for (var k = 0; k < keys.length; k++) { var key = keys[k]; var val = ratings[key] || 0; var pct = (val / 5) * 100; html += '<div class="ccCard__barRow"><span class="ccCard__barLabel">' + BAR_LABELS[key] + '</span><div class="ccCard__barTrack"><div class="ccCard__barFill" style="width:' + pct + '%"></div></div><span class="ccCard__barValue">' + val.toFixed(1) + '</span></div>'; } html += '</div>'; return html; }
+function renderCard(item, rank) {
+var imgRatioClass = 'ccCard__imgWrap--' + (item.imageRatio || '4_3');
+var imgSrc = item.image || 'https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image1.jpg';
+var fb = 'https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/lifestyle/image1.jpg';
+var html = '<div class="ccCard" data-ccid="' + item.ccId + '">';
+html += '<div class="ccCard__imgWrap ' + imgRatioClass + '"><img class="ccCard__img" src="' + imgSrc + '" alt="' + item.ccName + '" loading="lazy" onerror="this.src=\'' + fb + '\'" /><div class="ccCard__rank">' + rank + '</div>';
+if (item.region) html += '<div class="ccCard__region">' + item.region + '</div>';
+html += '</div><div class="ccCard__body"><h3 class="ccCard__name">' + item.ccName + '</h3>';
+if (item.tags) html += '<div class="ccCard__tags">' + item.tags + '</div>';
+var ov = item.overall || 0;
+html += '<div class="ccCard__rating">' + renderStars(ov, prop.starSize) + '<span class="ccCard__score">' + ov.toFixed(2) + '</span><span class="ccCard__reviewCount">(' + (item.reviewCount || 0) + ')</span></div>';
+if (prop.showBars && item.ratings) html += renderBars(item.ratings);
+html += '<div class="ccCard__actions"><button class="ccCard__btn ccCard__btn--rate" data-action="rate" data-ccid="' + item.ccId + '" data-ccname="' + item.ccName + '">평가하기</button>';
+if (item.btn1Enabled && item.btn1Label) { var t1 = item.btn1NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--primary" href="' + (item.btn1Url || '#') + '"' + t1 + '>' + item.btn1Label + '</a>'; }
+if (item.btn2Enabled && item.btn2Label) { var t2 = item.btn2NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--secondary" href="' + (item.btn2Url || '#') + '"' + t2 + '>' + item.btn2Label + '</a>'; }
+html += '</div></div></div>'; return html;
+}
+function renderSkeleton() { var cols = prop.gridCols || 3; var count = Math.min(cols * 2, prop.maxCards || 12); var html = '<div class="ccRankSkeleton">'; for (var i = 0; i < count; i++) { html += '<div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--btn"></div></div></div>'; } html += '</div>'; return html; }
+function renderBoardMissing() { return '<div class="ccRankEmpty"><div class="ccRankEmpty__icon">&#9971;</div><div class="ccRankEmpty__title">브리지 블록을 배치해 주세요</div><p>푸터에 CC 데이터 브리지와 CC 평점 브리지 블록을 배치하면 자동으로 데이터를 읽어옵니다.</p></div>'; }
+var state = { searchQuery: '', sortBy: 'rating', regionFilter: 'all', carouselIndex: 0 };
+var ccData = [];
+function getFilteredData() { var data = ccData.slice(); if (state.searchQuery) { var q = state.searchQuery.toLowerCase(); data = data.filter(function(d) { return (d.ccName && d.ccName.toLowerCase().indexOf(q) !== -1) || (d.region && d.region.toLowerCase().indexOf(q) !== -1) || (d.tags && d.tags.toLowerCase().indexOf(q) !== -1); }); } if (state.regionFilter !== 'all') { data = data.filter(function(d) { return d.region && d.region.indexOf(state.regionFilter) !== -1; }); } if (state.sortBy === 'rating') data.sort(function(a, b) { return (b.overall || 0) - (a.overall || 0); }); else if (state.sortBy === 'name') data.sort(function(a, b) { return (a.ccName || '').localeCompare(b.ccName || ''); }); else if (state.sortBy === 'reviews') data.sort(function(a, b) { return (b.reviewCount || 0) - (a.reviewCount || 0); }); return data; }
+function getRegions() { var rs = {}; for (var i = 0; i < ccData.length; i++) { if (ccData[i].region) rs[ccData[i].region.split(' ')[0]] = true; } return Object.keys(rs).sort(); }
+/* ====== Carousel Engine ====== */
+function getVisibleCount() { var isMobile = container.offsetWidth < 768; return isMobile ? (prop.carouselVisibleMobile || 1) : (prop.carouselVisible || 3); }
+function getGap() { var isMobile = container.offsetWidth < 768; return isMobile ? (prop.gridGapMobile || 16) : (prop.gridGap || 20); }
+function getMaxIndex(totalCards) { var visible = getVisibleCount(); return Math.max(0, totalCards - visible); }
+function sizeCarouselCards() {
+var track = container.querySelector('.ccRankCarousel__track');
+if (!track) return;
+var cards = track.querySelectorAll('.ccCard');
+if (cards.length === 0) return;
+var visible = getVisibleCount();
+var gap = getGap();
+var tw = track.offsetWidth;
+if (tw <= 0) { setTimeout(sizeCarouselCards, 50); return; }
+var cardWidth = (tw - gap * (visible - 1)) / visible;
+for (var i = 0; i < cards.length; i++) {
+cards[i].style.width = cardWidth + 'px';
+cards[i].style.marginRight = (i < cards.length - 1) ? gap + 'px' : '0';
+}
+}
+function updateCarouselPosition(animate) {
+var track = container.querySelector('.ccRankCarousel__track');
+if (!track) return;
+var cards = track.querySelectorAll('.ccCard');
+if (cards.length === 0) return;
+var maxIdx = getMaxIndex(cards.length);
+if (state.carouselIndex > maxIdx) state.carouselIndex = maxIdx;
+if (state.carouselIndex < 0) state.carouselIndex = 0;
+var gap = getGap();
+var cardW = cards[0].offsetWidth;
+var offset = state.carouselIndex * (cardW + gap);
+track.style.transition = animate !== false ? 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none';
+track.style.transform = 'translateX(-' + offset + 'px)';
+/* Update nav disabled state */
+var prevBtn = container.querySelector('.ccRankCarousel__nav--prev');
+var nextBtn = container.querySelector('.ccRankCarousel__nav--next');
+if (prevBtn) { if (state.carouselIndex <= 0) prevBtn.classList.add('ccRankCarousel__nav--disabled'); else prevBtn.classList.remove('ccRankCarousel__nav--disabled'); }
+if (nextBtn) { if (state.carouselIndex >= maxIdx) nextBtn.classList.add('ccRankCarousel__nav--disabled'); else nextBtn.classList.remove('ccRankCarousel__nav--disabled'); }
+/* Update dots */
+var dots = container.querySelectorAll('.ccRankCarousel__dot');
+for (var d = 0; d < dots.length; d++) { if (d === state.carouselIndex) dots[d].classList.add('ccRankCarousel__dot--active'); else dots[d].classList.remove('ccRankCarousel__dot--active'); }
+}
+function renderAll() {
+var body = container.querySelector('.ccRankBody');
+if (!body) return;
+if (ccData.length === 0) { var doc = container.ownerDocument; var hasBridgeStore = doc.querySelectorAll('.ccBridgeStore').length > 0; if (!hasBridgeStore) { body.innerHTML = renderBoardMissing(); return; } }
+var data = getFilteredData();
+var mode = prop.displayMode || 'grid';
+var mc = prop.maxCards || 12;
+data = data.slice(0, mc);
+if (data.length === 0) { body.innerHTML = '<div class="ccRankEmpty"><div class="ccRankEmpty__icon">&#9971;</div><div class="ccRankEmpty__title">조건에 맞는 골프장이 없습니다.</div></div>'; return; }
+var ch = '';
+for (var i = 0; i < data.length; i++) ch += renderCard(data[i], i + 1);
+if (mode === 'carousel') {
+/* Build dots */
+var maxIdx = getMaxIndex(data.length);
+var dotsHtml = '<div class="ccRankCarousel__dots">';
+for (var di = 0; di <= maxIdx; di++) { dotsHtml += '<button class="ccRankCarousel__dot' + (di === 0 ? ' ccRankCarousel__dot--active' : '') + '" data-action="carousel-dot" data-index="' + di + '" aria-label="' + (di + 1) + '페이지"></button>'; }
+dotsHtml += '</div>';
+body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전">&#8249;</button><div class="ccRankCarousel__track">' + ch + '</div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음">&#8250;</button></div>' + dotsHtml;
+state.carouselIndex = 0;
+requestAnimationFrame(function() { requestAnimationFrame(function() { sizeCarouselCards(); updateCarouselPosition(false); initCarouselTouch(); }); });
+} else { body.innerHTML = '<div class="ccRankGrid">' + ch + '</div>'; }
+var rs = container.querySelector('[data-action="region"]');
+if (rs) { var regions = getRegions(); var opts = '<option value="all">전체 지역</option>'; for (var r = 0; r < regions.length; r++) { var sel = (state.regionFilter === regions[r]) ? ' selected' : ''; opts += '<option value="' + regions[r] + '"' + sel + '>' + regions[r] + '</option>'; } rs.innerHTML = opts; }
+log('Rendered', data.length, 'cards in', mode, 'mode');
+}
+/* ====== Touch Swipe ====== */
+var touchStartX = 0, touchDelta = 0, isSwiping = false;
+function initCarouselTouch() {
+var track = container.querySelector('.ccRankCarousel__track');
+if (!track) return;
+track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; touchDelta = 0; isSwiping = true; track.style.transition = 'none'; }, { passive: true });
+track.addEventListener('touchmove', function(e) { if (!isSwiping) return; touchDelta = e.touches[0].clientX - touchStartX; var gap = getGap(); var cards = track.querySelectorAll('.ccCard'); if (cards.length === 0) return; var cardW = cards[0].offsetWidth; var baseOffset = state.carouselIndex * (cardW + gap); track.style.transform = 'translateX(' + (-baseOffset + touchDelta) + 'px)'; }, { passive: true });
+track.addEventListener('touchend', function() { if (!isSwiping) return; isSwiping = false; var threshold = container.offsetWidth * 0.15; if (touchDelta < -threshold) { state.carouselIndex++; } else if (touchDelta > threshold) { state.carouselIndex--; } updateCarouselPosition(true); }, { passive: true });
+}
+/* ====== Resize handler ====== */
+var resizeTimer = null;
+function onResize() { if (resizeTimer) clearTimeout(resizeTimer); resizeTimer = setTimeout(function() { if ((prop.displayMode || 'grid') === 'carousel') { sizeCarouselCards(); updateCarouselPosition(false); } }, 150); }
+var resizeObs = null;
+try { resizeObs = new ResizeObserver(onResize); resizeObs.observe(container); } catch (e) {}
+/* ====== Data Load ====== */
+var loadRetryCount = 0, loadRetryTimer = null;
+function loadData() {
+var cacheDur = (prop.cacheDurationMin || 0) * 60 * 1000;
+if (cacheDur > 0) { try { var cached = bm.sessionStorage.getItem('cc_rating_cache'); if (cached && cached.expiry && Date.now() < cached.expiry && cached.data) { ccData = cached.data; renderAll(); return; } } catch (e) {} }
+var bridgeItems = collectBridgeData(); var allRatings = collectRatingData();
+ccData = aggregate(allRatings, bridgeItems);
+if (ccData.length === 0 && loadRetryCount < 5) { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); if (stores.length > 0) { loadRetryCount++; loadRetryTimer = setTimeout(function() { loadData(); }, 500); return; } }
+if (cacheDur > 0 && ccData.length > 0) { try { bm.sessionStorage.setItem('cc_rating_cache', { expiry: Date.now() + cacheDur, data: ccData }); } catch (e) {} }
+renderAll();
+}
+/* ====== Events ====== */
+var searchTimer = null;
+container.addEventListener('input', function(e) { if (e.target.matches('[data-action="search"]')) { if (searchTimer) clearTimeout(searchTimer); searchTimer = setTimeout(function() { state.searchQuery = e.target.value || ''; renderAll(); }, 300); } }, true);
+container.addEventListener('change', function(e) { if (e.target.matches('[data-action="sort"]')) { state.sortBy = e.target.value; renderAll(); } if (e.target.matches('[data-action="region"]')) { state.regionFilter = e.target.value; renderAll(); } }, true);
+container.addEventListener('click', function(e) {
+e.preventDefault();
+var pb = e.target.closest('[data-action="carousel-prev"]'); if (pb) { state.carouselIndex--; updateCarouselPosition(true); return; }
+var nb = e.target.closest('[data-action="carousel-next"]'); if (nb) { state.carouselIndex++; updateCarouselPosition(true); return; }
+var dot = e.target.closest('[data-action="carousel-dot"]'); if (dot) { state.carouselIndex = parseInt(dot.getAttribute('data-index'), 10) || 0; updateCarouselPosition(true); return; }
+var rb = e.target.closest('[data-action="rate"]'); if (rb) { bm.do('snackbar:open', { message: (rb.getAttribute('data-ccname') || '') + ' 평가 기능은 곧 추가됩니다!' }); return; }
+var lb = e.target.closest('a.ccCard__btn'); if (lb && lb.getAttribute('href') && lb.getAttribute('href') !== '#') { bm.do('go', lb.getAttribute('href')); }
+}, true);
+/* ====== Bridge Polling ====== */
+var lastBridgeSnapshot = '', pollTimer = null;
+function checkBridgeChanges() { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); var snapshot = ''; for (var s = 0; s < stores.length; s++) snapshot += (stores[s].textContent || '') + '|'; var ratingStores = doc.querySelectorAll('.ccRatingStore'); for (var r = 0; r < ratingStores.length; r++) snapshot += (ratingStores[r].textContent || '') + '|'; if (snapshot !== lastBridgeSnapshot && snapshot.length > 2) { lastBridgeSnapshot = snapshot; try { bm.sessionStorage.removeItem('cc_rating_cache'); } catch (e) {} loadRetryCount = 0; loadData(); } }
+/* ====== Init ====== */
+loadData();
+pollTimer = setInterval(checkBridgeChanges, 3000);
+bm.onContextChange = function() { prop = context.property; renderAll(); };
+bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
+log('CC Ranking initialized (Phase 3 + Carousel UX v2)');
+})();
+</script>

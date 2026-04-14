@@ -1,0 +1,105 @@
+<style>
+
+.ccBridgeRoot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+</style>
+
+<template>
+
+<div class="ccBridgeRoot" aria-hidden="true">
+  <textarea
+    class="ccBridgeStore"
+    data-bridge-group="{{property.bridgeGroupKey}}"
+    data-segment="{{property.segmentNo}}"
+    readonly
+    aria-hidden="true"
+  ></textarea>
+</div>
+
+</template>
+
+<script>
+
+(function () {
+  var container = bm.container;
+  var context = bm.context;
+
+  function log() {
+    if (context.property.debugLog) {
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift('[CC Bridge #' + context.property.segmentNo + ']');
+      console.log.apply(console, args);
+    }
+  }
+
+  function serializeAndInject() {
+    var ccList = context.property.ccList;
+    var groupKey = context.property.bridgeGroupKey;
+    var segmentNo = context.property.segmentNo;
+
+    if (!ccList || !Array.isArray(ccList)) {
+      log('ccList is empty or not an array');
+      return;
+    }
+
+    var validItems = [];
+    for (var i = 0; i < ccList.length; i++) {
+      var item = ccList[i];
+      if (item && item.ccId && item.ccId.trim() !== '') {
+        validItems.push({
+          ccId: (item.ccId || '').trim(),
+          ccName: item.ccName || '',
+          region: item.region || '',
+          tags: item.tags || '',
+          image: item.image || null,
+          imageRatio: item.imageRatio || '4_3',
+          btn1Enabled: !!item.btn1Enabled,
+          btn1Label: item.btn1Label || '',
+          btn1Url: item.btn1Url || '',
+          btn1NewTab: !!item.btn1NewTab,
+          btn2Enabled: !!item.btn2Enabled,
+          btn2Label: item.btn2Label || '',
+          btn2Url: item.btn2Url || '',
+          btn2NewTab: !!item.btn2NewTab,
+          isVisible: item.isVisible !== false
+        });
+      }
+    }
+
+    var payload = {
+      groupKey: groupKey || 'golpro_cc_master',
+      segmentNo: segmentNo || 1,
+      count: validItems.length,
+      items: validItems
+    };
+
+    var jsonStr = JSON.stringify(payload);
+    var store = container.querySelector('.ccBridgeStore');
+    if (store) {
+      store.textContent = jsonStr;
+      log('Serialized ' + validItems.length + ' CC items');
+    } else {
+      log('ccBridgeStore textarea not found');
+    }
+  }
+
+  serializeAndInject();
+
+  bm.onContextChange = function () {
+    serializeAndInject();
+  };
+
+  log('Bridge block initialized');
+})();
+
+</script>

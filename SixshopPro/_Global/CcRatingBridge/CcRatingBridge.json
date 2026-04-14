@@ -1,0 +1,74 @@
+{
+  "title": "GOLPRO - CC 평점 브리지 (CC Rating Bridge)",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "평점 게시판 연결",
+          "type": "TITLE"
+        },
+        {
+          "content": "이 블록은 화면에 보이지 않습니다. 평점 게시판을 선택하면 랭킹 블록이 자동으로 평점 데이터를 읽어갑니다.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "description": "회원 평점 데이터가 저장된 게시판. 문제 시 재선택.",
+          "id": "board",
+          "label": "평점 게시판",
+          "type": "BOARD"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "개발자",
+      "settings": [
+        {
+          "content": "개발자 설정",
+          "type": "TITLE"
+        },
+        {
+          "description": "개발자 옵션 노출. 문제 시 해제.",
+          "id": "developerMode",
+          "label": "개발자 옵션 보기",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "게시판 스캔 최대 페이지 수. 문제 시 5.",
+          "id": "maxScanPages",
+          "isVisible": "property.developerMode === true",
+          "label": "최대 스캔 페이지",
+          "max": 20,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "페이지"
+        },
+        {
+          "description": "콘솔 디버그 로그. 운영 시 반드시 끄세요.",
+          "id": "debugLog",
+          "isVisible": "property.developerMode === true",
+          "label": "콘솔 로그 출력",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "board": {
+      "commentStatus": "",
+      "id": null,
+      "name": "",
+      "posts": {
+        "count": 0,
+        "data": []
+      }
+    },
+    "debugLog": false,
+    "developerMode": false,
+    "maxScanPages": 5
+  }
+}

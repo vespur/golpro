@@ -1,0 +1,528 @@
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Section Wrapper ── */
+.witb-section {
+  background-color: {{property.sectionBg}};
+  padding: {{property.paddingTopD}}px {{property.paddingHD}}px {{property.paddingBottomD}}px;
+}
+
+/* ── Inner Container ── */
+.witb-inner {
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+}
+
+/* ── Section Header ── */
+.witb-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: {{property.headerMbD}}px;
+  gap: 16px;
+}
+.witb-header-left {}
+.witb-eyebrow {
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  font-size: {{property.eyebrowSize}}px;
+  color: {{property.accentColor}};
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.witb-title {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.titleSizeD}}px;
+  color: {{property.titleColor}};
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.witb-title em {
+  color: {{property.accentColor}};
+  font-style: normal;
+}
+.witb-subtitle {
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  font-size: {{property.subtitleSizeD}}px;
+  color: {{property.subtitleColor}};
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ── View All Button ── */
+.witb-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: {{property.accentColor}};
+  text-decoration: none;
+  border: 1.5px solid {{property.accentColor}};
+  border-radius: {{property.btnRadius}}px;
+  padding: 8px 16px;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.witb-view-all:hover {
+  background: {{property.accentColor}};
+  color: #fff;
+}
+.witb-view-all svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ── Tour Filter Tabs ── */
+.witb-tabs {
+  display: flex;
+  gap: {{property.tabGap}}px;
+  margin-bottom: {{property.tabMbD}}px;
+  flex-wrap: wrap;
+}
+.witb-tab {
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: {{property.tabFontSize}}px;
+  color: {{property.tabColor}};
+  background: {{property.tabBg}};
+  border: 1.5px solid {{property.tabBorderColor}};
+  border-radius: {{property.tabRadius}}px;
+  padding: {{property.tabPadV}}px {{property.tabPadH}}px;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.01em;
+}
+.witb-tab.active, .witb-tab[data-active="true"] {
+  background: {{property.tabActiveBg}};
+  color: {{property.tabActiveColor}};
+  border-color: {{property.tabActiveBorderColor}};
+}
+.witb-tab:hover:not(.active):not([data-active="true"]) {
+  border-color: {{property.accentColor}};
+  color: {{property.accentColor}};
+}
+
+/* ── Player Grid ── */
+.witb-grid {
+  display: grid;
+  grid-template-columns: repeat({{property.colsD}}, 1fr);
+  gap: {{property.gridGapD}}px;
+}
+
+/* ── Player Card ── */
+.witb-card {
+  background: {{property.cardBg}};
+  border: 1px solid {{property.cardBorder}};
+  border-radius: {{property.cardRadius}}px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(.25,.46,.45,.94), box-shadow 0.22s;
+  position: relative;
+  text-decoration: none;
+  display: block;
+}
+.witb-card:hover {
+  transform: translateY({{property.cardHoverShiftY}}px);
+  box-shadow: 0 {{property.shadowBlur}}px {{property.shadowSpread}}px {{property.shadowColor}};
+}
+
+/* ── Card Image Area ── */
+.witb-card-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: {{property.imgRatio}}%;
+  overflow: hidden;
+  background: {{property.imgPlaceholderBg}};
+}
+.witb-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.38s cubic-bezier(.25,.46,.45,.94);
+}
+.witb-card:hover .witb-card-img {
+  transform: scale({{property.imgHoverScale}});
+}
+
+/* ── Tour Badge ── */
+.witb-tour-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 4px;
+  z-index: 2;
+}
+.witb-tour-badge.pga    { background: #1a3a5c; color: #fff; }
+.witb-tour-badge.lpga   { background: #6b1a5c; color: #fff; }
+.witb-tour-badge.kpga   { background: #1a4c2a; color: #fff; }
+.witb-tour-badge.klpga  { background: #4c1a1a; color: #fff; }
+
+/* ── Gear Count Badge ── */
+.witb-gear-count {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.62);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.witb-gear-count svg { width: 10px; height: 10px; opacity: 0.8; }
+
+/* ── Image Gradient Overlay ── */
+.witb-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.18) 40%, transparent 70%);
+  z-index: 1;
+}
+
+/* ── Card Body ── */
+.witb-card-body {
+  padding: {{property.cardPadV}}px {{property.cardPadH}}px;
+  background: {{property.cardBodyBg}};
+}
+.witb-card-country {
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  font-size: 11px;
+  color: {{property.cardCountryColor}};
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.witb-card-name {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: {{property.cardNameSizeD}}px;
+  color: {{property.cardNameColor}};
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.witb-card-name-en {
+  font-family: var(--font-family-body);
+  font-weight: 400;
+  font-size: 12px;
+  color: {{property.cardNameEnColor}};
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+}
+.witb-card-divider {
+  height: 1px;
+  background: {{property.cardDividerColor}};
+  margin: 8px 0;
+}
+.witb-card-meta {
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  font-size: 12px;
+  color: {{property.cardMetaColor}};
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+/* ── CTA Arrow ── */
+.witb-card-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.witb-card-cta-label {
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  font-size: 12px;
+  color: {{property.accentColor}};
+}
+.witb-card-cta-arrow {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: {{property.accentColor}};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s;
+}
+.witb-card:hover .witb-card-cta-arrow { transform: translateX(3px); }
+.witb-card-cta-arrow svg { width: 12px; height: 12px; }
+
+/* ── Empty State ── */
+.witb-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: {{property.subtitleColor}};
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  font-size: 15px;
+}
+
+/* ── Skeleton Loading ── */
+.witb-skeleton {
+  background: linear-gradient(90deg, {{property.skeletonBase}} 25%, {{property.skeletonShine}} 50%, {{property.skeletonBase}} 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .witb-section {
+    padding: {{property.paddingTopM}}px {{property.paddingHM}}px {{property.paddingBottomM}}px;
+  }
+  .witb-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: {{property.headerMbM}}px;
+  }
+  .witb-title {
+    font-size: {{property.titleSizeM}}px;
+  }
+  .witb-subtitle {
+    font-size: {{property.subtitleSizeM}}px;
+  }
+  .witb-tabs {
+    margin-bottom: {{property.tabMbM}}px;
+    gap: 8px;
+  }
+  .witb-grid {
+    grid-template-columns: repeat({{property.colsM}}, 1fr);
+    gap: {{property.gridGapM}}px;
+  }
+  .witb-card-name {
+    font-size: {{property.cardNameSizeM}}px;
+  }
+}
+</style>
+
+<template>
+<section class="witb-section">
+  <div class="witb-inner">
+
+    <!-- Section Header -->
+    <div class="witb-header">
+      <div class="witb-header-left">
+        {{#if property.eyebrowText}}
+          <div class="witb-eyebrow">{{property.eyebrowText}}</div>
+        {{/if}}
+        <h2 class="witb-title">{{{property.sectionTitle}}}</h2>
+        {{#if property.sectionSubtitle}}
+          <p class="witb-subtitle">{{property.sectionSubtitle}}</p>
+        {{/if}}
+      </div>
+      {{#if (and property.showViewAll property.viewAllLink.value)}}
+        <a class="witb-view-all" href="{{property.viewAllLink.value}}" {{#if property.viewAllNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>
+          {{property.viewAllLabel}}
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      {{/if}}
+    </div>
+
+    <!-- Tour Filter Tabs -->
+    {{#if property.showTabs}}
+    <div class="witb-tabs" id="witb-tabs">
+      <button class="witb-tab active" data-tour="all">전체</button>
+      {{#if property.showPGA}}<button class="witb-tab" data-tour="pga">PGA</button>{{/if}}
+      {{#if property.showLPGA}}<button class="witb-tab" data-tour="lpga">LPGA</button>{{/if}}
+      {{#if property.showKPGA}}<button class="witb-tab" data-tour="kpga">KPGA</button>{{/if}}
+      {{#if property.showKLPGA}}<button class="witb-tab" data-tour="klpga">KLPGA</button>{{/if}}
+    </div>
+    {{/if}}
+
+    <!-- Player Grid -->
+    <div class="witb-grid" id="witb-grid">
+      {{#each property.players}}
+      <a class="witb-card"
+         href="{{#if linkUrl.value}}{{linkUrl.value}}{{else}}#{{/if}}"
+         data-tour="{{tourId}}"
+         aria-label="{{playerName}} 선수 장비 보기">
+
+        <!-- Image -->
+        <div class="witb-card-img-wrap">
+          {{#if playerImage}}
+            <img class="witb-card-img"
+                 src="{{playerImage}}"
+                 alt="{{playerName}}"
+                 loading="lazy"
+                 onerror="this.src='https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image1.jpg'">
+          {{else}}
+            <img class="witb-card-img"
+                 src="https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image{{add @index 1}}.jpg"
+                 alt="{{playerName}}"
+                 loading="lazy">
+          {{/if}}
+          <div class="witb-card-img-overlay"></div>
+
+          <!-- Tour Badge -->
+          {{#if tourId}}
+            <span class="witb-tour-badge {{tourId}}">{{toUpper tourId}}</span>
+          {{/if}}
+
+          <!-- Gear Count -->
+          {{#if gearCount}}
+            <div class="witb-gear-count">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 2a1 1 0 011 1v1h2a1 1 0 010 2h-.5l-.5 5H6l-.5-5H5a1 1 0 010-2h2V3a1 1 0 011-1z"/>
+              </svg>
+              {{gearCount}}개
+            </div>
+          {{/if}}
+        </div>
+
+        <!-- Card Body -->
+        <div class="witb-card-body">
+          {{#if countryFlag}}
+            <div class="witb-card-country">{{countryFlag}} {{countryName}}</div>
+          {{/if}}
+          <div class="witb-card-name">{{playerName}}</div>
+          {{#if playerNameEn}}
+            <div class="witb-card-name-en">{{playerNameEn}}</div>
+          {{/if}}
+          {{#if playerMeta}}
+            <div class="witb-card-divider"></div>
+            <div class="witb-card-meta">{{playerMeta}}</div>
+          {{/if}}
+          <div class="witb-card-cta">
+            <span class="witb-card-cta-label">장비 보기</span>
+            <span class="witb-card-cta-arrow">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6h8M7 3l3 3-3 3"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+      {{else}}
+      <div class="witb-empty">
+        등록된 선수가 없습니다.<br>설정 패널에서 선수를 추가해 주세요.
+      </div>
+      {{/each}}
+    </div>
+    <!-- /Player Grid -->
+
+  </div>
+</section>
+</template>
+
+<script>
+const container = bm.container;
+const context = bm.context;
+
+// ── Tour Filter Logic ──
+function initTabs() {
+  const tabsEl = container.querySelector('#witb-tabs');
+  if (!tabsEl) return;
+
+  const tabs = tabsEl.querySelectorAll('.witb-tab');
+  const cards = container.querySelectorAll('.witb-card[data-tour]');
+
+  function filterCards(tour) {
+    cards.forEach(card => {
+      const show = (tour === 'all') || (card.dataset.tour === tour);
+      card.style.display = show ? '' : 'none';
+    });
+    tabs.forEach(t => {
+      const isActive = t.dataset.tour === tour;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('data-active', isActive ? 'true' : 'false');
+    });
+  }
+
+  filterCards('all');
+}
+
+// ── Event Delegation ──
+container.addEventListener('click', function(e) {
+  e.stopPropagation();
+
+  // Tab click
+  const tab = e.target.closest('.witb-tab');
+  if (tab) {
+    e.preventDefault();
+    const tabsEl = container.querySelector('#witb-tabs');
+    const tabs = tabsEl ? tabsEl.querySelectorAll('.witb-tab') : [];
+    const cards = container.querySelectorAll('.witb-card[data-tour]');
+    const tour = tab.dataset.tour;
+
+    tabs.forEach(t => {
+      const isActive = t.dataset.tour === tour;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('data-active', isActive ? 'true' : 'false');
+    });
+    cards.forEach(card => {
+      card.style.display = (tour === 'all' || card.dataset.tour === tour) ? '' : 'none';
+    });
+    return;
+  }
+}, true);
+
+// ── Intersection Observer: Fade-up animation ──
+function initFadeUp() {
+  const cards = container.querySelectorAll('.witb-card');
+  if (!cards.length) return;
+
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.45s ease ' + (i * 0.06) + 's, transform 0.45s ease ' + (i * 0.06) + 's, box-shadow 0.22s';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => observer.observe(card));
+
+  bm.onDestroy = () => observer.disconnect();
+}
+
+// ── Init ──
+initTabs();
+initFadeUp();
+
+// ── Preview Sync ──
+bm.onContextChange = () => {
+  initTabs();
+  // Re-run fade for newly rendered cards
+  const cards = container.querySelectorAll('.witb-card');
+  cards.forEach(card => {
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+  });
+};
+</script>

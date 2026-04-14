@@ -1,0 +1,484 @@
+<template>
+<section
+  class="gp-feed"
+  data-tab="{{property.tabKey}}"
+  data-limit="{{property.limit}}"
+  aria-live="polite"
+>
+  <header class="gp-feed__head">
+    <div class="gp-feed__head-left">
+      {{#if property.showIcon}}
+        <span class="gp-feed__icon" aria-hidden="true">{{property.icon}}</span>
+      {{/if}}
+      <h3 class="gp-feed__title">{{property.feedTitle}}</h3>
+      {{#if (and property.showBadge property.badgeText)}}
+        <span class="gp-feed__badge">{{property.badgeText}}</span>
+      {{/if}}
+    </div>
+    {{#if (and property.moreLink property.moreLink.value)}}
+    <a class="gp-feed__more" href="{{property.moreLink.value}}">{{property.moreLinkText}}</a>
+    {{/if}}
+  </header>
+
+  <ol class="gp-feed__list">
+    {{#each property.board.posts.data}}
+      {{#unless isNotice}}
+      <li class="gp-feed__item">
+        <a class="gp-post" href="/posts/{{id}}">
+
+          {{!-- 1) 순위: JS applyRank()가 1부터 재부여 --}}
+          <span class="gp-post__rank"></span>
+
+          {{!-- 2) 썸네일: thumbnails(첨부) 우선
+               없으면 JS applyThumb()이 data-contents에서 첫 img src 추출
+               data-contents 속성에 저장 → span 안 raw HTML 삽입 금지 --}}
+          <span class="gp-post__thumb" data-contents="{{contents}}">
+            {{#each thumbnails}}{{#if @first}}
+              <img class="gp-post__thumb-img" src="{{this}}" alt="" loading="lazy" />
+            {{/if}}{{/each}}
+          </span>
+
+          {{!-- 3) 본문: 제목(+댓글수 JS 합성) + 메타 --}}
+          <span class="gp-post__body">
+            {{!-- data-title: 원본 제목, data-cmt: 댓글수
+                 JS applyTitle()이 "제목 [n]" 형태로 합쳐서 textContent에 삽입
+                 별도 span 불필요 → flex/grid 레이아웃 영향 없음 --}}
+            <strong class="gp-post__title"
+              data-title="{{title}}"
+              data-cmt="{{commentsCount}}">{{title}}</strong>
+            <span class="gp-post__meta">
+              <span class="gp-post__date" data-created="{{createdDate}}">{{createdDate}}</span>
+              {{#if ../property.showAuthor}}
+                <span class="gp-post__sep">&#183;</span>
+                <span class="gp-post__author">{{displayName}}</span>
+              {{/if}}
+            </span>
+          </span>
+
+        </a>
+      </li>
+      {{/unless}}
+    {{else}}
+    <li class="gp-feed__empty">{{property.emptyText}}</li>
+    {{/each}}
+  </ol>
+</section>
+</template>
+
+<style>
+/* 초기 숨김 - JS 없을 때 free만 보임 */
+.gp-feed[data-tab]:not([data-tab="free"]) { display: none; }
+
+/* ---- 래퍼
+   섹션을 "가득채우기"로 설정 후 블록 CSS에서 PC 너비 제어
+   데스크탑: max-width로 중앙 정렬 / 모바일: 전폭 활용 ---- */
+.gp-feed {
+  border: {{property.borderW}}px solid {{property.borderColor}};
+  border-radius: {{property.feedRadius}}px;
+  background: {{property.feedBg}};
+  overflow: hidden;
+  max-width: {{property.feedMaxWidth}}px;
+  margin: 0 auto;
+}
+
+/* ---- 헤더 ---- */
+.gp-feed__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: {{property.headPadV}}px {{property.headPadH}}px;
+  background: {{property.headBg}};
+  border-bottom: 1px solid {{property.borderColor}};
+}
+.gp-feed__head-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+.gp-feed__icon {
+  font-size: {{property.iconSize}}px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.gp-feed__title {
+  margin: 0;
+  font-size: {{property.titleSize}}px;
+  font-weight: 800;
+  color: {{property.titleColor}};
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-heading);
+}
+.gp-feed__badge {
+  flex-shrink: 0;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: {{property.accentColor}};
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+.gp-feed__more {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1.5px solid {{property.moreLinkColor}};
+  border-radius: 100px;
+  color: {{property.moreLinkColor}};
+  text-decoration: none;
+  font-size: {{property.moreLinkSize}}px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: .01em;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+  font-family: var(--font-family-body);
+}
+.gp-feed__more::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  flex-shrink: 0;
+}
+.gp-feed__more:hover {
+  background: {{property.moreLinkColor}};
+  color: #fff;
+  border-color: {{property.moreLinkColor}};
+}
+
+/* ---- 리스트: PC 2컬럼 grid — 세로 배열 (1~5 왼쪽, 6~10 오른쪽) ---- */
+.gp-feed__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column;        /* 위→아래로 먼저 채움: 1,2,3,4,5 → 왼쪽, 6,7,8,9,10 → 오른쪽 */
+}
+/* 왼쪽 컬럼(1~5번): 중앙 세로 구분선 */
+.gp-feed__item:nth-child(-n+5) {
+  border-right: 1px solid {{property.dividerColor}};
+}
+/* 모든 항목 하단 구분선 */
+.gp-feed__item {
+  border-bottom: 1px solid {{property.dividerColor}};
+}
+/* 각 컬럼 마지막 항목(5번, 10번) 하단 구분선 없음 */
+.gp-feed__item:nth-child(5),
+.gp-feed__item:nth-last-child(1) {
+  border-bottom: none;
+}
+
+/* ---- 댓글수 배지: 포인트 컬러 ---- */
+.gp-post__cmt-badge {
+  font-weight: 700;
+  color: {{property.accentColor}};
+  font-family: var(--font-family-body);
+}
+/* ---- 게시글 행: rank / thumb / body ---- */
+.gp-post {
+  display: grid;
+  grid-template-columns: {{property.rankW}}px {{property.thumbW}}px minmax(0, 1fr);
+  gap: {{property.rowGap}}px;
+  align-items: center;
+  padding: {{property.rowPadV}}px {{property.rowPadH}}px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 100ms ease;
+}
+.gp-post:hover { background: {{property.itemHoverBg}}; }
+
+/* ---- 순위 번호: 가운데 정렬 ---- */
+.gp-post__rank {
+  font-size: {{property.rankSize}}px;
+  font-style: italic;
+  font-weight: 200;
+  line-height: 1;
+  color: {{property.rankColor}};
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-family-heading);
+  letter-spacing: -.03em;
+}
+
+/* ---- 썸네일 ---- */
+.gp-post__thumb {
+  width: {{property.thumbW}}px;
+  height: {{property.thumbH}}px;
+  border-radius: {{property.thumbRadius}}px;
+  overflow: hidden;
+  background: {{property.thumbBg}};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.gp-post__thumb img,
+.gp-post__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+/* ---- 본문: 제목 + 메타 ---- */
+.gp-post__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: {{property.bodyGap}}px;
+}
+.gp-post__title {
+  display: block;
+  font-size: {{property.itemTitleSize}}px;
+  font-weight: 700;
+  color: {{property.itemColor}};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+  font-family: var(--font-family-body);
+}
+.gp-post__meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: {{property.metaSize}}px;
+  color: {{property.metaColor}};
+  font-family: var(--font-family-body);
+}
+.gp-post__sep { color: {{property.sepColor}}; }
+.gp-post__author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+/* ---- 빈 상태 ---- */
+.gp-feed__empty {
+  padding: {{property.emptyPadV}}px {{property.rowPadH}}px;
+  color: {{property.metaColor}};
+  font-size: {{property.metaSize}}px;
+  text-align: center;
+  font-family: var(--font-family-body);
+  grid-column: 1 / -1;
+}
+
+/* ---- 모바일: 1컬럼 복원 + 썸네일 우측 배치 + 전폭 활용 ---- */
+@media (max-width: 768px) {
+  /* 모바일 전폭: max-width 해제, border/radius 제거로 화면 끝까지 활용 */
+  .gp-feed {
+    max-width: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+  .gp-feed__list {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;      /* PC row 제한 해제 */
+    grid-auto-flow: row;           /* 모바일은 행 방향으로 복원 */
+  }
+  /* 모바일 구분선 초기화 */
+  .gp-feed__item {
+    border-right: none;
+    border-bottom: none;
+    border-top: 1px solid {{property.dividerColor}};
+  }
+  .gp-feed__item:nth-child(-n+5) { border-right: none; }
+  .gp-feed__item:nth-child(5)    { border-bottom: none; }
+  .gp-feed__item:first-child     { border-top: none; }
+  .gp-feed__head {
+    padding: {{property.headPadVMobile}}px {{property.headPadHMobile}}px;
+  }
+  /* 모바일: rank / body(1fr) / thumb — 썸네일 우측
+     rankW를 넉넉히 확보해 번호-제목 사이 시각적 여백 보장 */
+  .gp-post {
+    grid-template-columns: {{property.rankWMobile}}px minmax(0, 1fr) {{property.thumbWMobile}}px;
+    gap: {{property.rowGapMobile}}px;
+    padding: {{property.rowPadVMobile}}px {{property.rowPadHMobile}}px;
+  }
+  .gp-post__thumb { grid-column: 3; grid-row: 1; width: {{property.thumbWMobile}}px; height: {{property.thumbHMobile}}px; }
+  .gp-post__body  { grid-column: 2; grid-row: 1; }
+  .gp-post__rank  { font-size: {{property.rankSizeMobile}}px; grid-column: 1; grid-row: 1; }
+  .gp-post__title { font-size: {{property.itemTitleSizeMobile}}px; }
+  .gp-post__meta  { font-size: {{property.metaSizeMobile}}px; }
+  .gp-feed__title { font-size: {{property.titleSizeMobile}}px; }
+}
+</style>
+
+<script>
+(function () {
+  var container = bm.container;
+  var context   = bm.context;
+  var doc       = container.ownerDocument;
+
+  var EVT     = 'gp:tabChange';
+  var myTab   = '';
+  var myLimit = 0;
+
+  function p(key, fb) {
+    var v = context.property[key];
+    return (v !== undefined && v !== null && v !== '') ? v : fb;
+  }
+
+  function readConfig() {
+    myTab   = String(p('tabKey', '')).trim();
+    myLimit = parseInt(p('limit', 0), 10);
+    if (!isFinite(myLimit) || myLimit < 0) myLimit = 0;
+  }
+
+  /* ---- 상대 시간 포맷 ---- */
+  function relTime(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    var diff = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (diff < 60)     return '방금 전';
+    if (diff < 3600)   return Math.floor(diff / 60) + '분 전';
+    if (diff < 86400)  return Math.floor(diff / 3600) + '시간 전';
+    if (diff < 604800) return Math.floor(diff / 86400) + '일 전';
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var dd = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '.' + mm + '.' + dd;
+  }
+
+  /* ---- 날짜 DOM 치환 ---- */
+  function applyDates() {
+    var els = container.querySelectorAll('.gp-post__date[data-created]');
+    for (var i = 0; i < els.length; i++) {
+      var raw = els[i].getAttribute('data-created') || '';
+      if (raw) els[i].textContent = relTime(raw);
+    }
+  }
+
+  /* ---- 본문 이미지 fallback 썸네일 ----
+     span.gp-post__thumb의 data-contents 속성에 본문 HTML이 저장됨
+     DOM 삽입 없이 정규식으로 첫 <img src> 추출
+     → DOM 구조 파괴 없음
+  ---- */
+  function applyThumb() {
+    var thumbs = container.querySelectorAll('.gp-post__thumb[data-contents]');
+    for (var i = 0; i < thumbs.length; i++) {
+      var thumb = thumbs[i];
+      if (thumb.querySelector('img')) continue; /* 이미 thumbnails img 있음 */
+
+      var html = thumb.getAttribute('data-contents') || '';
+      if (!html) continue;
+
+      /* 정규식으로 첫 img src 추출 (DOM 파싱 없이) */
+      var match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (!match || !match[1]) continue;
+
+      var img      = doc.createElement('img');
+      img.className = 'gp-post__thumb-img';
+      img.src       = match[1];
+      img.alt       = '';
+      img.loading   = 'lazy';
+      thumb.appendChild(img);
+    }
+  }
+
+  /* ---- 제목 + 댓글수 합성 ----
+     title: textContent로 안전하게 설정 (XSS 방지)
+     [n]: span.gp-post__cmt-badge를 createElement로 추가 → accentColor 적용
+  ---- */
+  function applyTitle() {
+    var titles = container.querySelectorAll('.gp-post__title[data-title]');
+    for (var i = 0; i < titles.length; i++) {
+      var el       = titles[i];
+      var rawTitle = el.getAttribute('data-title') || '';
+      var n        = parseInt(el.getAttribute('data-cmt') || '0', 10);
+
+      /* 기존 내용 초기화 */
+      el.textContent = rawTitle;
+
+      /* 댓글수 있으면 색상 span 추가 */
+      if (n > 0) {
+        var badge = doc.createElement('span');
+        badge.className   = 'gp-post__cmt-badge';
+        badge.textContent = ' [' + n + ']';
+        el.appendChild(badge);
+      }
+    }
+  }
+
+  /* ---- limit 초과 숨김 ---- */
+  function applyLimit() {
+    if (myLimit <= 0) return;
+    var items = container.querySelectorAll('.gp-feed__item');
+    var shown = 0;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].style.display === 'none') continue;
+      shown++;
+      if (shown > myLimit) items[i].style.display = 'none';
+    }
+  }
+
+  /* ---- 순위 재부여 (공지 제외 후 1부터) ---- */
+  function applyRank() {
+    var items = container.querySelectorAll('.gp-feed__item');
+    var num = 1;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].style.display === 'none') continue;
+      var rankEl = items[i].querySelector('.gp-post__rank');
+      if (rankEl) rankEl.textContent = num;
+      num++;
+    }
+  }
+
+  /* ---- 전체 적용 ---- */
+  function applyAll() {
+    applyThumb();
+    applyDates();
+    applyTitle();
+    applyLimit();
+    applyRank();
+  }
+
+  function show() {
+    var feed = container.querySelector('.gp-feed');
+    if (feed) { feed.style.display = 'block'; applyAll(); }
+  }
+  function hide() {
+    var feed = container.querySelector('.gp-feed');
+    if (feed) feed.style.display = 'none';
+  }
+
+  /* ---- Hero gp:tabChange 수신 ---- */
+  function onTabChange(e) {
+    if (!e || !e.detail) return;
+    var tab = String(e.detail.tab || '').trim();
+    if (tab === myTab) { show(); } else { hide(); }
+  }
+
+  function init() {
+    readConfig();
+    applyAll();
+    doc.addEventListener(EVT, onTabChange);
+
+    bm.onContextChange = function () {
+      readConfig();
+      applyAll();
+    };
+    bm.onDestroy = function () {
+      doc.removeEventListener(EVT, onTabChange);
+    };
+  }
+
+  init();
+})();
+</script>

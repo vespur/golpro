@@ -1,0 +1,910 @@
+{
+  "title": "GOLPRO - WITB 선수 상세 페이지 (Player Detail)",
+  "status": "active",
+  "settings": [
+    {
+      "content": "선수 정보",
+      "settings": [
+        {
+          "content": "선수 프로필 히어로",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 히어로 섹션 배경 이미지를 변경합니다.\n선수의 전신 또는 스윙 사진을 사용하세요.\n문제가 생기면 이미지를 재업로드하세요.",
+          "id": "heroImage",
+          "label": "선수 대표 사진 (배경)",
+          "type": "IMAGE_PICKER"
+        },
+        {
+          "description": "이 값은 히어로 투어 뱃지와 색상을 변경합니다.\n문제가 생기면 pga로 되돌리세요.",
+          "id": "tourId",
+          "label": "소속 투어",
+          "options": [
+            {
+              "label": "PGA",
+              "value": "pga"
+            },
+            {
+              "label": "LPGA",
+              "value": "lpga"
+            },
+            {
+              "label": "KPGA",
+              "value": "kpga"
+            },
+            {
+              "label": "KLPGA",
+              "value": "klpga"
+            }
+          ],
+          "type": "RADIO"
+        },
+        {
+          "description": "이 값은 히어로에 표시되는 한글 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "playerName",
+          "label": "선수 이름 (한글)",
+          "placeholder": "예: 타이거 우즈",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 한글 이름 아래 영문 이름을 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "playerNameEn",
+          "label": "선수 이름 (영문, 선택)",
+          "placeholder": "예: Tiger Woods",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 히어로 우측 국기를 변경합니다. 이모지 국기를 붙여넣으세요.\n문제가 생기면 비워두세요.",
+          "id": "countryFlag",
+          "label": "국기 이모지 (선택)",
+          "placeholder": "예: 🇺🇸",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 국기 아래 국적 텍스트를 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "countryName",
+          "label": "국적 텍스트 (선택)",
+          "placeholder": "예: 미국",
+          "type": "TEXT"
+        },
+        {
+          "content": "선수 스탯",
+          "type": "TITLE"
+        },
+        {
+          "content": "히어로 하단에 표시되는 선수 주요 통계입니다. 비워두면 해당 항목이 숨겨집니다.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "description": "이 값은 세계 랭킹 수치를 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "statRanking",
+          "label": "세계 랭킹",
+          "placeholder": "예: 4",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 통산 우승 횟수를 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "statWins",
+          "label": "통산 우승 횟수",
+          "placeholder": "예: 82",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 최근 성적 또는 시즌 정보를 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "statSeason",
+          "label": "최근 성적/시즌 정보",
+          "placeholder": "예: 2025 시즌 활약 중",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 네 번째 스탯 항목의 제목을 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "statExtraLabel",
+          "label": "추가 스탯 레이블 (선택)",
+          "placeholder": "예: 메이저",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 네 번째 스탯 항목의 수치를 변경합니다.\n문제가 생기면 비워두세요.",
+          "id": "statExtra",
+          "label": "추가 스탯 값 (선택)",
+          "placeholder": "예: 15승",
+          "type": "TEXT"
+        },
+        {
+          "content": "버튼",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 모든 장비 카드의 구매 버튼 레이블을 변경합니다.\n문제가 생기면 '최저가 보기'로 되돌리세요.",
+          "id": "buyBtnLabel",
+          "label": "구매 버튼 텍스트",
+          "placeholder": "예: 최저가 보기",
+          "type": "TEXT"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "현재 장비",
+      "settings": [
+        {
+          "content": "현재 사용 장비 (Current Gear)",
+          "type": "TITLE"
+        },
+        {
+          "content": "현재 선수가 사용 중인 장비를 등록합니다. 최대 100개. 드라이버 → 우드 → 아이언 → 웨지 → 퍼터 → 볼 순서로 입력을 권장합니다.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "description": "이 값은 현재 사용 장비 카드 목록을 변경합니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "currentGear",
+          "label": "현재 장비 목록",
+          "maxCount": 100,
+          "settings": [
+            {
+              "content": "장비 기본 정보",
+              "type": "TITLE"
+            },
+            {
+              "description": "이 값은 카드 상단 카테고리 뱃지를 변경합니다.\n문제가 생기면 해당 카테고리로 되돌리세요.",
+              "id": "category",
+              "label": "장비 카테고리",
+              "options": [
+                {
+                  "label": "드라이버",
+                  "value": "드라이버"
+                },
+                {
+                  "label": "우드",
+                  "value": "우드"
+                },
+                {
+                  "label": "하이브리드",
+                  "value": "하이브리드"
+                },
+                {
+                  "label": "아이언",
+                  "value": "아이언"
+                },
+                {
+                  "label": "웨지",
+                  "value": "웨지"
+                },
+                {
+                  "label": "퍼터",
+                  "value": "퍼터"
+                }
+              ],
+              "type": "RADIO"
+            },
+            {
+              "description": "이 값은 카드 상단 카테고리 뱃지 텍스트를 변경합니다.\n문제가 생기면 해당 카테고리로 되돌리세요.",
+              "id": "category",
+              "label": "장비 카테고리 (상세)",
+              "options": [
+                {
+                  "label": "드라이버",
+                  "value": "드라이버"
+                },
+                {
+                  "label": "3번 우드",
+                  "value": "3번 우드"
+                },
+                {
+                  "label": "5번 우드",
+                  "value": "5번 우드"
+                },
+                {
+                  "label": "하이브리드",
+                  "value": "하이브리드"
+                },
+                {
+                  "label": "아이언",
+                  "value": "아이언"
+                },
+                {
+                  "label": "웨지 (PW)",
+                  "value": "웨지 (PW)"
+                },
+                {
+                  "label": "웨지 (AW)",
+                  "value": "웨지 (AW)"
+                },
+                {
+                  "label": "웨지 (SW)",
+                  "value": "웨지 (SW)"
+                },
+                {
+                  "label": "웨지 (LW)",
+                  "value": "웨지 (LW)"
+                },
+                {
+                  "label": "웨지",
+                  "value": "웨지"
+                },
+                {
+                  "label": "퍼터",
+                  "value": "퍼터"
+                },
+                {
+                  "label": "볼",
+                  "value": "볼"
+                },
+                {
+                  "label": "장갑",
+                  "value": "장갑"
+                },
+                {
+                  "label": "슈즈",
+                  "value": "슈즈"
+                },
+                {
+                  "label": "백",
+                  "value": "백"
+                }
+              ],
+              "type": "SELECT"
+            },
+            {
+              "description": "이 값은 장비 카드 이미지를 변경합니다.\n흰 배경의 제품 이미지 사용을 권장합니다.\n문제가 생기면 이미지를 재업로드하세요.",
+              "id": "gearImage",
+              "label": "장비 이미지",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 브랜드 레이블을 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "brand",
+              "label": "브랜드명",
+              "placeholder": "예: TaylorMade",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드에 표시되는 장비 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "gearName",
+              "label": "장비명 / 모델명",
+              "placeholder": "예: Qi10 LS",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드 하단 스펙 정보를 변경합니다.\n문제가 생기면 비워두세요.\n엔터로 줄바꿈이 가능해요.",
+              "id": "spec",
+              "label": "스펙 / 세부 정보 (선택)",
+              "placeholder": "예: 9.0° / Mitsubishi Kai'li White 60 TX",
+              "type": "TEXTAREA"
+            },
+            {
+              "content": "구매 링크",
+              "type": "TITLE"
+            },
+            {
+              "description": "이 값은 '최저가 보기' 버튼의 링크를 변경합니다.\n비워두면 버튼이 숨겨집니다.\n문제가 생기면 링크를 초기화하세요.",
+              "id": "buyLink",
+              "label": "최저가/구매 링크",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "과거 장비",
+      "settings": [
+        {
+          "content": "과거 장비 아카이브 (Archive)",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 과거 사용 장비 아카이브 섹션 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showArchive",
+          "label": "과거 장비 섹션 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "현재 사용 중이 아닌 과거 장비를 연도별로 기록합니다. 이 기록이 쌓이면 데이터 자산이 됩니다. 최대 100개.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "description": "이 값은 과거 장비 아카이브 목록을 변경합니다.\n문제가 생기면 항목을 삭제하세요.",
+          "id": "archiveGear",
+          "label": "과거 장비 목록",
+          "maxCount": 100,
+          "settings": [
+            {
+              "description": "이 값은 장비 사용 연도를 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "usedYear",
+              "label": "사용 연도",
+              "placeholder": "예: 2023",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 과거 장비 카테고리를 변경합니다.\n문제가 생기면 해당 카테고리로 되돌리세요.",
+              "id": "category",
+              "label": "장비 카테고리",
+              "options": [
+                {
+                  "label": "드라이버",
+                  "value": "드라이버"
+                },
+                {
+                  "label": "3번 우드",
+                  "value": "3번 우드"
+                },
+                {
+                  "label": "5번 우드",
+                  "value": "5번 우드"
+                },
+                {
+                  "label": "하이브리드",
+                  "value": "하이브리드"
+                },
+                {
+                  "label": "아이언",
+                  "value": "아이언"
+                },
+                {
+                  "label": "웨지",
+                  "value": "웨지"
+                },
+                {
+                  "label": "퍼터",
+                  "value": "퍼터"
+                },
+                {
+                  "label": "볼",
+                  "value": "볼"
+                },
+                {
+                  "label": "기타",
+                  "value": "기타"
+                }
+              ],
+              "type": "SELECT"
+            },
+            {
+              "description": "이 값은 과거 장비 썸네일 이미지를 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "gearImage",
+              "label": "장비 이미지 (선택)",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 브랜드명을 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "brand",
+              "label": "브랜드명",
+              "placeholder": "예: TaylorMade",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 과거 장비 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "gearName",
+              "label": "장비명 / 모델명",
+              "placeholder": "예: SIM2",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 과거 장비 스펙 정보를 변경합니다.\n문제가 생기면 비워두세요.\n엔터로 줄바꿈이 가능해요.",
+              "id": "spec",
+              "label": "스펙 (선택)",
+              "placeholder": "예: 9.0° / Fujikura Ventus TR Black",
+              "type": "TEXTAREA"
+            },
+            {
+              "description": "이 값은 과거 장비 구매 링크를 변경합니다.\n비워두면 버튼이 숨겨집니다.\n문제가 생기면 초기화하세요.",
+              "id": "buyLink",
+              "label": "최저가/구매 링크 (선택)",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "고급 옵션 활성화",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 디자인 고급 설정 항목 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "developerMode",
+          "label": "디자인 고급 옵션 보기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "색상",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 뱃지, 버튼, 강조 요소의 포인트 컬러를 변경합니다.\n권장값: #22C55E (GOLPRO 딥그린)\n문제가 생기면 #22C55E로 되돌리세요.",
+          "id": "accentColor",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 컬러 (Accent)",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 전체 섹션 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "sectionBg",
+          "isVisible": "property.developerMode === true",
+          "label": "섹션 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 히어로 이미지 로딩 전 배경색을 변경합니다.\n권장값: #0a0c11\n문제가 생기면 #0a0c11로 되돌리세요.",
+          "id": "heroBg",
+          "isVisible": "property.developerMode === true",
+          "label": "히어로 배경색 (이미지 없을 때)",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "히어로 섹션",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑 히어로 섹션의 최소 높이를 변경합니다.\n권장값: 420\n문제가 생기면 420으로 되돌리세요.",
+          "id": "heroHeightD",
+          "isVisible": "property.developerMode === true",
+          "label": "히어로 최소 높이 데스크탑 (px)",
+          "max": 700,
+          "min": 240,
+          "step": 10,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 히어로 섹션의 최소 높이를 변경합니다.\n권장값: 300\n문제가 생기면 300으로 되돌리세요.",
+          "id": "heroHeightM",
+          "isVisible": "property.developerMode === true",
+          "label": "히어로 최소 높이 모바일 (px)",
+          "max": 500,
+          "min": 180,
+          "step": 10,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 히어로 카드의 모서리 반경을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "heroRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "히어로 모서리 둥글기 (px)",
+          "max": 32,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 데스크탑 히어로 선수 이름 크기를 변경합니다.\n권장값: 48\n문제가 생기면 48로 되돌리세요.",
+          "id": "heroNameSizeD",
+          "isVisible": "property.developerMode === true",
+          "label": "선수 이름 크기 데스크탑 (px)",
+          "max": 80,
+          "min": 28,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 히어로 선수 이름 크기를 변경합니다.\n권장값: 32\n문제가 생기면 32로 되돌리세요.",
+          "id": "heroNameSizeM",
+          "isVisible": "property.developerMode === true",
+          "label": "선수 이름 크기 모바일 (px)",
+          "max": 56,
+          "min": 20,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "현재 장비 카드",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑에서 현재 장비 카드 열 수를 변경합니다.\n권장값: 4\n문제가 생기면 4로 되돌리세요.",
+          "id": "gearColsD",
+          "label": "데스크탑 열 수",
+          "max": 6,
+          "min": 2,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "이 값은 모바일에서 현재 장비 카드 열 수를 변경합니다.\n권장값: 2\n문제가 생기면 2로 되돌리세요.",
+          "id": "gearColsM",
+          "label": "모바일 열 수",
+          "max": 3,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "이 값은 데스크탑 현재 장비 카드 간격을 변경합니다.\n권장값: 20\n문제가 생기면 20으로 되돌리세요.",
+          "id": "gearGapD",
+          "label": "카드 간격 데스크탑 (px)",
+          "max": 48,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 현재 장비 카드 간격을 변경합니다.\n권장값: 12\n문제가 생기면 12로 되돌리세요.",
+          "id": "gearGapM",
+          "label": "카드 간격 모바일 (px)",
+          "max": 32,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 장비 카드 이미지 영역의 세로 비율을 변경합니다.\n권장값: 80 (가로형)\n문제가 생기면 80으로 되돌리세요.",
+          "id": "gearImgRatio",
+          "isVisible": "property.developerMode === true",
+          "label": "장비 이미지 비율 (%)",
+          "max": 140,
+          "min": 60,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "%"
+        },
+        {
+          "description": "이 값은 현재 장비 카드 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "gearCardBg",
+          "isVisible": "property.developerMode === true",
+          "label": "장비 카드 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 현재 장비 카드 테두리 색상을 변경합니다.\n권장값: #EBEBEB\n문제가 생기면 #EBEBEB로 되돌리세요.",
+          "id": "gearCardBorder",
+          "isVisible": "property.developerMode === true",
+          "label": "장비 카드 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 현재 장비 카드 모서리 반경을 변경합니다.\n권장값: 12\n문제가 생기면 12로 되돌리세요.",
+          "id": "gearCardRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "장비 카드 모서리 둥글기 (px)",
+          "max": 24,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 구매 버튼의 기본 배경색을 변경합니다.\n권장값: #F4F4F4\n문제가 생기면 #F4F4F4로 되돌리세요.",
+          "id": "gearBtnBg",
+          "isVisible": "property.developerMode === true",
+          "label": "구매 버튼 기본 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 구매 버튼의 모서리 반경을 변경합니다.\n권장값: 8\n문제가 생기면 8로 되돌리세요.",
+          "id": "gearBtnRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "구매 버튼 모서리 (px)",
+          "max": 100,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "과거 장비 아카이브",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 과거 장비 목록 아이템의 배경색을 변경합니다.\n권장값: #FAFAFA\n문제가 생기면 #FAFAFA로 되돌리세요.",
+          "id": "archiveBg",
+          "isVisible": "property.developerMode === true",
+          "label": "아카이브 아이템 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 과거 장비 아이템 테두리 색상을 변경합니다.\n권장값: #EBEBEB\n문제가 생기면 #EBEBEB로 되돌리세요.",
+          "id": "archiveBorder",
+          "isVisible": "property.developerMode === true",
+          "label": "아카이브 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 과거 장비 아이템 호버 시 배경색을 변경합니다.\n권장값: #F0FFF4\n문제가 생기면 #F0FFF4로 되돌리세요.",
+          "id": "archiveHoverBg",
+          "isVisible": "property.developerMode === true",
+          "label": "아카이브 호버 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 과거 장비 아이템 모서리 반경을 변경합니다.\n권장값: 10\n문제가 생기면 10으로 되돌리세요.",
+          "id": "archiveRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "아카이브 모서리 둥글기 (px)",
+          "max": 20,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "간격 (데스크탑)",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 콘텐츠 최대 가로 너비를 변경합니다.\n권장값: 1400\n문제가 생기면 1400으로 되돌리세요.",
+          "id": "maxWidth",
+          "label": "최대 너비 (px)",
+          "max": 1920,
+          "min": 800,
+          "step": 20,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 상단 여백을 변경합니다.\n권장값: 80\n문제가 생기면 80으로 되돌리세요.",
+          "id": "paddingTopD",
+          "label": "상단 여백 데스크탑 (px)",
+          "max": 160,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 하단 여백을 변경합니다.\n권장값: 80\n문제가 생기면 80으로 되돌리세요.",
+          "id": "paddingBottomD",
+          "label": "하단 여백 데스크탑 (px)",
+          "max": 160,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 좌우 여백을 변경합니다.\n권장값: 40\n문제가 생기면 40으로 되돌리세요.",
+          "id": "paddingHD",
+          "label": "좌우 여백 데스크탑 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "간격 (모바일)",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 모바일 섹션 상단 여백을 변경합니다.\n권장값: 48\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingTopM",
+          "label": "상단 여백 모바일 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 하단 여백을 변경합니다.\n권장값: 48\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingBottomM",
+          "label": "하단 여백 모바일 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 좌우 여백을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "paddingHM",
+          "label": "좌우 여백 모바일 (px)",
+          "max": 60,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#22C55E",
+    "archiveBg": "#FAFAFA",
+    "archiveBorder": "#EBEBEB",
+    "archiveDotColor": "#D4D4D4",
+    "archiveGapD": 10,
+    "archiveGear": [
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "드라이버",
+        "gearImage": "",
+        "gearName": "Stealth Plus+",
+        "spec": "9.0° / Fujikura Ventus TR Black 6X",
+        "usedYear": "2022"
+      },
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "드라이버",
+        "gearImage": "",
+        "gearName": "SIM2",
+        "spec": "9.0° / Mitsubishi Diamana D+ White 60 TX",
+        "usedYear": "2021"
+      }
+    ],
+    "archiveHoverBg": "#F0FFF4",
+    "archiveImgSize": 64,
+    "archiveImgSizeM": 52,
+    "archiveItemGapH": 16,
+    "archiveNameSize": 14,
+    "archiveNameSizeM": 13,
+    "archivePadH": 16,
+    "archivePadV": 14,
+    "archiveRadius": 10,
+    "buyBtnLabel": "최저가 보기",
+    "countryFlag": "🇺🇸",
+    "countryName": "미국",
+    "currentGear": [
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "드라이버",
+        "gearImage": "",
+        "gearName": "Qi10 LS",
+        "spec": "9.0° / Mitsubishi Kai'li White 60 TX"
+      },
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "3번 우드",
+        "gearImage": "",
+        "gearName": "Qi10 LS",
+        "spec": "15° / Mitsubishi Kai'li White 80 TX"
+      },
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "아이언",
+        "gearImage": "",
+        "gearName": "P7TW",
+        "spec": "3-PW / True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "웨지",
+        "gearImage": "",
+        "gearName": "MG4",
+        "spec": "56° / 60° / True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "brand": "TaylorMade",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "퍼터",
+        "gearImage": "",
+        "gearName": "Spider Tour X",
+        "spec": "블레이드형 / 34인치"
+      },
+      {
+        "brand": "Bridgestone",
+        "buyLink": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "category": "볼",
+        "gearImage": "",
+        "gearName": "Tour B XS Tiger Woods Edition",
+        "spec": "슬레이트 그레이"
+      }
+    ],
+    "currentGearMbD": 64,
+    "currentGearMbM": 40,
+    "developerMode": false,
+    "dividerColor": "#F0F0F0",
+    "gearBodyPadH": 14,
+    "gearBodyPadV": 14,
+    "gearBtnBg": "#F4F4F4",
+    "gearBtnBorderColor": "#E0E0E0",
+    "gearBtnColor": "#111111",
+    "gearBtnRadius": 8,
+    "gearCardBg": "#FFFFFF",
+    "gearCardBorder": "#EBEBEB",
+    "gearCardRadius": 12,
+    "gearColsD": 4,
+    "gearColsM": 2,
+    "gearGapD": 20,
+    "gearGapM": 12,
+    "gearImgBg": "#F8F8F8",
+    "gearImgRatio": 80,
+    "gearMbD": 24,
+    "gearMbM": 16,
+    "gearNameColor": "#111111",
+    "gearNameSizeD": 15,
+    "gearNameSizeM": 13,
+    "gearShadowColor": "#00000018",
+    "gearSpecColor": "#767676",
+    "heroBg": "#0a0c11",
+    "heroHeightD": 420,
+    "heroHeightM": 300,
+    "heroImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image1.jpg",
+    "heroMbD": 56,
+    "heroMbM": 36,
+    "heroNameEnSizeD": 18,
+    "heroNameEnSizeM": 14,
+    "heroNameSizeD": 48,
+    "heroNameSizeM": 32,
+    "heroPadD": 40,
+    "heroPadM": 20,
+    "heroRadius": 16,
+    "maxWidth": 1400,
+    "paddingBottomD": 80,
+    "paddingBottomM": 48,
+    "paddingHD": 40,
+    "paddingHM": 16,
+    "paddingTopD": 80,
+    "paddingTopM": 48,
+    "playerName": "타이거 우즈",
+    "playerNameEn": "Tiger Woods",
+    "sectionBg": "#FFFFFF",
+    "sectionHeaderMbD": 16,
+    "sectionHeaderMbM": 12,
+    "sectionTitleColor": "#111111",
+    "sectionTitleSizeD": 22,
+    "sectionTitleSizeM": 18,
+    "showArchive": true,
+    "statExtra": "15승",
+    "statExtraLabel": "메이저",
+    "statRanking": "4",
+    "statSeason": "2024 복귀",
+    "statWins": "82",
+    "subtitleColor": "#A0A0A0",
+    "tourId": "pga"
+  }
+}

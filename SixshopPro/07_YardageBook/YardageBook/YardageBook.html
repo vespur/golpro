@@ -1,0 +1,630 @@
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.yb-section {
+  background: {{property.sectionBg}};
+  padding: {{property.paddingTopD}}px {{property.paddingHD}}px {{property.paddingBottomD}}px;
+}
+.yb-inner { max-width: {{property.maxWidth}}px; margin: 0 auto; }
+
+/* ── Header ── */
+.yb-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 28px; gap: 16px;
+}
+.yb-eyebrow {
+  font-family: var(--font-family-body); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: {{property.accentColor}};
+  margin-bottom: 8px;
+}
+.yb-title {
+  font-family: var(--font-family-heading); font-weight: var(--font-weight-heading);
+  font-size: {{property.titleSizeD}}px; color: {{property.titleColor}};
+  letter-spacing: -0.02em; line-height: 1.15;
+}
+.yb-title em { color: {{property.accentColor}}; font-style: normal; }
+.yb-cc-box { text-align: right; flex-shrink: 0; }
+.yb-cc-name { font-family: var(--font-family-heading); font-weight: var(--font-weight-heading); font-size: 16px; color: {{property.titleColor}}; }
+.yb-cc-meta { font-family: var(--font-family-body); font-size: 12px; color: {{property.subtitleColor}}; margin-top: 3px; }
+
+/* ── Nav Panel ── */
+.yb-nav-panel {
+  background: {{property.cardBg}};
+  border: 1px solid {{property.borderColor}};
+  border-radius: {{property.radius}}px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+
+/* Hole pill grid */
+.yb-pill-label {
+  font-family: var(--font-family-body); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: {{property.subtitleColor}};
+  margin-bottom: 12px;
+}
+.yb-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.yb-pill {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-family-heading); font-weight: var(--font-weight-heading);
+  font-size: 13px;
+  border: 1.5px solid {{property.borderColor}};
+  background: transparent; color: {{property.subtitleColor}};
+  cursor: pointer; transition: all 0.16s; flex-shrink: 0;
+}
+.yb-pill.active {
+  background: {{property.titleColor}}; color: #fff;
+  border-color: {{property.titleColor}}; transform: scale(1.08);
+}
+.yb-pill:hover:not(.active) { border-color: {{property.accentColor}}; color: {{property.accentColor}}; }
+
+/* ── Main Viewer ── */
+.yb-viewer {
+  display: grid;
+  grid-template-columns: 1fr {{property.infoPanelW}}px;
+  gap: {{property.viewerGap}}px;
+  align-items: start;
+}
+
+/* ── Image Panel ── */
+.yb-img-panel {
+  background: {{property.cardBg}}; border: 1px solid {{property.borderColor}};
+  border-radius: {{property.radius}}px; overflow: hidden;
+}
+.yb-img-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid {{property.borderColor}};
+}
+.yb-hnum {
+  font-family: var(--font-family-heading); font-weight: var(--font-weight-heading);
+  font-size: 28px; color: {{property.titleColor}}; letter-spacing: -0.02em; line-height: 1;
+}
+.yb-hnum small {
+  font-size: 13px; font-weight: 400; color: {{property.subtitleColor}}; margin-left: 4px;
+}
+.yb-par-row { display: flex; gap: 20px; }
+.yb-stat { display: flex; flex-direction: column; align-items: center; }
+.yb-stat-lbl {
+  font-family: var(--font-family-body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: {{property.subtitleColor}}; margin-bottom: 2px;
+}
+.yb-stat-val {
+  font-family: var(--font-family-heading); font-weight: var(--font-weight-heading);
+  font-size: 22px; line-height: 1; color: {{property.accentColor}};
+}
+.yb-stat-val.p3 { color: #3B82F6; }
+.yb-stat-val.p5 { color: #F59E0B; }
+.yb-stat-val.hdcp { color: {{property.subtitleColor}}; font-size: 18px; }
+
+/* Course image */
+.yb-main-img-wrap {
+  position: relative; width: 100%; padding-top: {{property.imgRatio}}%;
+  background: {{property.imgPlaceholderBg}}; overflow: hidden;
+}
+.yb-main-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transition: opacity 0.3s ease;
+}
+.yb-img-empty {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px;
+  color: {{property.subtitleColor}}; font-family: var(--font-family-body); font-size: 13px;
+}
+.yb-img-empty svg { opacity: 0.4; }
+
+/* Green */
+.yb-green-section {
+  border-top: 1px solid {{property.borderColor}}; padding: 14px 18px;
+}
+.yb-green-label {
+  font-family: var(--font-family-body); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: {{property.subtitleColor}}; margin-bottom: 8px;
+}
+.yb-green-img { width: 100%; border-radius: 8px; display: block; max-height: 160px; object-fit: contain; }
+
+/* Thumbnail strip */
+.yb-thumb-strip {
+  border-top: 1px solid {{property.borderColor}}; padding: 12px 18px;
+}
+.yb-thumbs { display: flex; gap: 8px; }
+.yb-thumb {
+  flex: 1; border-radius: 8px; overflow: hidden; cursor: pointer;
+  border: 2px solid transparent; transition: border-color 0.16s;
+  aspect-ratio: 4/3; background: {{property.imgPlaceholderBg}};
+}
+.yb-thumb.active { border-color: {{property.accentColor}}; }
+.yb-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ── Info Panel ── */
+.yb-info { display: flex; flex-direction: column; gap: 14px; }
+
+.yb-card {
+  background: {{property.cardBg}}; border: 1px solid {{property.borderColor}};
+  border-radius: {{property.radius}}px; overflow: hidden;
+}
+.yb-card-hd {
+  padding: 12px 16px 0;
+  font-family: var(--font-family-body); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: {{property.accentColor}};
+}
+
+/* Desc */
+.yb-desc {
+  padding: 10px 16px 14px;
+  font-family: var(--font-family-body); font-size: 13px;
+  color: {{property.descColor}}; line-height: 1.75; white-space: pre-line;
+}
+.yb-desc-ph { color: {{property.subtitleColor}}; font-style: italic; }
+
+/* Distance rows */
+.yb-dist-row {
+  display: grid; grid-template-columns: auto 1fr;
+  align-items: center; padding: 9px 16px;
+  border-bottom: 1px solid {{property.borderColor}};
+}
+.yb-dist-row:last-child { border-bottom: none; }
+.yb-tee { display: flex; align-items: center; gap: 8px; }
+.yb-tee-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.yb-tee-name {
+  font-family: var(--font-family-body); font-weight: 600; font-size: 12px;
+  color: {{property.titleColor}}; min-width: 50px;
+}
+.yb-dist-num {
+  font-family: var(--font-family-heading); font-weight: var(--font-weight-heading);
+  font-size: 18px; color: {{property.titleColor}}; text-align: right; letter-spacing: -0.01em;
+}
+.yb-dist-num small { font-size: 10px; font-weight: 400; color: {{property.subtitleColor}}; margin-left: 2px; }
+
+/* ── Prev / Next ── */
+.yb-footer-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 24px; gap: 12px;
+}
+.yb-nav-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 11px 22px;
+  border-radius: {{property.radius}}px; border: 1.5px solid {{property.borderColor}};
+  background: {{property.cardBg}}; color: {{property.titleColor}};
+  font-family: var(--font-family-body); font-weight: 600; font-size: 14px;
+  cursor: pointer; transition: all 0.16s; user-select: none;
+}
+.yb-nav-btn:hover:not(:disabled) { border-color: {{property.accentColor}}; color: {{property.accentColor}}; }
+.yb-nav-btn:disabled { opacity: 0.32; cursor: not-allowed; }
+.yb-nav-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.yb-nav-next {
+  background: {{property.accentColor}}; border-color: {{property.accentColor}}; color: #fff;
+}
+.yb-nav-next:hover:not(:disabled) { opacity: 0.88; color: #fff !important; border-color: {{property.accentColor}} !important; }
+.yb-progress {
+  font-family: var(--font-family-body); font-size: 13px; color: {{property.subtitleColor}};
+  white-space: nowrap; text-align: center;
+}
+.yb-progress strong { color: {{property.titleColor}}; font-weight: 700; }
+
+/* ── Scorecard ── */
+.yb-sc-wrap {
+  margin-top: 36px; background: {{property.cardBg}};
+  border: 1px solid {{property.borderColor}}; border-radius: {{property.radius}}px; overflow: hidden;
+}
+.yb-sc-hd {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border-bottom: 1px solid {{property.borderColor}};
+}
+.yb-sc-bar { width: 4px; height: 22px; background: {{property.accentColor}}; border-radius: 2px; }
+.yb-sc-title { font-family: var(--font-family-heading); font-weight: var(--font-weight-heading); font-size: 16px; color: {{property.titleColor}}; }
+.yb-sc-overflow { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.yb-sc-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.yb-sc-table th, .yb-sc-table td {
+  padding: 8px 10px; text-align: center;
+  font-family: var(--font-family-body); font-size: 12px;
+  border-right: 1px solid {{property.borderColor}}; white-space: nowrap;
+}
+.yb-sc-table th:last-child, .yb-sc-table td:last-child { border-right: none; }
+.yb-sc-table thead th {
+  background: {{property.sectionBg}}; font-weight: 700; font-size: 10px;
+  letter-spacing: 0.05em; text-transform: uppercase; color: {{property.subtitleColor}};
+  border-bottom: 1px solid {{property.borderColor}};
+}
+.yb-sc-table thead th:first-child { text-align: left; padding-left: 14px; }
+.yb-sc-table tbody tr { border-bottom: 1px solid {{property.borderColor}}; }
+.yb-sc-table tbody tr:last-child { border-bottom: none; }
+.yb-sc-table td:first-child { text-align: left; padding-left: 14px; font-weight: 600; color: {{property.titleColor}}; }
+.yb-sc-table .ah { background: rgba(34,197,94,0.09); color: {{property.accentColor}}; font-weight: 700; }
+.yb-sc-table .par-row td { color: {{property.accentColor}}; font-weight: 700; }
+.yb-sc-table .t-b { color: #111; font-weight: 700; }
+.yb-sc-table .t-bl { color: #2563EB; }
+.yb-sc-table .t-w { color: #6B7280; }
+.yb-sc-table .t-l { color: #EC4899; }
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .yb-section { padding: {{property.paddingTopM}}px {{property.paddingHM}}px {{property.paddingBottomM}}px; }
+  .yb-header { flex-direction: column; align-items: flex-start; }
+  .yb-title { font-size: {{property.titleSizeM}}px; }
+  .yb-cc-box { text-align: left; }
+  .yb-viewer { grid-template-columns: 1fr; }
+  .yb-pill { width: 32px; height: 32px; font-size: 12px; }
+  .yb-hnum { font-size: 22px; }
+  .yb-stat-val { font-size: 18px; }
+  .yb-nav-btn { padding: 9px 14px; font-size: 13px; }
+}
+</style>
+
+<template>
+<section class="yb-section">
+  <div class="yb-inner">
+
+    <!-- Header -->
+    <div class="yb-header">
+      <div>
+        <div class="yb-eyebrow">{{property.eyebrow}}</div>
+        <div class="yb-title">{{{property.sectionTitle}}}</div>
+      </div>
+      {{#if property.ccName}}
+        <div class="yb-cc-box">
+          <div class="yb-cc-name">{{property.ccName}}</div>
+          {{#if property.ccMeta}}<div class="yb-cc-meta">{{property.ccMeta}}</div>{{/if}}
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- Hole Nav -->
+    <div class="yb-nav-panel">
+      <div class="yb-pill-label">홀 선택</div>
+      <div class="yb-pills" id="yb-pills">
+        {{#each property.holes}}
+          <button class="yb-hole-pill yb-pill" data-idx="{{@index}}">{{add @index 1}}</button>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Viewer -->
+    <div class="yb-viewer">
+
+      <!-- Image Panel -->
+      <div class="yb-img-panel">
+
+        <!-- Top bar: Hole#, Par, HDCP -->
+        <div class="yb-img-topbar">
+          <div class="yb-hnum" id="yb-hnum">—<small>Hole</small></div>
+          <div class="yb-par-row">
+            <div class="yb-stat">
+              <div class="yb-stat-lbl">Par</div>
+              <div class="yb-stat-val" id="yb-par">—</div>
+            </div>
+            <div class="yb-stat">
+              <div class="yb-stat-lbl">HDCP</div>
+              <div class="yb-stat-val hdcp" id="yb-hdcp">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main image -->
+        <div class="yb-main-img-wrap">
+          <div class="yb-img-empty" id="yb-img-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            코스 이미지를 업로드하세요
+          </div>
+          <img class="yb-main-img" id="yb-main-img" src="" alt="" loading="lazy" style="display:none">
+        </div>
+
+        <!-- Green Analysis -->
+        <div class="yb-green-section" id="yb-green-sec" style="display:none">
+          <div class="yb-green-label">Green Analysis</div>
+          <img class="yb-green-img" id="yb-green-img" src="" alt="그린 분석" loading="lazy">
+        </div>
+
+        <!-- Thumb strip -->
+        <div class="yb-thumb-strip" id="yb-thumb-strip" style="display:none">
+          <div class="yb-thumbs" id="yb-thumbs"></div>
+        </div>
+
+      </div>
+
+      <!-- Info Panel -->
+      <div class="yb-info">
+
+        <!-- Description -->
+        <div class="yb-card">
+          <div class="yb-card-hd">홀 설명</div>
+          <div class="yb-desc" id="yb-desc"><span class="yb-desc-ph">설정 패널에서 홀 설명을 입력하세요.</span></div>
+        </div>
+
+        <!-- Distance -->
+        <div class="yb-card">
+          <div class="yb-card-hd" style="padding-bottom:8px;">거리 정보</div>
+          <div class="yb-dist-row">
+            <div class="yb-tee"><div class="yb-tee-dot" style="background:#111111"></div><div class="yb-tee-name">Black</div></div>
+            <div class="yb-dist-num" id="yb-db">—<small>m</small></div>
+          </div>
+          <div class="yb-dist-row">
+            <div class="yb-tee"><div class="yb-tee-dot" style="background:#2563EB"></div><div class="yb-tee-name">Blue</div></div>
+            <div class="yb-dist-num" id="yb-dbl">—<small>m</small></div>
+          </div>
+          <div class="yb-dist-row">
+            <div class="yb-tee"><div class="yb-tee-dot" style="background:#D1D5DB"></div><div class="yb-tee-name">White</div></div>
+            <div class="yb-dist-num" id="yb-dw">—<small>m</small></div>
+          </div>
+          {{#if property.showSenior}}
+          <div class="yb-dist-row">
+            <div class="yb-tee"><div class="yb-tee-dot" style="background:#F59E0B"></div><div class="yb-tee-name">Senior</div></div>
+            <div class="yb-dist-num" id="yb-ds">—<small>m</small></div>
+          </div>
+          {{/if}}
+          <div class="yb-dist-row">
+            <div class="yb-tee"><div class="yb-tee-dot" style="background:#EC4899"></div><div class="yb-tee-name">Lady</div></div>
+            <div class="yb-dist-num" id="yb-dl">—<small>m</small></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Prev / Next -->
+    <div class="yb-footer-nav">
+      <button class="yb-nav-btn" id="yb-prev" disabled>
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4L6 9l5 5"/></svg>
+        이전 홀
+      </button>
+      <div class="yb-progress"><strong id="yb-pc">1</strong> / <span id="yb-pt">{{size property.holes}}</span> Hole</div>
+      <button class="yb-nav-btn yb-nav-next" id="yb-next">
+        다음 홀
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l5 5-5 5"/></svg>
+      </button>
+    </div>
+
+    <!-- Scorecard -->
+    {{#if property.showScorecard}}
+    <div class="yb-sc-wrap" id="yb-sc">
+      <div class="yb-sc-hd">
+        <div class="yb-sc-bar"></div>
+        <div class="yb-sc-title">스코어카드</div>
+      </div>
+      <div class="yb-sc-overflow">
+        <table class="yb-sc-table">
+          <thead><tr id="yb-sc-head"></tr></thead>
+          <tbody id="yb-sc-body"></tbody>
+        </table>
+      </div>
+    </div>
+    {{/if}}
+
+  </div>
+</section>
+</template>
+
+<script>
+const C  = bm.container;
+const cx = bm.context;
+let cur  = 0;
+let swipeX = 0;
+
+function holes() { return cx.property.holes || []; }
+function hole(i) { return holes()[i] || {}; }
+
+/* ── render ── */
+function render() {
+  const hs  = holes();
+  const h   = hole(cur);
+  const tot = hs.length;
+
+  // Pills
+  C.querySelectorAll('.yb-pill').forEach((p, i) => p.classList.toggle('active', i === cur));
+
+  // Hole# / Par / HDCP
+  setText('#yb-hnum', (cur + 1) + '<small>Hole</small>');
+  const parEl = C.querySelector('#yb-par');
+  if (parEl) {
+    const p = h.par || 4;
+    parEl.textContent = p;
+    parEl.className = 'yb-stat-val' + (p === 3 ? ' p3' : p === 5 ? ' p5' : '');
+  }
+  setText('#yb-hdcp', h.hdcp || '—');
+
+  // Main image
+  const img  = C.querySelector('#yb-main-img');
+  const ph   = C.querySelector('#yb-img-ph');
+  if (img) {
+    if (h.courseImg) {
+      img.src = h.courseImg;
+      img.alt = 'Hole ' + (cur + 1);
+      img.style.display = 'block';
+      if (ph) ph.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      if (ph) ph.style.display = 'flex';
+    }
+  }
+
+  // Green
+  const gs = C.querySelector('#yb-green-sec');
+  const gi = C.querySelector('#yb-green-img');
+  if (gs && gi) {
+    if (h.greenImg) { gs.style.display = 'block'; gi.src = h.greenImg; }
+    else { gs.style.display = 'none'; }
+  }
+
+  // Thumb strip
+  const extras = [h.courseImg, h.greenImg, h.extraImg1, h.extraImg2].filter(Boolean);
+  const ts = C.querySelector('#yb-thumb-strip');
+  const tw = C.querySelector('#yb-thumbs');
+  if (ts && tw) {
+    if (extras.length > 1) {
+      ts.style.display = 'block';
+      tw.innerHTML = '';
+      extras.forEach((src, i) => {
+        const d = C.ownerDocument.createElement('div');
+        d.className = 'yb-thumb' + (i === 0 ? ' active' : '');
+        d.dataset.src = src;
+        const im = C.ownerDocument.createElement('img');
+        im.src = src; im.loading = 'lazy';
+        d.appendChild(im); tw.appendChild(d);
+      });
+    } else {
+      ts.style.display = 'none';
+    }
+  }
+
+  // Description
+  const dEl = C.querySelector('#yb-desc');
+  if (dEl) {
+    dEl.innerHTML = h.description
+      ? h.description.replace(/\n/g, '<br>')
+      : '<span class="yb-desc-ph">홀 설명이 없습니다.</span>';
+  }
+
+  // Distance
+  const sd = (id, v) => {
+    const el = C.querySelector(id);
+    if (el) el.innerHTML = (v || '—') + '<small>m</small>';
+  };
+  sd('#yb-db',  h.distBlack);
+  sd('#yb-dbl', h.distBlue);
+  sd('#yb-dw',  h.distWhite);
+  sd('#yb-ds',  h.distSenior);
+  sd('#yb-dl',  h.distLady);
+
+  // Prev/Next
+  const pb = C.querySelector('#yb-prev');
+  const nb = C.querySelector('#yb-next');
+  if (pb) pb.disabled = (cur === 0);
+  if (nb) nb.disabled = (cur >= tot - 1);
+
+  // Progress
+  setText('#yb-pc', cur + 1);
+  setText('#yb-pt', tot);
+
+  // Scorecard
+  renderSC(hs);
+}
+
+function setText(sel, val) {
+  const el = C.querySelector(sel);
+  if (el) el.innerHTML = val;
+}
+
+/* ── Scorecard ── */
+function renderSC(hs) {
+  const head = C.querySelector('#yb-sc-head');
+  const body = C.querySelector('#yb-sc-body');
+  if (!head || !body || !hs.length) return;
+
+  let th = '<th>Tee</th>';
+  hs.forEach((h, i) => { th += '<th class="' + (i === cur ? 'ah' : '') + '">' + (i + 1) + '</th>'; });
+  th += '<th>TOT</th>';
+  head.innerHTML = th;
+
+  const tees = [
+    { id: 'distBlack',  cls: 't-b',  dot: '#111111', name: 'Black'  },
+    { id: 'distBlue',   cls: 't-bl', dot: '#2563EB', name: 'Blue'   },
+    { id: 'distWhite',  cls: 't-w',  dot: '#D1D5DB', name: 'White'  },
+    { id: 'distSenior', cls: '',     dot: '#F59E0B', name: 'Senior' },
+    { id: 'distLady',   cls: 't-l',  dot: '#EC4899', name: 'Lady'   }
+  ];
+
+  let rows = '';
+
+  // HDCP row
+  let hdRow = '<tr><td style="font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:#a0a0a0">HDCP</td>';
+  hs.forEach((h, i) => { hdRow += '<td class="' + (i === cur ? 'ah' : '') + '" style="font-size:11px">' + (h.hdcp || '—') + '</td>'; });
+  hdRow += '<td>—</td></tr>';
+  rows += hdRow;
+
+  tees.forEach(tee => {
+    if (tee.id === 'distSenior' && !cx.property.showSenior) return;
+    let tot = 0;
+    let row = '<tr><td class="' + tee.cls + '"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + tee.dot + ';vertical-align:middle;margin-right:5px"></span>' + tee.name + '</td>';
+    hs.forEach((h, i) => {
+      const v = Number(h[tee.id]) || 0;
+      tot += v;
+      row += '<td class="' + (i === cur ? 'ah' : '') + '">' + (v || '—') + '</td>';
+    });
+    row += '<td>' + (tot || '—') + '</td></tr>';
+    rows += row;
+  });
+
+  // Par row
+  let pt = 0;
+  let pRow = '<tr class="par-row"><td>Par</td>';
+  hs.forEach((h, i) => {
+    pt += Number(h.par) || 0;
+    pRow += '<td class="' + (i === cur ? 'ah' : '') + '">' + (h.par || '—') + '</td>';
+  });
+  pRow += '<td>' + (pt || '—') + '</td></tr>';
+  rows += pRow;
+
+  body.innerHTML = rows;
+}
+
+/* ── Go to hole ── */
+function goHole(idx) {
+  const hs = holes();
+  if (idx < 0 || idx >= hs.length) return;
+  cur = idx;
+  render();
+  // Smooth scroll into view
+  const viewer = C.querySelector('.yb-viewer');
+  if (viewer) {
+    const rect = viewer.getBoundingClientRect();
+    if (rect.top < 60) {
+      const win = C.ownerDocument.defaultView || C.ownerDocument.parentWindow;
+      win.scrollTo({ top: win.pageYOffset + rect.top - 80, behavior: 'smooth' });
+    }
+  }
+}
+
+/* ── Events ── */
+C.addEventListener('click', function(e) {
+  e.stopPropagation();
+
+  const pill = e.target.closest('.yb-pill');
+  if (pill) { e.preventDefault(); goHole(Number(pill.dataset.idx)); return; }
+
+  if (e.target.closest('#yb-prev')) { e.preventDefault(); goHole(cur - 1); return; }
+  if (e.target.closest('#yb-next')) { e.preventDefault(); goHole(cur + 1); return; }
+
+  const thumb = e.target.closest('.yb-thumb');
+  if (thumb) {
+    e.preventDefault();
+    const mi = C.querySelector('#yb-main-img');
+    if (mi && thumb.dataset.src) {
+      mi.style.opacity = '0';
+      setTimeout(() => { mi.src = thumb.dataset.src; mi.style.display = 'block'; mi.style.opacity = '1'; }, 220);
+      C.querySelector('#yb-img-ph').style.display = 'none';
+    }
+    C.querySelectorAll('.yb-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    return;
+  }
+}, true);
+
+/* keyboard */
+function onKey(e) {
+  if (e.key === 'ArrowLeft')  goHole(cur - 1);
+  if (e.key === 'ArrowRight') goHole(cur + 1);
+}
+const doc = C.ownerDocument;
+doc.addEventListener('keydown', onKey);
+
+/* swipe */
+const viewer = C.querySelector('.yb-viewer');
+if (viewer) {
+  viewer.addEventListener('touchstart', e => { swipeX = e.changedTouches[0].screenX; }, { passive: true });
+  viewer.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - swipeX;
+    if (Math.abs(dx) > 50) goHole(dx < 0 ? cur + 1 : cur - 1);
+  }, { passive: true });
+}
+
+bm.onDestroy = () => doc.removeEventListener('keydown', onKey);
+
+bm.onContextChange = () => {
+  if (cur >= holes().length) cur = 0;
+  render();
+};
+
+render();
+// init first pill active
+const fp = C.querySelector('.yb-pill');
+if (fp) fp.classList.add('active');
+</script>

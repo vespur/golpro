@@ -1,0 +1,855 @@
+{
+  "title": "GOLPRO - CC 랭킹 (CC Ranking)",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "상단 영역",
+          "type": "TITLE"
+        },
+        {
+          "description": "상단 헤더(제목/부제) 표시 여부. 문제 시 체크.",
+          "id": "showHeader",
+          "label": "상단 헤더 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "상단 작은 텍스트. 문제 시 삭제 후 재입력.",
+          "id": "eyebrow",
+          "isVisible": "property.showHeader === true",
+          "label": "아이브로우 텍스트",
+          "placeholder": "예: CC RANKING",
+          "type": "TEXT"
+        },
+        {
+          "description": "상단 제목. 문제 시 기본값 복구.",
+          "id": "headerTitle",
+          "isVisible": "property.showHeader === true",
+          "label": "제목",
+          "placeholder": "예: 골프장 랭킹",
+          "type": "TEXT"
+        },
+        {
+          "description": "상단 부제목. 문제 시 삭제 후 재입력.",
+          "id": "headerSubtitle",
+          "isVisible": "property.showHeader === true",
+          "label": "부제목",
+          "placeholder": "예: 회원 평가 기반 골프장 순위",
+          "type": "TEXT"
+        },
+        {
+          "content": "표시 설정",
+          "type": "TITLE"
+        },
+        {
+          "description": "카드 배열 방식. 문제 시 grid로 복구.",
+          "id": "displayMode",
+          "label": "표시 모드",
+          "options": [
+            {
+              "label": "그리드",
+              "value": "grid"
+            },
+            {
+              "label": "캐러셀",
+              "value": "carousel"
+            }
+          ],
+          "type": "RADIO"
+        },
+        {
+          "description": "표시할 최대 카드 수. 문제 시 12로 복구.",
+          "id": "maxCards",
+          "label": "최대 카드 수",
+          "max": 50,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "개"
+        },
+        {
+          "description": "검색, 정렬, 지역 필터 표시 여부. 문제 시 체크.",
+          "id": "showToolbar",
+          "label": "검색/정렬 바 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "전략성/컨디션/경관/서비스/시설/가격 막대. 문제 시 체크.",
+          "id": "showBars",
+          "label": "항목별 점수 막대 표시",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "디자인 설정",
+          "type": "TITLE"
+        },
+        {
+          "description": "디자인 옵션 노출 여부. 문제 시 해제.",
+          "id": "developerMode",
+          "label": "디자인 옵션 보기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "레이아웃 — 데스크톱",
+          "type": "TITLE"
+        },
+        {
+          "description": "데스크톱 그리드 열 수. 문제 시 3으로 복구.",
+          "id": "gridCols",
+          "isVisible": "property.developerMode === true",
+          "label": "그리드 열 수",
+          "max": 5,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "카드 사이 간격(px). 문제 시 20으로 복구.",
+          "id": "gridGap",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 간격",
+          "max": 48,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "캐러셀 한번에 보이는 카드 수. 문제 시 3.",
+          "id": "carouselVisible",
+          "isVisible": "property.developerMode === true",
+          "label": "캐러셀 표시 개수",
+          "max": 5,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "개"
+        },
+        {
+          "content": "레이아웃 — 모바일",
+          "type": "TITLE"
+        },
+        {
+          "description": "모바일 그리드 열 수. 문제 시 1로 복구.",
+          "id": "gridColsMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "그리드 열 수 (모바일)",
+          "max": 2,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "모바일 카드 간격. 문제 시 16으로 복구.",
+          "id": "gridGapMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 간격 (모바일)",
+          "max": 32,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 캐러셀 카드 수. 문제 시 1.",
+          "id": "carouselVisibleMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "캐러셀 표시 개수 (모바일)",
+          "max": 2,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "개"
+        },
+        {
+          "content": "여백 — 데스크톱",
+          "type": "TITLE"
+        },
+        {
+          "description": "블록 상단 여백. 문제 시 40으로 복구.",
+          "id": "paddingTop",
+          "isVisible": "property.developerMode === true",
+          "label": "상단 여백",
+          "max": 120,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "블록 하단 여백. 문제 시 40으로 복구.",
+          "id": "paddingBottom",
+          "isVisible": "property.developerMode === true",
+          "label": "하단 여백",
+          "max": 120,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "블록 좌측 여백. 문제 시 20으로 복구.",
+          "id": "paddingLeft",
+          "isVisible": "property.developerMode === true",
+          "label": "좌측 여백",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "블록 우측 여백. 문제 시 20으로 복구.",
+          "id": "paddingRight",
+          "isVisible": "property.developerMode === true",
+          "label": "우측 여백",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "여백 — 모바일",
+          "type": "TITLE"
+        },
+        {
+          "description": "모바일 상단 여백. 문제 시 24로 복구.",
+          "id": "paddingTopMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "상단 여백 (모바일)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 하단 여백. 문제 시 24로 복구.",
+          "id": "paddingBottomMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "하단 여백 (모바일)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 좌측 여백. 문제 시 16으로 복구.",
+          "id": "paddingLeftMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "좌측 여백 (모바일)",
+          "max": 48,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 우측 여백. 문제 시 16으로 복구.",
+          "id": "paddingRightMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "우측 여백 (모바일)",
+          "max": 48,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "타이포그래피",
+          "type": "TITLE"
+        },
+        {
+          "description": "아이브로우 텍스트 크기. 문제 시 12로 복구.",
+          "id": "eyebrowSize",
+          "isVisible": "property.developerMode === true",
+          "label": "아이브로우 크기",
+          "max": 18,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "상단 제목 크기. 문제 시 28로 복구.",
+          "id": "titleSize",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 크기",
+          "max": 48,
+          "min": 18,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 제목 크기. 문제 시 22로 복구.",
+          "id": "titleSizeMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 크기 (모바일)",
+          "max": 36,
+          "min": 16,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "부제목 크기. 문제 시 15로 복구.",
+          "id": "subtitleSize",
+          "isVisible": "property.developerMode === true",
+          "label": "부제목 크기",
+          "max": 24,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 부제목 크기. 문제 시 14로 복구.",
+          "id": "subtitleSizeMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "부제목 크기 (모바일)",
+          "max": 20,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "카드 골프장명 크기. 문제 시 16으로 복구.",
+          "id": "cardNameSize",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 이름 크기",
+          "max": 24,
+          "min": 14,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "모바일 카드 이름 크기. 문제 시 15로 복구.",
+          "id": "cardNameSizeMobile",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 이름 크기 (모바일)",
+          "max": 20,
+          "min": 13,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "색상",
+          "type": "TITLE"
+        },
+        {
+          "description": "주요 강조 색상. 문제 시 #166534로 복구.",
+          "id": "accentColor",
+          "isVisible": "property.developerMode === true",
+          "label": "액센트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "상단 제목 색상. 문제 시 #F9FAFB로 복구.",
+          "id": "titleColor",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "부제목 및 보조 텍스트 색상. 문제 시 #9CA3AF.",
+          "id": "subtitleColor",
+          "isVisible": "property.developerMode === true",
+          "label": "부제/보조 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "카드 배경색. 문제 시 #1F2937로 복구.",
+          "id": "cardBg",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "카드 테두리 색상. 문제 시 #374151로 복구.",
+          "id": "cardBorderColor",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "카드 골프장명 색상. 문제 시 #F9FAFB.",
+          "id": "cardNameColor",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 이름 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "태그 텍스트 색상. 문제 시 #6EE7B7.",
+          "id": "cardTagColor",
+          "isVisible": "property.developerMode === true",
+          "label": "태그 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "검색/정렬 필드 테두리. 문제 시 #374151.",
+          "id": "borderColor",
+          "isVisible": "property.developerMode === true",
+          "label": "입력 필드 테두리",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "검색/정렬 필드 배경. 문제 시 #111827.",
+          "id": "inputBg",
+          "isVisible": "property.developerMode === true",
+          "label": "입력 필드 배경",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "검색/정렬 필드 텍스트 색상. 문제 시 #E5E7EB.",
+          "id": "inputColor",
+          "isVisible": "property.developerMode === true",
+          "label": "입력 필드 텍스트",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "카드 스타일",
+          "type": "TITLE"
+        },
+        {
+          "description": "카드 둥근 모서리. 문제 시 12로 복구.",
+          "id": "cardRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 모서리 반경",
+          "max": 24,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "카드 바디 내부 여백. 문제 시 16으로 복구.",
+          "id": "cardPadding",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 내부 여백",
+          "max": 32,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "마우스 오버 시 카드 올라가는 효과. 문제 시 해제.",
+          "id": "cardHoverLift",
+          "isVisible": "property.developerMode === true",
+          "label": "호버 리프트 효과",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "호버 시 그림자 색상. 문제 시 #00000040.",
+          "id": "cardShadowColor",
+          "isVisible": "property.developerMode === true",
+          "label": "호버 그림자 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이미지 로딩 전 배경색. 문제 시 #374151.",
+          "id": "cardImgPlaceholder",
+          "isVisible": "property.developerMode === true",
+          "label": "이미지 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "검색/정렬 필드 모서리 반경. 문제 시 8.",
+          "id": "inputRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "입력 필드 모서리",
+          "max": 20,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "별점 스타일",
+          "type": "TITLE"
+        },
+        {
+          "description": "별점 아이콘 크기. 문제 시 16으로 복구.",
+          "id": "starSize",
+          "isVisible": "property.developerMode === true",
+          "label": "별 크기",
+          "max": 24,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "별점 채워진 색상. 문제 시 #FBBF24.",
+          "id": "starFilledColor",
+          "isVisible": "property.developerMode === true",
+          "label": "채워진 별 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "별점 빈 색상. 문제 시 #4B5563.",
+          "id": "starEmptyColor",
+          "isVisible": "property.developerMode === true",
+          "label": "빈 별 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "숫자 점수 텍스트 크기. 문제 시 16.",
+          "id": "scoreSize",
+          "isVisible": "property.developerMode === true",
+          "label": "점수 텍스트 크기",
+          "max": 24,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "숫자 점수 색상. 문제 시 #F9FAFB.",
+          "id": "scoreColor",
+          "isVisible": "property.developerMode === true",
+          "label": "점수 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "막대 그래프",
+          "type": "TITLE"
+        },
+        {
+          "description": "점수 막대 높이. 문제 시 6으로 복구.",
+          "id": "barHeight",
+          "isVisible": "property.developerMode === true",
+          "label": "막대 높이",
+          "max": 12,
+          "min": 4,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "점수 막대 모서리 반경. 문제 시 3.",
+          "id": "barRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "막대 모서리",
+          "max": 8,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "막대 트랙 배경색. 문제 시 #374151.",
+          "id": "barTrackColor",
+          "isVisible": "property.developerMode === true",
+          "label": "막대 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "버튼",
+          "type": "TITLE"
+        },
+        {
+          "description": "버튼 상하 여백. 문제 시 8로 복구.",
+          "id": "btnPaddingY",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 상하 패딩",
+          "max": 16,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "버튼 좌우 여백. 문제 시 12로 복구.",
+          "id": "btnPaddingX",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 좌우 패딩",
+          "max": 24,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "버튼 둥근 모서리. 문제 시 8로 복구.",
+          "id": "btnRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 모서리",
+          "max": 20,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "버튼 텍스트 크기. 문제 시 13으로 복구.",
+          "id": "btnFontSize",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 텍스트 크기",
+          "max": 18,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "평가하기 버튼 배경. 문제 시 transparent.",
+          "id": "rateBtnBg",
+          "isVisible": "property.developerMode === true",
+          "label": "평가 버튼 배경",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "평가하기 버튼 텍스트 색상. 문제 시 #9CA3AF.",
+          "id": "rateBtnColor",
+          "isVisible": "property.developerMode === true",
+          "label": "평가 버튼 텍스트",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "평가하기 버튼 테두리. 문제 시 #4B5563.",
+          "id": "rateBtnBorderColor",
+          "isVisible": "property.developerMode === true",
+          "label": "평가 버튼 테두리",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "간격",
+          "type": "TITLE"
+        },
+        {
+          "description": "헤더와 콘텐츠 간격. 문제 시 24로 복구.",
+          "id": "headerGap",
+          "isVisible": "property.developerMode === true",
+          "label": "헤더 하단 간격",
+          "max": 48,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "검색바와 카드 간격. 문제 시 20으로 복구.",
+          "id": "toolbarGap",
+          "isVisible": "property.developerMode === true",
+          "label": "툴바 하단 간격",
+          "max": 40,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "집계 엔진",
+          "type": "TITLE"
+        },
+        {
+          "description": "최근 N개월 평가만 집계. 문제 시 12로 복구.",
+          "id": "recentMonths",
+          "isVisible": "property.developerMode === true",
+          "label": "집계 기간",
+          "max": 36,
+          "min": 3,
+          "step": 3,
+          "type": "RANGE",
+          "unit": "개월"
+        },
+        {
+          "description": "보정 최소 리뷰 수(m). 문제 시 30으로 복구.",
+          "id": "bayesianM",
+          "isVisible": "property.developerMode === true",
+          "label": "베이즈 최소 리뷰 수",
+          "max": 100,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "전역 평균 x10. 40=4.0점. 문제 시 40 복구.",
+          "id": "bayesianC",
+          "isVisible": "property.developerMode === true",
+          "label": "베이즈 전역 평균(x10)",
+          "max": 50,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "코스 전략성 항목 가중치. 문제 시 25로 복구.",
+          "id": "weightStrategy",
+          "isVisible": "property.developerMode === true",
+          "label": "코스 전략성 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "코스 컨디션 항목 가중치. 문제 시 20으로 복구.",
+          "id": "weightCondition",
+          "isVisible": "property.developerMode === true",
+          "label": "코스 컨디션 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "경관 항목 가중치. 문제 시 10으로 복구.",
+          "id": "weightScenery",
+          "isVisible": "property.developerMode === true",
+          "label": "경관 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "서비스 항목 가중치. 문제 시 20으로 복구.",
+          "id": "weightService",
+          "isVisible": "property.developerMode === true",
+          "label": "서비스 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "시설 항목 가중치. 문제 시 10으로 복구.",
+          "id": "weightFacility",
+          "isVisible": "property.developerMode === true",
+          "label": "시설 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "가격 만족도 항목 가중치. 문제 시 15로 복구.",
+          "id": "weightPrice",
+          "isVisible": "property.developerMode === true",
+          "label": "가격 만족도 가중치",
+          "max": 100,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE"
+        },
+        {
+          "description": "집계 캐시 유지 시간(분). 0=비활성. 문제 시 10.",
+          "id": "cacheDurationMin",
+          "isVisible": "property.developerMode === true",
+          "label": "캐시 유지 시간",
+          "max": 60,
+          "min": 0,
+          "step": 5,
+          "type": "RANGE",
+          "unit": "분"
+        },
+        {
+          "content": "디버그",
+          "type": "TITLE"
+        },
+        {
+          "description": "콘솔 디버그 로그. 운영 시 반드시 끄세요.",
+          "id": "debugLog",
+          "isVisible": "property.developerMode === true",
+          "label": "콘솔 로그 출력",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#166534",
+    "barHeight": 6,
+    "barRadius": 3,
+    "barTrackColor": "#374151",
+    "bayesianC": 40,
+    "bayesianM": 30,
+    "borderColor": "#374151",
+    "btnFontSize": 13,
+    "btnPaddingX": 12,
+    "btnPaddingY": 8,
+    "btnRadius": 8,
+    "cacheDurationMin": 10,
+    "cardBg": "#1F2937",
+    "cardBorderColor": "#374151",
+    "cardHoverLift": true,
+    "cardImgPlaceholder": "#374151",
+    "cardNameColor": "#F9FAFB",
+    "cardNameSize": 16,
+    "cardNameSizeMobile": 15,
+    "cardPadding": 16,
+    "cardRadius": 12,
+    "cardShadowColor": "#00000040",
+    "cardTagColor": "#6EE7B7",
+    "carouselVisible": 3,
+    "carouselVisibleMobile": 1,
+    "debugLog": false,
+    "developerMode": false,
+    "displayMode": "grid",
+    "eyebrow": "CC RANKING",
+    "eyebrowSize": 12,
+    "gridCols": 3,
+    "gridColsMobile": 1,
+    "gridGap": 20,
+    "gridGapMobile": 16,
+    "headerGap": 24,
+    "headerSubtitle": "회원 평가 기반 골프장 순위",
+    "headerTitle": "골프장 랭킹",
+    "inputBg": "#111827",
+    "inputColor": "#E5E7EB",
+    "inputRadius": 8,
+    "maxCards": 12,
+    "paddingBottom": 40,
+    "paddingBottomMobile": 24,
+    "paddingLeft": 20,
+    "paddingLeftMobile": 16,
+    "paddingRight": 20,
+    "paddingRightMobile": 16,
+    "paddingTop": 40,
+    "paddingTopMobile": 24,
+    "rateBtnBg": "#00000000",
+    "rateBtnBorderColor": "#4B5563",
+    "rateBtnColor": "#9CA3AF",
+    "recentMonths": 12,
+    "scoreColor": "#F9FAFB",
+    "scoreSize": 16,
+    "showBars": true,
+    "showHeader": true,
+    "showToolbar": true,
+    "starEmptyColor": "#4B5563",
+    "starFilledColor": "#FBBF24",
+    "starSize": 16,
+    "subtitleColor": "#9CA3AF",
+    "subtitleSize": 15,
+    "subtitleSizeMobile": 14,
+    "titleColor": "#F9FAFB",
+    "titleSize": 28,
+    "titleSizeMobile": 22,
+    "toolbarGap": 20,
+    "weightCondition": 20,
+    "weightFacility": 10,
+    "weightPrice": 15,
+    "weightScenery": 10,
+    "weightService": 20,
+    "weightStrategy": 25
+  }
+}

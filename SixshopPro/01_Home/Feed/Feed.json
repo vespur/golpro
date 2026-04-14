@@ -1,0 +1,573 @@
+{
+  "title": "Home_피드",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "피드 기본",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 Hero 카드와 피드를 연결합니다.\n Hero 카드의 tabKey와 동일하게 입력하세요.\n문제가 생기면 'free'로 되돌리세요.",
+          "id": "tabKey",
+          "label": "탭 키",
+          "placeholder": "예: free, gear, cc, live",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 피드 상단 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "feedTitle",
+          "label": "피드 헤더 제목",
+          "placeholder": "예: 자유게시판 · 최신글",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 더보기 버튼의 이동 링크를 변경합니다.\n비워두면 버튼이 숨겨집니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "moreLink",
+          "label": "더보기 링크",
+          "type": "LINK"
+        },
+        {
+          "description": "이 값은 더보기 버튼 문구를 변경합니다.\n문제가 생기면 '더보기'로 되돌리세요.",
+          "id": "moreLinkText",
+          "label": "더보기 버튼 텍스트",
+          "placeholder": "예: 더보기, 전체보기",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 노출할 게시글 수를 변경합니다.\n권장: 10개(2컬럼 5행).\n문제가 생기면 10으로 되돌리세요.",
+          "id": "limit",
+          "label": "최대 표시 개수",
+          "max": 20,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 불러올 게시판을 변경합니다.\n문제가 생기면 기본 게시판으로 되돌리세요.",
+          "id": "board",
+          "label": "연결 게시판",
+          "type": "BOARD"
+        },
+        {
+          "content": "헤더 아이콘 · 배지",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 헤더 이모지 표시를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "showIcon",
+          "label": "이모지 아이콘 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 헤더 이모지를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "icon",
+          "isVisible": "property.showIcon === true",
+          "label": "이모지",
+          "placeholder": "예: ⛳ 🏌️ 🎯",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 헤더 배지 표시를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "showBadge",
+          "label": "배지 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 배지 문구를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "badgeText",
+          "isVisible": "property.showBadge === true",
+          "label": "배지 텍스트",
+          "placeholder": "예: LIVE, HOT, NEW",
+          "type": "TEXT"
+        },
+        {
+          "content": "목록 옵션",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 작성자 이름 표시를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "showAuthor",
+          "label": "작성자 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 게시글 없을 때 표시할 문구를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "emptyText",
+          "label": "빈 목록 안내 메시지",
+          "placeholder": "예: 게시글이 아직 없어요.",
+          "type": "TEXT"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "색상",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 댓글수 배지·더보기 버튼 색상을 변경합니다.\n문제가 생기면 #166534로 되돌리세요.",
+          "id": "accentColor",
+          "label": "포인트 컬러",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 피드 카드 배경을 변경합니다.\n문제가 생기면 #ffffff로 되돌리세요.",
+          "id": "feedBg",
+          "label": "피드 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 피드 헤더 영역 배경을 변경합니다.\n문제가 생기면 #f9fafb로 되돌리세요.",
+          "id": "headBg",
+          "label": "헤더 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 피드 카드 테두리 색을 변경합니다.\n문제가 생기면 #e5e7eb로 되돌리세요.",
+          "id": "borderColor",
+          "label": "외곽 테두리 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 게시글 행 사이 구분선 색을 변경합니다.\n문제가 생기면 #f3f4f6로 되돌리세요.",
+          "id": "dividerColor",
+          "label": "행 구분선 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 피드 헤더 제목 글자 색을 변경합니다.\n문제가 생기면 #111111로 되돌리세요.",
+          "id": "titleColor",
+          "label": "헤더 제목 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 게시글 제목 글자 색을 변경합니다.\n문제가 생기면 #111827로 되돌리세요.",
+          "id": "itemColor",
+          "label": "게시글 제목 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 마우스 오버 시 배경색을 변경합니다.\n문제가 생기면 #f9fafb로 되돌리세요.",
+          "id": "itemHoverBg",
+          "label": "행 호버 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 더보기 버튼 테두리·글자 색을 변경합니다.\n문제가 생기면 #166534로 되돌리세요.",
+          "id": "moreLinkColor",
+          "label": "더보기 버튼 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 순위 번호 글자 색을 변경합니다.\n권장: 연한 회색 계열을 사용하세요.\n문제가 생기면 #9ca3af로 되돌리세요.",
+          "id": "rankColor",
+          "label": "순위 번호 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 날짜·작성자 글자 색을 변경합니다.\n문제가 생기면 #6b7280으로 되돌리세요.",
+          "id": "metaColor",
+          "label": "메타 정보 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 날짜·작성자 사이 점 색을 변경합니다.\n문제가 생기면 #d1d5db로 되돌리세요.",
+          "id": "sepColor",
+          "label": "구분점 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 이미지 없을 때 썸네일 배경을 변경합니다.\n문제가 생기면 #f3f4f6로 되돌리세요.",
+          "id": "thumbBg",
+          "label": "썸네일 빈 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "피드 형태",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑에서 피드 최대 너비를 변경합니다.\n섹션을 '가득채우기'로 설정 후 이 값으로 PC 너비를 제어하세요.\n문제가 생기면 1200으로 되돌리세요.",
+          "id": "feedMaxWidth",
+          "label": "최대 너비 — 데스크탑 (px)",
+          "max": 1600,
+          "min": 600,
+          "step": 40,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 피드 카드 모서리를 변경합니다.\n권장: 8~16.\n문제가 생기면 14로 되돌리세요.",
+          "id": "feedRadius",
+          "label": "모서리 둥글기 (px)",
+          "max": 24,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 피드 카드 테두리 두께를 변경합니다.\n문제가 생기면 1로 되돌리세요.",
+          "id": "borderW",
+          "label": "테두리 두께 (px)",
+          "max": 4,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "content": "행 간격 · 여백",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 행 내부 위아래 여백을 변경합니다.\n문제가 생기면 12로 되돌리세요.",
+          "id": "rowPadV",
+          "label": "행 상하 여백 — 데스크탑 (px)",
+          "max": 20,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 행 내부 좌우 여백을 변경합니다.\n문제가 생기면 16로 되돌리세요.",
+          "id": "rowPadH",
+          "label": "행 좌우 여백 — 데스크탑 (px)",
+          "max": 28,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 행 내부 위아래 여백을 변경합니다.\n문제가 생기면 12로 되돌리세요.",
+          "id": "rowPadVMobile",
+          "label": "행 상하 여백 — 모바일 (px)",
+          "max": 16,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 행 내부 좌우 여백을 변경합니다.\n문제가 생기면 14로 되돌리세요.",
+          "id": "rowPadHMobile",
+          "label": "행 좌우 여백 — 모바일 (px)",
+          "max": 20,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 번호·썸네일·제목 사이 간격을 변경합니다.\n권장: 12~16.\n문제가 생기면 14로 되돌리세요.",
+          "id": "rowGap",
+          "label": "요소 간격 — 데스크탑 (px)",
+          "max": 24,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 번호·썸네일·제목 사이 간격을 변경합니다.\n권장: 12.\n문제가 생기면 12로 되돌리세요.",
+          "id": "rowGapMobile",
+          "label": "요소 간격 — 모바일 (px)",
+          "max": 20,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 제목과 날짜 사이 간격을 변경합니다.\n문제가 생기면 6으로 되돌리세요.",
+          "id": "bodyGap",
+          "label": "제목-메타 간격 (px)",
+          "max": 12,
+          "min": 2,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "content": "순위 번호",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 순위 번호가 차지하는 열 너비를 변경합니다.\n권장: 36~44.\n문제가 생기면 40으로 되돌리세요.",
+          "id": "rankW",
+          "label": "번호 열 너비 — 데스크탑 (px)",
+          "max": 56,
+          "min": 24,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 순위 번호 열 너비를 변경합니다.\n권장: 32~40.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "rankWMobile",
+          "label": "번호 열 너비 — 모바일 (px)",
+          "max": 48,
+          "min": 24,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 순위 번호 글자 크기를 변경합니다.\n권장: 24~32.\n문제가 생기면 28로 되돌리세요.",
+          "id": "rankSize",
+          "label": "번호 폰트 크기 — 데스크탑 (px)",
+          "max": 48,
+          "min": 16,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 순위 번호 글자 크기를 변경합니다.\n권장: 18~22.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "rankSizeMobile",
+          "label": "번호 폰트 크기 — 모바일 (px)",
+          "max": 36,
+          "min": 14,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "content": "썸네일",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 썸네일 가로 크기를 변경합니다.\n문제가 생기면 84로 되돌리세요.",
+          "id": "thumbW",
+          "label": "썸네일 너비 — 데스크탑 (px)",
+          "max": 120,
+          "min": 48,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 썸네일 세로 크기를 변경합니다.\n문제가 생기면 56으로 되돌리세요.",
+          "id": "thumbH",
+          "label": "썸네일 높이 — 데스크탑 (px)",
+          "max": 80,
+          "min": 32,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 썸네일 가로 크기를 변경합니다.\n문제가 생기면 64로 되돌리세요.",
+          "id": "thumbWMobile",
+          "label": "썸네일 너비 — 모바일 (px)",
+          "max": 96,
+          "min": 40,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 썸네일 세로 크기를 변경합니다.\n문제가 생기면 44로 되돌리세요.",
+          "id": "thumbHMobile",
+          "label": "썸네일 높이 — 모바일 (px)",
+          "max": 64,
+          "min": 28,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 썸네일 모서리 둥글기를 변경합니다.\n문제가 생기면 6으로 되돌리세요.",
+          "id": "thumbRadius",
+          "label": "썸네일 모서리 (px)",
+          "max": 16,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "content": "텍스트 크기",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 피드 헤더 제목 크기를 변경합니다.\n문제가 생기면 15로 되돌리세요.",
+          "id": "titleSize",
+          "label": "헤더 제목 크기 — 데스크탑 (px)",
+          "max": 20,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 헤더 제목 크기를 변경합니다.\n문제가 생기면 14로 되돌리세요.",
+          "id": "titleSizeMobile",
+          "label": "헤더 제목 크기 — 모바일 (px)",
+          "max": 17,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 게시글 제목 크기를 변경합니다.\n문제가 생기면 15로 되돌리세요.",
+          "id": "itemTitleSize",
+          "label": "게시글 제목 크기 — 데스크탑 (px)",
+          "max": 18,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 게시글 제목 크기를 변경합니다.\n문제가 생기면 13으로 되돌리세요.",
+          "id": "itemTitleSizeMobile",
+          "label": "게시글 제목 크기 — 모바일 (px)",
+          "max": 15,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 날짜·작성자 글자 크기를 변경합니다.\n문제가 생기면 12로 되돌리세요.",
+          "id": "metaSize",
+          "label": "날짜·작성자 크기 — 데스크탑 (px)",
+          "max": 14,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 날짜·작성자 글자 크기를 변경합니다.\n문제가 생기면 11로 되돌리세요.",
+          "id": "metaSizeMobile",
+          "label": "날짜·작성자 크기 — 모바일 (px)",
+          "max": 13,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 더보기 버튼 글자 크기를 변경합니다.\n문제가 생기면 13으로 되돌리세요.",
+          "id": "moreLinkSize",
+          "label": "더보기 버튼 텍스트 크기 (px)",
+          "max": 16,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 헤더 이모지 크기를 변경합니다.\n문제가 생기면 16으로 되돌리세요.",
+          "id": "iconSize",
+          "label": "이모지 아이콘 크기 (px)",
+          "max": 24,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 게시글 없을 때 여백을 변경합니다.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "emptyPadV",
+          "label": "빈 목록 상하 여백 (px)",
+          "max": 40,
+          "min": 12,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 헤더 내부 위아래 여백을 변경합니다.\n문제가 생기면 12로 되돌리세요.",
+          "id": "headPadV",
+          "label": "헤더 상하 여백 — 데스크탑 (px)",
+          "max": 24,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 헤더 내부 좌우 여백을 변경합니다.\n문제가 생기면 16으로 되돌리세요.",
+          "id": "headPadH",
+          "label": "헤더 좌우 여백 — 데스크탑 (px)",
+          "max": 28,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 헤더 위아래 여백을 변경합니다.\n문제가 생기면 10으로 되돌리세요.",
+          "id": "headPadVMobile",
+          "label": "헤더 상하 여백 — 모바일 (px)",
+          "max": 20,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 헤더 좌우 여백을 변경합니다.\n문제가 생기면 12로 되돌리세요.",
+          "id": "headPadHMobile",
+          "label": "헤더 좌우 여백 — 모바일 (px)",
+          "max": 20,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#166534",
+    "badgeText": "LIVE",
+    "board": {
+      "id": null,
+      "posts": {
+        "limit": 20,
+        "page": 1
+      }
+    },
+    "bodyGap": 6,
+    "borderColor": "#e5e7eb",
+    "borderW": 1,
+    "dividerColor": "#f3f4f6",
+    "emptyPadV": 20,
+    "emptyText": "게시글이 아직 없어요.",
+    "feedBg": "#ffffff",
+    "feedMaxWidth": 1200,
+    "feedRadius": 14,
+    "feedTitle": "자유게시판 · 최신글",
+    "headBg": "#f9fafb",
+    "headPadH": 16,
+    "headPadHMobile": 12,
+    "headPadV": 12,
+    "headPadVMobile": 10,
+    "icon": "⛳",
+    "iconSize": 16,
+    "itemColor": "#111827",
+    "itemHoverBg": "#f9fafb",
+    "itemTitleSize": 15,
+    "itemTitleSizeMobile": 13,
+    "limit": 10,
+    "metaColor": "#6b7280",
+    "metaSize": 12,
+    "metaSizeMobile": 11,
+    "moreLink": {
+      "id": null,
+      "label": "더보기",
+      "type": "url",
+      "value": ""
+    },
+    "moreLinkColor": "#166534",
+    "moreLinkSize": 13,
+    "moreLinkText": "더보기",
+    "rankColor": "#c4c9d4",
+    "rankSize": 28,
+    "rankSizeMobile": 20,
+    "rankW": 40,
+    "rankWMobile": 36,
+    "rowGap": 14,
+    "rowGapMobile": 12,
+    "rowPadH": 16,
+    "rowPadHMobile": 14,
+    "rowPadV": 12,
+    "rowPadVMobile": 12,
+    "sepColor": "#d1d5db",
+    "showAuthor": true,
+    "showBadge": false,
+    "showIcon": true,
+    "tabKey": "free",
+    "thumbBg": "#f3f4f6",
+    "thumbH": 56,
+    "thumbHMobile": 44,
+    "thumbRadius": 6,
+    "thumbW": 84,
+    "thumbWMobile": 64,
+    "titleColor": "#111111",
+    "titleSize": 15,
+    "titleSizeMobile": 14
+  }
+}

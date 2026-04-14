@@ -1,0 +1,591 @@
+<style>
+.bm-form-container {
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-family-body);
+}
+
+.bm-form-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bm-form-title {
+  font-size: 24px;
+  font-weight: var(--font-weight-heading);
+  font-family: var(--font-family-heading);
+  margin-bottom: 30px;
+  color: {{property.labelColor}};
+}
+
+.bm-form-field {
+  margin-bottom: {{property.fieldSpacing}}px;
+}
+
+.bm-form-label {
+  display: block;
+  font-size: {{property.labelFontSize}}px;
+  font-weight: 500;
+  color: {{property.labelColor}};
+  margin-bottom: 8px;
+}
+
+.bm-form-required {
+  color: {{property.requiredColor}};
+  margin-left: 4px;
+}
+
+.bm-form-input,
+.bm-form-textarea,
+.bm-form-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: {{property.inputFontSize}}px;
+  border: 1px solid {{property.inputBorderColor}};
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+  background-color: #fff;
+}
+
+.bm-form-input:focus,
+.bm-form-textarea:focus,
+.bm-form-select:focus {
+  outline: none;
+  border-color: {{property.inputFocusBorderColor}};
+}
+
+.bm-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.bm-form-tel-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.bm-form-tel-group input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font-size: {{property.inputFontSize}}px;
+  border: 1px solid {{property.inputBorderColor}};
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: border-color 0.2s ease;
+  background-color: #fff;
+}
+
+.bm-form-tel-group input:focus {
+  outline: none;
+  border-color: {{property.inputFocusBorderColor}};
+}
+
+.bm-form-tel-separator {
+  color: {{property.labelColor}};
+  font-weight: 500;
+}
+
+.bm-form-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bm-form-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: {{property.inputFontSize}}px;
+}
+
+.bm-form-radio-item input[type="radio"] {
+  -webkit-appearance: radio;
+  -moz-appearance: radio;
+  appearance: radio;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: {{property.buttonBgColor}};
+}
+
+.bm-form-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: {{property.inputFontSize}}px;
+}
+
+.bm-form-checkbox-item input[type="checkbox"] {
+  -webkit-appearance: checkbox;
+  -moz-appearance: checkbox;
+  appearance: checkbox;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: {{property.buttonBgColor}};
+}
+
+.bm-form-agreement-box {
+  border: 1px solid {{property.inputBorderColor}};
+  border-radius: 4px;
+  padding: 16px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #666;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  background-color: #fafafa;
+}
+
+.bm-form-submit {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: {{property.buttonFontSize}}px;
+  font-weight: 600;
+  color: {{property.buttonTextColor}};
+  background-color: {{property.buttonBgColor}};
+  border: none;
+  border-radius: {{property.buttonBorderRadius}}px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+}
+
+.bm-form-submit:hover {
+  background-color: {{property.buttonHoverBgColor}};
+}
+
+.bm-form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bm-form-error {
+  border-color: {{property.requiredColor}} !important;
+}
+
+.bm-form-error-message {
+  color: {{property.requiredColor}};
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .bm-form-container {
+    padding: 16px;
+  }
+  
+  .bm-form-label {
+    font-size: {{property.labelFontSizeMobile}}px;
+  }
+  
+  .bm-form-input,
+  .bm-form-textarea,
+  .bm-form-select {
+    font-size: {{property.inputFontSizeMobile}}px;
+  }
+  
+  .bm-form-tel-group input {
+    font-size: {{property.inputFontSizeMobile}}px;
+    padding: 10px 8px;
+  }
+  
+  .bm-form-tel-group {
+    gap: 4px;
+  }
+  
+  .bm-form-radio-item,
+  .bm-form-checkbox-item {
+    font-size: {{property.inputFontSizeMobile}}px;
+  }
+  
+  .bm-form-submit {
+    font-size: {{property.buttonFontSizeMobile}}px;
+  }
+}
+</style>
+<data value="$customer"/>
+<template>
+<div class="bm-form-container" data-form-id="{{id}}">
+  
+  {{#unless (or property.saveToGoogleSheet property.saveToBoard)}}
+  <div class="bm-form-warning">
+    ⚠️ 저장 설정에서 구글시트 또는 게시판 중 하나 이상을 선택해주세요.
+  </div>
+  {{/unless}}
+  
+  {{#if property.showFormTitle}}
+  <h2 class="bm-form-title">{{property.formTitle}}</h2>
+  {{/if}}
+  
+  <form class="bm-form" novalidate>
+    {{#each property.fields}}
+    <div class="bm-form-field" data-field-index="{{@index}}" data-field-type="{{fieldType}}" data-field-label="{{label}}" data-required="{{required}}">
+      
+      <label class="bm-form-label">
+        {{label}}
+        {{#if required}}<span class="bm-form-required">●</span>{{/if}}
+      </label>
+      
+      {{#if (eq fieldType "text")}}
+      <input type="text" class="bm-form-input" name="field_{{@index}}" placeholder="{{placeholder}}">
+      {{/if}}
+      
+      {{#if (eq fieldType "email")}}
+      <input type="email" class="bm-form-input" name="field_{{@index}}" placeholder="{{placeholder}}">
+      {{/if}}
+      
+      {{#if (eq fieldType "number")}}
+      <input type="number" class="bm-form-input" name="field_{{@index}}" placeholder="{{placeholder}}">
+      {{/if}}
+      
+      {{#if (eq fieldType "date")}}
+      <input type="date" class="bm-form-input" name="field_{{@index}}">
+      {{/if}}
+      
+      {{#if (eq fieldType "textarea")}}
+      <textarea class="bm-form-textarea" name="field_{{@index}}" placeholder="{{placeholder}}"></textarea>
+      {{/if}}
+      
+      {{#if (eq fieldType "tel")}}
+      <div class="bm-form-tel-group">
+        <input type="text" class="bm-form-tel-part" name="field_{{@index}}_1" maxlength="4" inputmode="numeric">
+        <span class="bm-form-tel-separator">-</span>
+        <input type="text" class="bm-form-tel-part" name="field_{{@index}}_2" maxlength="4" inputmode="numeric">
+        <span class="bm-form-tel-separator">-</span>
+        <input type="text" class="bm-form-tel-part" name="field_{{@index}}_3" maxlength="4" inputmode="numeric">
+      </div>
+      {{/if}}
+      
+      {{#if (eq fieldType "select")}}
+      <select class="bm-form-select" name="field_{{@index}}">
+        <option value="">선택해주세요</option>
+        {{#each (split options ",")}}
+        <option value="{{trim this}}">{{trim this}}</option>
+        {{/each}}
+      </select>
+      {{/if}}
+      
+      {{#if (eq fieldType "radio")}}
+      <div class="bm-form-radio-group">
+        {{#each (split options ",")}}
+        <label class="bm-form-radio-item">
+          <input type="radio" name="field_{{@../index}}" value="{{trim this}}">
+          <span>{{trim this}}</span>
+        </label>
+        {{/each}}
+      </div>
+      {{/if}}
+      
+      {{#if (eq fieldType "checkbox")}}
+      <label class="bm-form-checkbox-item">
+        <input type="checkbox" name="field_{{@index}}">
+        <span>{{checkboxLabel}}</span>
+      </label>
+      {{/if}}
+      
+      {{#if (eq fieldType "agreement")}}
+      <div class="bm-form-agreement-box">{{agreementText}}</div>
+      <label class="bm-form-checkbox-item">
+        <input type="checkbox" name="field_{{@index}}">
+        <span>{{checkboxLabel}}</span>
+      </label>
+      {{/if}}
+      
+    </div>
+    {{/each}}
+    
+    <button type="submit" class="bm-form-submit">{{property.submitButtonText}}</button>
+  </form>
+</div>
+</template>
+<script>
+var container = bm.container;
+var context = bm.context;
+
+function initForm() {
+  var formContainer = container.querySelector('[data-form-id="' + context.id + '"]');
+  if (!formContainer) return;
+  
+  var telGroups = formContainer.querySelectorAll('.bm-form-tel-group');
+  for (var g = 0; g < telGroups.length; g++) {
+    var group = telGroups[g];
+    var inputs = group.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) {
+      (function(idx, inputList) {
+        inputList[idx].addEventListener('input', function(e) {
+          this.value = this.value.replace(/[^0-9]/g, '');
+          if (this.value.length >= this.maxLength && idx < inputList.length - 1) {
+            inputList[idx + 1].focus();
+          }
+        });
+        inputList[idx].addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && this.value === '' && idx > 0) {
+            inputList[idx - 1].focus();
+          }
+        });
+      })(i, inputs);
+    }
+  }
+}
+
+function handleSubmit(e) {
+  if (!e.target.matches('.bm-form')) return;
+  e.preventDefault();
+  
+  var form = e.target;
+  var submitBtn = form.querySelector('.bm-form-submit');
+  
+  // 저장 설정 필수 검증
+  if (!context.property.saveToGoogleSheet && !context.property.saveToBoard) {
+    alert('저장 설정에서 구글시트 또는 게시판 중 하나 이상을 선택해주세요.');
+    return;
+  }
+  
+  var errorElements = form.querySelectorAll('.bm-form-error');
+  for (var i = 0; i < errorElements.length; i++) {
+    errorElements[i].classList.remove('bm-form-error');
+  }
+  var errorMessages = form.querySelectorAll('.bm-form-error-message');
+  for (var i = 0; i < errorMessages.length; i++) {
+    errorMessages[i].remove();
+  }
+  
+  var formData = {};
+  var hasError = false;
+  
+  var fields = form.querySelectorAll('.bm-form-field');
+  for (var f = 0; f < fields.length; f++) {
+    var field = fields[f];
+    var fieldType = field.dataset.fieldType;
+    var fieldLabel = field.dataset.fieldLabel;
+    var isRequired = field.dataset.required === 'true';
+    var value = '';
+    
+    if (fieldType === 'tel') {
+      var parts = field.querySelectorAll('.bm-form-tel-part');
+      var telParts = [];
+      for (var p = 0; p < parts.length; p++) {
+        telParts.push(parts[p].value);
+      }
+      value = telParts.join('-');
+      
+      if (isRequired && (telParts[0] === '' || telParts[1] === '' || telParts[2] === '')) {
+        hasError = true;
+        for (var p = 0; p < parts.length; p++) {
+          parts[p].classList.add('bm-form-error');
+        }
+        showError(field, '필수 항목입니다.');
+      }
+    } else if (fieldType === 'checkbox' || fieldType === 'agreement') {
+      var checkbox = field.querySelector('input[type="checkbox"]');
+      value = checkbox.checked ? '동의' : '';
+      
+      if (isRequired && !checkbox.checked) {
+        hasError = true;
+        showError(field, '필수 항목입니다.');
+      }
+    } else if (fieldType === 'radio') {
+      var checked = field.querySelector('input[type="radio"]:checked');
+      value = checked ? checked.value : '';
+      
+      if (isRequired && !value) {
+        hasError = true;
+        showError(field, '필수 항목입니다.');
+      }
+    } else {
+      var input = field.querySelector('input, textarea, select');
+      if (input) {
+        value = input.value;
+        
+        if (isRequired && !value.trim()) {
+          hasError = true;
+          input.classList.add('bm-form-error');
+          showError(field, '필수 항목입니다.');
+        }
+        
+        if (fieldType === 'email' && value && !isValidEmail(value)) {
+          hasError = true;
+          input.classList.add('bm-form-error');
+          showError(field, '올바른 이메일 형식이 아닙니다.');
+        }
+      }
+    }
+    
+    formData[fieldLabel] = value;
+  }
+  
+  if (hasError) {
+    var firstError = form.querySelector('.bm-form-error, .bm-form-error-message');
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return;
+  }
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = '제출 중...';
+  
+  var savePromises = [];
+  
+  if (context.property.saveToGoogleSheet && context.property.googleSheetUrl) {
+    savePromises.push(submitToGoogleSheet(context.property.googleSheetUrl, formData));
+  }
+  
+  var board = context.property.board;
+  if (context.property.saveToBoard && board && board.id) {
+    savePromises.push(submitToBoard(formData));
+  }
+  
+  Promise.all(savePromises)
+    .then(function() {
+      showSuccess(form, submitBtn);
+    })
+    .catch(function(err) {
+      console.error('Submit error:', err);
+      alert('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = context.property.submitButtonText;
+    });
+}
+
+function showSuccess(form, submitBtn) {
+  alert(context.property.successMessage);
+  form.reset();
+  submitBtn.disabled = false;
+  submitBtn.textContent = context.property.submitButtonText;
+}
+
+function showError(field, message) {
+  var errorDiv = document.createElement('div');
+  errorDiv.className = 'bm-form-error-message';
+  errorDiv.textContent = message;
+  field.appendChild(errorDiv);
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function submitToGoogleSheet(url, data) {
+  return new Promise(function(resolve, reject) {
+    var iframe = document.createElement('iframe');
+    iframe.name = 'bm-form-iframe-' + context.id + '-' + Date.now();
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = url;
+    form.target = iframe.name;
+    
+    var keys = Object.keys(data);
+    for (var i = 0; i < keys.length; i++) {
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = keys[i];
+      input.value = data[keys[i]];
+      form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+    
+    setTimeout(function() {
+      try {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      } catch(e) {}
+      resolve();
+    }, 2000);
+  });
+}
+
+function submitToBoard(data) {
+  return new Promise(function(resolve, reject) {
+    var board = context.property.board;
+    
+    if (!board || !board.id) {
+      console.warn('게시판이 선택되지 않았습니다.');
+      resolve();
+      return;
+    }
+    
+    var customer = context.customer;
+    
+    var title = context.property.postTitleFormat || '[문의] 고객님의 문의';
+    
+    var keys = Object.keys(data);
+    for (var i = 0; i < keys.length; i++) {
+      var placeholder = '{{' + keys[i] + '}}';
+      title = title.split(placeholder).join(data[keys[i]] || '');
+    }
+    
+    var contents = '';
+    for (var i = 0; i < keys.length; i++) {
+      var label = keys[i];
+      var value = data[keys[i]] || '-';
+      contents += '- ' + label + ' : ' + value + '<br>';
+    }
+    
+    var accessType = context.property.postAccessType || 'SECRET';
+    
+    if (board.secretPostRole === 'NOT_USED') {
+      accessType = 'OPEN';
+    }
+    
+    var params = {
+      boardId: board.id,
+      title: title,
+      contents: contents,
+      accessType: accessType
+    };
+    
+    if (!customer) {
+      params.userName = data['이름'] || '방문자';
+      params.email = data['이메일'] || 'guest@form.com';
+      params.password = '000000';
+    }
+    
+    bm.do('board:createPost', { params: params })
+      .then(function() {
+        resolve();
+      })
+      .catch(function(err) {
+        console.error('Board submit error:', err);
+        reject(err);
+      });
+  });
+}
+
+container.addEventListener('submit', handleSubmit, true);
+initForm();
+
+bm.onContextChange = function() {
+  initForm();
+};
+
+bm.onDestroy = function() {
+  container.removeEventListener('submit', handleSubmit, true);
+};
+</script>

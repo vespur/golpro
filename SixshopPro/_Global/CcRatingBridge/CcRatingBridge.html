@@ -1,0 +1,152 @@
+<style>
+
+.ccRatingRoot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+</style>
+
+<template>
+
+<div class="ccRatingRoot" aria-hidden="true">
+  <textarea
+    class="ccRatingStore"
+    data-type="cc-rating-bridge"
+    readonly
+    aria-hidden="true"
+  ></textarea>
+</div>
+
+</template>
+
+<script>
+
+(function () {
+  var container = bm.container;
+  var context = bm.context;
+
+  function log() {
+    if (context.property.debugLog) {
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift('[CC Rating Bridge]');
+      console.log.apply(console, args);
+    }
+  }
+
+  var MARKER_REGEX = /\[\u025e\u025e!--CC_RATING:(.*?)--\u025e\u025e\]/g;
+  var allCollectedPosts = [];
+  var isScanning = false;
+  var scanComplete = false;
+  var currentScanPage = 1;
+  var postsPerPage = 0;
+
+  function parseMarkers(posts) {
+    var ratings = [];
+    for (var p = 0; p < posts.length; p++) {
+      var content = posts[p].contents || '';
+      var match;
+      MARKER_REGEX.lastIndex = 0;
+      while ((match = MARKER_REGEX.exec(content)) !== null) {
+        try {
+          var data = JSON.parse(match[1]);
+          if (data && data.ccId && data.ratings && data.userKey && data.createdAt) {
+            ratings.push(data);
+          }
+        } catch (err) {
+          log('Marker parse error:', err);
+        }
+      }
+    }
+    return ratings;
+  }
+
+  function writeStore(ratings) {
+    var store = container.querySelector('.ccRatingStore');
+    if (!store) return;
+    var board = context.property.board;
+    var payload = {
+      boardId: (board && board.id) ? board.id : null,
+      boardName: (board && board.name) ? board.name : '',
+      ratings: ratings,
+      collectedAt: new Date().toISOString(),
+      totalPosts: allCollectedPosts.length,
+      pagesScanned: currentScanPage
+    };
+    store.textContent = JSON.stringify(payload);
+    log('Wrote', ratings.length, 'ratings from', allCollectedPosts.length, 'posts, boardId:', payload.boardId);
+  }
+
+  function startScan() {
+    var board = context.property.board;
+    if (!board || !board.id || !board.posts) {
+      log('No board selected, writing empty store');
+      writeStore([]);
+      return;
+    }
+    isScanning = true;
+    scanComplete = false;
+    currentScanPage = 1;
+    allCollectedPosts = [];
+    collectCurrentPage();
+  }
+
+  function collectCurrentPage() {
+    var board = context.property.board;
+    if (!board || !board.posts) {
+      finishScan();
+      return;
+    }
+    var posts = board.posts.data || [];
+    var totalCount = board.posts.count || 0;
+
+    for (var i = 0; i < posts.length; i++) {
+      allCollectedPosts.push(posts[i]);
+    }
+    if (currentScanPage === 1 && posts.length > 0) {
+      postsPerPage = posts.length;
+    }
+
+    log('Page', currentScanPage, ':', posts.length, 'posts. Total:', allCollectedPosts.length, '/', totalCount);
+
+    var maxPages = context.property.maxScanPages || 5;
+    var totalPages = postsPerPage > 0 ? Math.ceil(totalCount / postsPerPage) : 1;
+
+    if (currentScanPage < totalPages && currentScanPage < maxPages && posts.length > 0) {
+      currentScanPage++;
+      setTimeout(function () {
+        bm.config('property:board.posts.page', currentScanPage);
+        bm.apply();
+      }, 0);
+    } else {
+      finishScan();
+    }
+  }
+
+  function finishScan() {
+    isScanning = false;
+    scanComplete = true;
+    var ratings = parseMarkers(allCollectedPosts);
+    writeStore(ratings);
+    log('Scan complete.', ratings.length, 'ratings parsed');
+  }
+
+  startScan();
+
+  bm.onContextChange = function () {
+    if (isScanning && !scanComplete) {
+      collectCurrentPage();
+    }
+  };
+
+  log('Rating Bridge initialized');
+})();
+
+</script>

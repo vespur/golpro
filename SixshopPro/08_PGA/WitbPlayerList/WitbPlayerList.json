@@ -1,0 +1,1024 @@
+{
+  "title": "GOLPRO - WITB 선수 목록 (Player List)",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "섹션 텍스트",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 섹션 제목 위에 표시되는 작은 레이블을 변경합니다.\n문제가 생기면 기본값 'WHAT'S IN THE BAG'으로 되돌리세요.",
+          "id": "eyebrowText",
+          "label": "상단 소제목 (Eyebrow)",
+          "placeholder": "예: WHAT'S IN THE BAG",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 섹션 메인 제목을 변경합니다. <em>태그로 강조 표시 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "sectionTitle",
+          "label": "섹션 제목",
+          "placeholder": "예: 프로 선수 <em>장비</em>",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 제목 하단 설명 문구를 변경합니다.\n문제가 생기면 비워두거나 기본값으로 되돌리세요.\n엔터로 줄바꿈이 가능해요.",
+          "id": "sectionSubtitle",
+          "label": "섹션 부제목",
+          "placeholder": "예: PGA, LPGA, KPGA, KLPGA 투어 선수들의 실제 사용 장비를 확인해보세요.",
+          "type": "TEXTAREA"
+        },
+        {
+          "content": "전체보기 버튼",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 섹션 우측 상단 전체보기 버튼 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showViewAll",
+          "label": "전체보기 버튼 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 전체보기 버튼의 레이블 텍스트를 변경합니다.\n문제가 생기면 '전체보기'로 되돌리세요.",
+          "id": "viewAllLabel",
+          "isVisible": "property.showViewAll === true",
+          "label": "버튼 텍스트",
+          "placeholder": "예: 전체보기",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 전체보기 버튼 클릭 시 이동하는 링크를 변경합니다.\n문제가 생기면 링크를 초기화하세요.",
+          "id": "viewAllLink",
+          "isVisible": "property.showViewAll === true",
+          "label": "버튼 링크",
+          "type": "LINK"
+        },
+        {
+          "description": "이 값은 버튼 클릭 시 새 탭 열기 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "viewAllNewTab",
+          "isVisible": "property.showViewAll === true",
+          "label": "새 탭에서 열기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "투어 필터 탭",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 PGA/LPGA 등 투어 필터 탭 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showTabs",
+          "label": "투어 필터 탭 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 PGA 필터 탭 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showPGA",
+          "isVisible": "property.showTabs === true",
+          "label": "PGA 탭 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 LPGA 필터 탭 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showLPGA",
+          "isVisible": "property.showTabs === true",
+          "label": "LPGA 탭 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 KPGA 필터 탭 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showKPGA",
+          "isVisible": "property.showTabs === true",
+          "label": "KPGA 탭 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 KLPGA 필터 탭 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showKLPGA",
+          "isVisible": "property.showTabs === true",
+          "label": "KLPGA 탭 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "선수 목록 (LIST)",
+          "type": "TITLE"
+        },
+        {
+          "content": "선수 카드를 추가하고 정보를 입력하세요. 최대 100명까지 등록 가능합니다. 100명 초과 시 동일한 블록을 추가하여 이어서 사용하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "description": "이 값은 선수 카드 목록을 변경합니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "players",
+          "label": "선수 목록",
+          "maxCount": 100,
+          "settings": [
+            {
+              "content": "선수 기본 정보",
+              "type": "TITLE"
+            },
+            {
+              "description": "이 값은 선수 카드 이미지를 변경합니다.\n문제가 생기면 이미지를 재업로드하세요.",
+              "id": "playerImage",
+              "label": "선수 사진",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 선수 카드에 표시되는 한글 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "playerName",
+              "label": "선수 이름 (한글)",
+              "placeholder": "예: 타이거 우즈",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 선수 이름 아래 표시되는 영문 이름을 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "playerNameEn",
+              "label": "선수 이름 (영문, 선택)",
+              "placeholder": "예: Tiger Woods",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드에 표시되는 투어 배지와 필터 분류를 변경합니다.\n문제가 생기면 pga로 되돌리세요.",
+              "id": "tourId",
+              "label": "소속 투어",
+              "options": [
+                {
+                  "label": "PGA",
+                  "value": "pga"
+                },
+                {
+                  "label": "LPGA",
+                  "value": "lpga"
+                },
+                {
+                  "label": "KPGA",
+                  "value": "kpga"
+                },
+                {
+                  "label": "KLPGA",
+                  "value": "klpga"
+                }
+              ],
+              "type": "RADIO"
+            },
+            {
+              "description": "이 값은 국적 아이콘을 변경합니다. 이모지 국기를 복붙하세요.\n문제가 생기면 비워두세요.",
+              "id": "countryFlag",
+              "label": "국기 이모지 (선택)",
+              "placeholder": "예: 🇺🇸",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드 상단 국적 표시를 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "countryName",
+              "label": "국적 (선택)",
+              "placeholder": "예: 미국",
+              "type": "TEXT"
+            },
+            {
+              "content": "장비 및 메타 정보",
+              "type": "TITLE"
+            },
+            {
+              "description": "이 값은 카드 우상단 장비 개수 배지를 변경합니다.\n문제가 생기면 비워두세요.",
+              "id": "gearCount",
+              "label": "장비 수량 (선택)",
+              "placeholder": "예: 14",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드 하단 선수 메타 정보를 변경합니다.\n문제가 생기면 비워두세요.\n엔터로 줄바꿈이 가능해요.",
+              "id": "playerMeta",
+              "label": "선수 정보/최근 우승 (선택)",
+              "placeholder": "예: 세계 랭킹 1위\n2025 마스터스 우승",
+              "type": "TEXTAREA"
+            },
+            {
+              "content": "링크",
+              "type": "TITLE"
+            },
+            {
+              "description": "이 값은 카드 클릭 시 이동하는 링크를 변경합니다.\n문제가 생기면 링크를 초기화하세요.",
+              "id": "linkUrl",
+              "label": "선수 상세 페이지 링크",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "고급 옵션 활성화",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 디자인 고급 설정 항목 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "developerMode",
+          "label": "디자인 고급 옵션 보기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "색상",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 배지, 버튼, 강조 요소의 주요 컬러를 변경합니다.\n권장값: #22C55E (GOLPRO 딥그린)\n문제가 생기면 #22C55E로 되돌리세요.",
+          "id": "accentColor",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 컬러 (Accent)",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 전체 섹션의 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "sectionBg",
+          "isVisible": "property.developerMode === true",
+          "label": "섹션 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 섹션 메인 제목 텍스트 색상을 변경합니다.\n권장값: #111111\n문제가 생기면 #111111로 되돌리세요.",
+          "id": "titleColor",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 부제목 및 메타 텍스트의 색상을 변경합니다.\n권장값: #767676\n문제가 생기면 #767676으로 되돌리세요.",
+          "id": "subtitleColor",
+          "isVisible": "property.developerMode === true",
+          "label": "부제목/설명 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "카드 디자인",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 선수 카드의 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "cardBg",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 하단 텍스트 영역의 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "cardBodyBg",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 정보 영역 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 외곽선 색상을 변경합니다.\n권장값: #E8E8E8\n문제가 생기면 #E8E8E8로 되돌리세요.",
+          "id": "cardBorder",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 선수 카드의 모서리 반경을 변경합니다.\n권장값: 12\n문제가 생기면 12로 되돌리세요.",
+          "id": "cardRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 모서리 둥글기 (px)",
+          "max": 32,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 카드 텍스트 영역의 상하 패딩을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "cardPadV",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 내부 상하 여백 (px)",
+          "max": 40,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 카드 텍스트 영역의 좌우 패딩을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "cardPadH",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 내부 좌우 여백 (px)",
+          "max": 40,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 카드 내 선수 한글 이름의 색상을 변경합니다.\n권장값: #111111\n문제가 생기면 #111111로 되돌리세요.",
+          "id": "cardNameColor",
+          "isVisible": "property.developerMode === true",
+          "label": "선수 이름 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 내 선수 영문 이름의 색상을 변경합니다.\n권장값: #A0A0A0\n문제가 생기면 #A0A0A0으로 되돌리세요.",
+          "id": "cardNameEnColor",
+          "isVisible": "property.developerMode === true",
+          "label": "영문 이름 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 국적 표시 텍스트의 색상을 변경합니다.\n권장값: #A0A0A0\n문제가 생기면 #A0A0A0으로 되돌리세요.",
+          "id": "cardCountryColor",
+          "isVisible": "property.developerMode === true",
+          "label": "국적 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 선수 메타 정보 텍스트의 색상을 변경합니다.\n권장값: #767676\n문제가 생기면 #767676으로 되돌리세요.",
+          "id": "cardMetaColor",
+          "isVisible": "property.developerMode === true",
+          "label": "메타 정보 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 내부 구분선의 색상을 변경합니다.\n권장값: #F0F0F0\n문제가 생기면 #F0F0F0으로 되돌리세요.",
+          "id": "cardDividerColor",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 구분선 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "이미지",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 카드 이미지 영역의 세로 비율을 변경합니다.\n권장값: 118 (세로형)\n문제가 생기면 118로 되돌리세요.",
+          "id": "imgRatio",
+          "isVisible": "property.developerMode === true",
+          "label": "이미지 비율 (padding-top %)",
+          "max": 160,
+          "min": 60,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "%"
+        },
+        {
+          "description": "이 값은 이미지 로딩 전 표시되는 배경색을 변경합니다.\n권장값: #E8E8E8\n문제가 생기면 #E8E8E8로 되돌리세요.",
+          "id": "imgPlaceholderBg",
+          "isVisible": "property.developerMode === true",
+          "label": "이미지 플레이스홀더 배경",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "호버 효과",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 카드에 마우스를 올렸을 때 위로 이동하는 픽셀을 변경합니다.\n권장값: -6\n문제가 생기면 -6으로 되돌리세요.",
+          "id": "cardHoverShiftY",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 호버 상승 거리 (px)",
+          "max": 0,
+          "min": -20,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 카드 호버 시 이미지 확대 배율을 변경합니다.\n권장값: 1.07\n문제가 생기면 1.07로 되돌리세요.",
+          "id": "imgHoverScale",
+          "isVisible": "property.developerMode === true",
+          "label": "이미지 호버 확대 배율",
+          "max": 130,
+          "min": 100,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "%"
+        },
+        {
+          "description": "이 값은 카드 호버 시 나타나는 그림자 색상을 변경합니다.\n권장값: rgba(0,0,0,0.12)\n문제가 생기면 초기화하세요.",
+          "id": "shadowColor",
+          "isVisible": "property.developerMode === true",
+          "label": "카드 호버 그림자 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 호버 그림자의 블러 반경을 변경합니다.\n권장값: 24\n문제가 생기면 24로 되돌리세요.",
+          "id": "shadowBlur",
+          "isVisible": "property.developerMode === true",
+          "label": "그림자 번짐 (px)",
+          "max": 60,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 호버 그림자의 확산 범위를 변경합니다.\n권장값: 0\n문제가 생기면 0으로 되돌리세요.",
+          "id": "shadowSpread",
+          "isVisible": "property.developerMode === true",
+          "label": "그림자 확산 (px)",
+          "max": 20,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "그리드 레이아웃",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑에서 표시되는 카드 열 개수를 변경합니다.\n권장값: 4\n문제가 생기면 4로 되돌리세요.",
+          "id": "colsD",
+          "label": "데스크탑 열 수",
+          "max": 6,
+          "min": 2,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "이 값은 모바일에서 표시되는 카드 열 개수를 변경합니다.\n권장값: 2\n문제가 생기면 2로 되돌리세요.",
+          "id": "colsM",
+          "label": "모바일 열 수",
+          "max": 3,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "열"
+        },
+        {
+          "description": "이 값은 데스크탑 카드 사이 간격을 변경합니다.\n권장값: 20\n문제가 생기면 20으로 되돌리세요.",
+          "id": "gridGapD",
+          "label": "카드 간격 데스크탑 (px)",
+          "max": 48,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 카드 사이 간격을 변경합니다.\n권장값: 12\n문제가 생기면 12로 되돌리세요.",
+          "id": "gridGapM",
+          "label": "카드 간격 모바일 (px)",
+          "max": 32,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "타이포그래피",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 Eyebrow 소제목 텍스트 크기를 변경합니다.\n권장값: 11\n문제가 생기면 11로 되돌리세요.",
+          "id": "eyebrowSize",
+          "isVisible": "property.developerMode === true",
+          "label": "소제목 폰트 크기 (px)",
+          "max": 16,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 데스크탑 섹션 제목 크기를 변경합니다.\n권장값: 36\n문제가 생기면 36으로 되돌리세요.",
+          "id": "titleSizeD",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 폰트 크기 데스크탑 (px)",
+          "max": 64,
+          "min": 20,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 제목 크기를 변경합니다.\n권장값: 26\n문제가 생기면 26으로 되돌리세요.",
+          "id": "titleSizeM",
+          "isVisible": "property.developerMode === true",
+          "label": "제목 폰트 크기 모바일 (px)",
+          "max": 48,
+          "min": 16,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 데스크탑 섹션 부제목 크기를 변경합니다.\n권장값: 15\n문제가 생기면 15로 되돌리세요.",
+          "id": "subtitleSizeD",
+          "isVisible": "property.developerMode === true",
+          "label": "부제목 폰트 크기 데스크탑 (px)",
+          "max": 22,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 부제목 크기를 변경합니다.\n권장값: 14\n문제가 생기면 14로 되돌리세요.",
+          "id": "subtitleSizeM",
+          "isVisible": "property.developerMode === true",
+          "label": "부제목 폰트 크기 모바일 (px)",
+          "max": 20,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 카드 내 선수 이름 텍스트 크기를 변경합니다.\n권장값: 17\n문제가 생기면 17로 되돌리세요.",
+          "id": "cardNameSizeD",
+          "isVisible": "property.developerMode === true",
+          "label": "선수 이름 크기 데스크탑 (px)",
+          "max": 28,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 카드 내 선수 이름 텍스트 크기를 변경합니다.\n권장값: 15\n문제가 생기면 15로 되돌리세요.",
+          "id": "cardNameSizeM",
+          "isVisible": "property.developerMode === true",
+          "label": "선수 이름 크기 모바일 (px)",
+          "max": 24,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "투어 탭 스타일",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 비활성 탭의 배경색을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "tabBg",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 기본 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 비활성 탭의 텍스트 색상을 변경합니다.\n권장값: #555555\n문제가 생기면 #555555로 되돌리세요.",
+          "id": "tabColor",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 기본 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 비활성 탭의 테두리 색상을 변경합니다.\n권장값: #DDDDDD\n문제가 생기면 #DDDDDD로 되돌리세요.",
+          "id": "tabBorderColor",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 기본 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 선택된 탭의 배경색을 변경합니다.\n권장값: #111111\n문제가 생기면 #111111로 되돌리세요.",
+          "id": "tabActiveBg",
+          "isVisible": "property.developerMode === true",
+          "label": "활성 탭 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 선택된 탭의 텍스트 색상을 변경합니다.\n권장값: #FFFFFF\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "tabActiveColor",
+          "isVisible": "property.developerMode === true",
+          "label": "활성 탭 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 선택된 탭의 테두리 색상을 변경합니다.\n권장값: #111111\n문제가 생기면 #111111로 되돌리세요.",
+          "id": "tabActiveBorderColor",
+          "isVisible": "property.developerMode === true",
+          "label": "활성 탭 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 필터 탭의 모서리 반경을 변경합니다.\n권장값: 100 (완전 둥근 pill형)\n문제가 생기면 100으로 되돌리세요.",
+          "id": "tabRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 모서리 둥글기 (px)",
+          "max": 100,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 필터 탭의 텍스트 크기를 변경합니다.\n권장값: 13\n문제가 생기면 13으로 되돌리세요.",
+          "id": "tabFontSize",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 텍스트 크기 (px)",
+          "max": 18,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 탭 버튼의 상하 패딩을 변경합니다.\n권장값: 7\n문제가 생기면 7로 되돌리세요.",
+          "id": "tabPadV",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 상하 여백 (px)",
+          "max": 20,
+          "min": 4,
+          "step": 1,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 탭 버튼의 좌우 패딩을 변경합니다.\n권장값: 18\n문제가 생기면 18로 되돌리세요.",
+          "id": "tabPadH",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 좌우 여백 (px)",
+          "max": 40,
+          "min": 8,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 투어 필터 탭 버튼들 사이의 간격을 변경합니다.\n권장값: 8\n문제가 생기면 8로 되돌리세요.",
+          "id": "tabGap",
+          "isVisible": "property.developerMode === true",
+          "label": "탭 사이 간격 (px)",
+          "max": 32,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "버튼 스타일",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 전체보기 버튼의 모서리 반경을 변경합니다.\n권장값: 100\n문제가 생기면 100으로 되돌리세요.",
+          "id": "btnRadius",
+          "isVisible": "property.developerMode === true",
+          "label": "전체보기 버튼 모서리 (px)",
+          "max": 100,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "간격 (데스크탑)",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 섹션 내용의 최대 가로 너비를 변경합니다.\n권장값: 1400\n문제가 생기면 1400으로 되돌리세요.",
+          "id": "maxWidth",
+          "label": "최대 너비 (px)",
+          "max": 1920,
+          "min": 800,
+          "step": 20,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 상단 여백을 변경합니다.\n권장값: 80\n문제가 생기면 80으로 되돌리세요.",
+          "id": "paddingTopD",
+          "label": "상단 여백 데스크탑 (px)",
+          "max": 160,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 하단 여백을 변경합니다.\n권장값: 80\n문제가 생기면 80으로 되돌리세요.",
+          "id": "paddingBottomD",
+          "label": "하단 여백 데스크탑 (px)",
+          "max": 160,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 좌우 여백을 변경합니다.\n권장값: 40\n문제가 생기면 40으로 되돌리세요.",
+          "id": "paddingHD",
+          "label": "좌우 여백 데스크탑 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 섹션 헤더와 필터 탭 사이 간격을 변경합니다.\n권장값: 32\n문제가 생기면 32로 되돌리세요.",
+          "id": "headerMbD",
+          "label": "헤더 하단 여백 데스크탑 (px)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 필터 탭과 카드 그리드 사이 간격을 변경합니다.\n권장값: 24\n문제가 생기면 24로 되돌리세요.",
+          "id": "tabMbD",
+          "label": "탭 하단 여백 데스크탑 (px)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "간격 (모바일)",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 모바일 섹션 상단 여백을 변경합니다.\n권장값: 48\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingTopM",
+          "label": "상단 여백 모바일 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 하단 여백을 변경합니다.\n권장값: 48\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingBottomM",
+          "label": "하단 여백 모바일 (px)",
+          "max": 120,
+          "min": 0,
+          "step": 8,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 섹션 좌우 여백을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "paddingHM",
+          "label": "좌우 여백 모바일 (px)",
+          "max": 60,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 헤더와 탭 사이 간격을 변경합니다.\n권장값: 24\n문제가 생기면 24로 되돌리세요.",
+          "id": "headerMbM",
+          "label": "헤더 하단 여백 모바일 (px)",
+          "max": 60,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "description": "이 값은 모바일 탭과 카드 그리드 사이 간격을 변경합니다.\n권장값: 16\n문제가 생기면 16으로 되돌리세요.",
+          "id": "tabMbM",
+          "label": "탭 하단 여백 모바일 (px)",
+          "max": 60,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE",
+          "unit": "px"
+        },
+        {
+          "content": "스켈레톤 색상",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 로딩 중 스켈레톤 UI의 기본 배경색을 변경합니다.\n권장값: #EFEFEF\n문제가 생기면 #EFEFEF로 되돌리세요.",
+          "id": "skeletonBase",
+          "isVisible": "property.developerMode === true",
+          "label": "스켈레톤 기본 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 로딩 스켈레톤의 shimmer 반짝임 색상을 변경합니다.\n권장값: #F9F9F9\n문제가 생기면 #F9F9F9로 되돌리세요.",
+          "id": "skeletonShine",
+          "isVisible": "property.developerMode === true",
+          "label": "스켈레톤 반짝임 색상",
+          "type": "COLOR_PICKER"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#22C55E",
+    "btnRadius": 100,
+    "cardBg": "#FFFFFF",
+    "cardBodyBg": "#FFFFFF",
+    "cardBorder": "#E8E8E8",
+    "cardCountryColor": "#A0A0A0",
+    "cardDividerColor": "#F0F0F0",
+    "cardHoverShiftY": -6,
+    "cardMetaColor": "#767676",
+    "cardNameColor": "#111111",
+    "cardNameEnColor": "#A0A0A0",
+    "cardNameSizeD": 17,
+    "cardNameSizeM": 15,
+    "cardPadH": 16,
+    "cardPadV": 16,
+    "cardRadius": 12,
+    "colsD": 4,
+    "colsM": 2,
+    "developerMode": false,
+    "eyebrowSize": 11,
+    "eyebrowText": "WHAT'S IN THE BAG",
+    "gridGapD": 20,
+    "gridGapM": 12,
+    "headerMbD": 32,
+    "headerMbM": 24,
+    "imgHoverScale": 107,
+    "imgPlaceholderBg": "#E8E8E8",
+    "imgRatio": 118,
+    "maxWidth": 1400,
+    "paddingBottomD": 80,
+    "paddingBottomM": 48,
+    "paddingHD": 40,
+    "paddingHM": 16,
+    "paddingTopD": 80,
+    "paddingTopM": 48,
+    "players": [
+      {
+        "countryFlag": "🇺🇸",
+        "countryName": "미국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image1.jpg",
+        "playerMeta": "세계 랭킹 4위\n2024 Master 준우승",
+        "playerName": "타이거 우즈",
+        "playerNameEn": "Tiger Woods",
+        "tourId": "pga"
+      },
+      {
+        "countryFlag": "🇮🇪",
+        "countryName": "북아일랜드",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image2.jpg",
+        "playerMeta": "세계 랭킹 3위\n2025 Amgen Irish Open 우승",
+        "playerName": "로리 맥길로이",
+        "playerNameEn": "Rory McIlroy",
+        "tourId": "pga"
+      },
+      {
+        "countryFlag": "🇺🇸",
+        "countryName": "미국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image3.jpg",
+        "playerMeta": "세계 랭킹 1위\n2025 Masters 우승",
+        "playerName": "스카티 셰플러",
+        "playerNameEn": "Scottie Scheffler",
+        "tourId": "pga"
+      },
+      {
+        "countryFlag": "🇰🇷",
+        "countryName": "대한민국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image4.jpg",
+        "playerMeta": "세계 랭킹 12위\n2025 시즌 활약 중",
+        "playerName": "김주형",
+        "playerNameEn": "Tom Kim",
+        "tourId": "pga"
+      },
+      {
+        "countryFlag": "🇺🇸",
+        "countryName": "미국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image5.jpg",
+        "playerMeta": "세계 랭킹 1위\n2025 시즌 다승 달성",
+        "playerName": "넬리 코다",
+        "playerNameEn": "Nelly Korda",
+        "tourId": "lpga"
+      },
+      {
+        "countryFlag": "🇬🇧",
+        "countryName": "영국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image6.jpg",
+        "playerMeta": "세계 랭킹 10위\n2025 시즌 활약 중",
+        "playerName": "찰리 헐",
+        "playerNameEn": "Charley Hull",
+        "tourId": "lpga"
+      },
+      {
+        "countryFlag": "🇺🇸",
+        "countryName": "미국",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image7.jpg",
+        "playerMeta": "아마추어 최강자\n2025 프로 전환",
+        "playerName": "카이 트럼프",
+        "playerNameEn": "Kai Trump",
+        "tourId": "lpga"
+      },
+      {
+        "countryFlag": "🇦🇺",
+        "countryName": "호주",
+        "gearCount": "14",
+        "linkUrl": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "playerImage": "https://ss3-prod-static-files.s3.ap-northeast-2.amazonaws.com/block-image-library/sports/image8.jpg",
+        "playerMeta": "세계 랭킹 15위\n2025 시즌 활약 중",
+        "playerName": "이민우",
+        "playerNameEn": "Min Woo Lee",
+        "tourId": "pga"
+      }
+    ],
+    "sectionBg": "#FFFFFF",
+    "sectionSubtitle": "PGA, LPGA, KPGA, KLPGA 투어 선수들의 실제 사용 장비를 확인해보세요.",
+    "sectionTitle": "프로 선수 <em>장비</em>",
+    "shadowBlur": 24,
+    "shadowColor": "#00000020",
+    "shadowSpread": 0,
+    "showKLPGA": true,
+    "showKPGA": true,
+    "showLPGA": true,
+    "showPGA": true,
+    "showTabs": true,
+    "showViewAll": true,
+    "skeletonBase": "#EFEFEF",
+    "skeletonShine": "#F9F9F9",
+    "subtitleColor": "#767676",
+    "subtitleSizeD": 15,
+    "subtitleSizeM": 14,
+    "tabActiveBg": "#111111",
+    "tabActiveBorderColor": "#111111",
+    "tabActiveColor": "#FFFFFF",
+    "tabBg": "#FFFFFF",
+    "tabBorderColor": "#DDDDDD",
+    "tabColor": "#555555",
+    "tabFontSize": 13,
+    "tabGap": 8,
+    "tabMbD": 24,
+    "tabMbM": 16,
+    "tabPadH": 18,
+    "tabPadV": 7,
+    "tabRadius": 100,
+    "titleColor": "#111111",
+    "titleSizeD": 36,
+    "titleSizeM": 26,
+    "viewAllLabel": "전체보기",
+    "viewAllLink": {
+      "id": null,
+      "label": "",
+      "type": "url",
+      "value": ""
+    },
+    "viewAllNewTab": false
+  }
+}

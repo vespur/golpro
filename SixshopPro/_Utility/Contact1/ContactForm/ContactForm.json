@@ -1,0 +1,377 @@
+{
+  "title": "게시판+구글 시트 연동 문의 폼",
+  "status": "active",
+  "settings": [
+    {
+      "content": "폼 기본 설정",
+      "type": "TITLE"
+    },
+    {
+      "id": "formTitle",
+      "label": "폼 제목",
+      "type": "TEXT"
+    },
+    {
+      "id": "showFormTitle",
+      "label": "폼 제목 표시",
+      "type": "CHECKBOX"
+    },
+    {
+      "id": "submitButtonText",
+      "label": "제출 버튼 텍스트",
+      "type": "TEXT"
+    },
+    {
+      "id": "successMessage",
+      "label": "제출 완료 메시지",
+      "type": "TEXT"
+    },
+    {
+      "content": "저장 설정",
+      "type": "TITLE"
+    },
+    {
+      "id": "saveToGoogleSheet",
+      "label": "구글시트에 저장",
+      "type": "CHECKBOX"
+    },
+    {
+      "id": "googleSheetUrl",
+      "isVisible": "property.saveToGoogleSheet == true",
+      "label": "구글시트 웹앱 URL",
+      "type": "TEXT"
+    },
+    {
+      "content": "<a href='https://cucurl.notion.site/2ccb05755386805da380d77dcc2fc35b' target='_blank'>가이드보기</a>",
+      "isVisible": "property.saveToGoogleSheet == true",
+      "type": "DESCRIPTION"
+    },
+    {
+      "id": "saveToBoard",
+      "label": "식스샵 게시판에 저장",
+      "type": "CHECKBOX"
+    },
+    {
+      "id": "board",
+      "isPostsIncluded": false,
+      "isVisible": "property.saveToBoard == true",
+      "label": "저장할 게시판",
+      "type": "BOARD"
+    },
+    {
+      "id": "postTitleFormat",
+      "isVisible": "property.saveToBoard == true",
+      "label": "게시글 제목 형식",
+      "type": "TEXT"
+    },
+    {
+      "id": "postAccessType",
+      "isVisible": "property.saveToBoard == true",
+      "label": "게시글 공개 여부",
+      "options": [
+        {
+          "label": "공개",
+          "value": "OPEN"
+        },
+        {
+          "label": "비공개",
+          "value": "SECRET"
+        }
+      ],
+      "type": "RADIO"
+    },
+    {
+      "content": "입력 필드 설정",
+      "type": "TITLE"
+    },
+    {
+      "id": "fields",
+      "label": "입력 필드 목록",
+      "maxCount": 20,
+      "settings": [
+        {
+          "id": "fieldType",
+          "label": "필드 타입",
+          "options": [
+            {
+              "label": "텍스트",
+              "value": "text"
+            },
+            {
+              "label": "여러 줄 텍스트",
+              "value": "textarea"
+            },
+            {
+              "label": "전화번호 (3분할)",
+              "value": "tel"
+            },
+            {
+              "label": "이메일",
+              "value": "email"
+            },
+            {
+              "label": "숫자",
+              "value": "number"
+            },
+            {
+              "label": "날짜",
+              "value": "date"
+            },
+            {
+              "label": "라디오 버튼",
+              "value": "radio"
+            },
+            {
+              "label": "드롭다운",
+              "value": "select"
+            },
+            {
+              "label": "체크박스",
+              "value": "checkbox"
+            },
+            {
+              "label": "약관 동의",
+              "value": "agreement"
+            }
+          ],
+          "type": "SELECT"
+        },
+        {
+          "id": "label",
+          "label": "필드 라벨",
+          "type": "TEXT"
+        },
+        {
+          "id": "placeholder",
+          "label": "플레이스홀더",
+          "type": "TEXT"
+        },
+        {
+          "id": "required",
+          "label": "필수 항목",
+          "type": "CHECKBOX"
+        },
+        {
+          "id": "options",
+          "isVisible": "property.fields[index].fieldType == \"radio\" || property.fields[index].fieldType == \"select\"",
+          "label": "옵션 (콤마로 구분)",
+          "type": "TEXT"
+        },
+        {
+          "id": "agreementText",
+          "isVisible": "property.fields[index].fieldType == \"agreement\"",
+          "label": "약관 내용",
+          "type": "TEXTAREA"
+        },
+        {
+          "id": "checkboxLabel",
+          "isVisible": "property.fields[index].fieldType == \"checkbox\" || property.fields[index].fieldType == \"agreement\"",
+          "label": "체크박스/동의 라벨",
+          "type": "TEXT"
+        }
+      ],
+      "type": "LIST"
+    },
+    {
+      "content": "디자인 설정",
+      "type": "TITLE"
+    },
+    {
+      "id": "labelColor",
+      "label": "라벨 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "requiredColor",
+      "label": "필수 표시 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "inputBorderColor",
+      "label": "입력창 테두리 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "inputFocusBorderColor",
+      "label": "입력창 포커스 테두리 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "buttonBgColor",
+      "label": "버튼 배경 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "buttonTextColor",
+      "label": "버튼 텍스트 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "buttonHoverBgColor",
+      "label": "버튼 호버 배경 색상",
+      "type": "COLOR_PICKER"
+    },
+    {
+      "id": "buttonBorderRadius",
+      "label": "버튼 모서리 둥글기",
+      "max": 50,
+      "min": 0,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "fieldSpacing",
+      "label": "필드 간격",
+      "max": 50,
+      "min": 10,
+      "step": 2,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "maxWidth",
+      "label": "폼 최대 너비",
+      "max": 1000,
+      "min": 300,
+      "step": 10,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "content": "텍스트 크기 설정 (데스크톱)",
+      "type": "TITLE"
+    },
+    {
+      "id": "labelFontSize",
+      "label": "라벨 글자 크기",
+      "max": 24,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "inputFontSize",
+      "label": "입력창 글자 크기",
+      "max": 20,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "buttonFontSize",
+      "label": "버튼 글자 크기",
+      "max": 24,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "content": "텍스트 크기 설정 (모바일)",
+      "type": "TITLE"
+    },
+    {
+      "id": "labelFontSizeMobile",
+      "label": "라벨 글자 크기",
+      "max": 24,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "inputFontSizeMobile",
+      "label": "입력창 글자 크기",
+      "max": 20,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    },
+    {
+      "id": "buttonFontSizeMobile",
+      "label": "버튼 글자 크기",
+      "max": 24,
+      "min": 12,
+      "step": 1,
+      "type": "RANGE",
+      "unit": "px"
+    }
+  ],
+  "property": {
+    "board": {
+      "id": "",
+      "posts": {
+        "limit": 10,
+        "page": 1,
+        "sort": ""
+      }
+    },
+    "buttonBgColor": "#333333",
+    "buttonBorderRadius": 4,
+    "buttonFontSize": 16,
+    "buttonFontSizeMobile": 15,
+    "buttonHoverBgColor": "#555555",
+    "buttonTextColor": "#ffffff",
+    "fieldSpacing": 24,
+    "fields": [
+      {
+        "agreementText": "",
+        "checkboxLabel": "",
+        "fieldType": "text",
+        "label": "이름",
+        "options": "",
+        "placeholder": "",
+        "required": true
+      },
+      {
+        "agreementText": "",
+        "checkboxLabel": "",
+        "fieldType": "tel",
+        "label": "연락처",
+        "options": "",
+        "placeholder": "",
+        "required": true
+      },
+      {
+        "agreementText": "",
+        "checkboxLabel": "",
+        "fieldType": "textarea",
+        "label": "문의내용",
+        "options": "",
+        "placeholder": "",
+        "required": false
+      },
+      {
+        "agreementText": "개인정보 보호법 제30조에 따라 정보 주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리지침을 수립, 공개합니다.",
+        "checkboxLabel": "개인정보 수집 및 이용에 동의합니다.",
+        "fieldType": "agreement",
+        "label": "개인정보 수집 및 이용 동의",
+        "options": "",
+        "placeholder": "",
+        "required": true
+      }
+    ],
+    "formTitle": "문의하기",
+    "googleSheetUrl": "",
+    "inputBorderColor": "#dddddd",
+    "inputFocusBorderColor": "#333333",
+    "inputFontSize": 14,
+    "inputFontSizeMobile": 14,
+    "labelColor": "#333333",
+    "labelFontSize": 14,
+    "labelFontSizeMobile": 13,
+    "maxWidth": 600,
+    "postAccessType": "SECRET",
+    "postTitleFormat": "[문의] {{이름}}님의 문의",
+    "requiredColor": "#e74c3c",
+    "saveToBoard": false,
+    "saveToGoogleSheet": false,
+    "showFormTitle": true,
+    "submitButtonText": "제출하기",
+    "successMessage": "제출이 완료되었습니다. 감사합니다!"
+  }
+}

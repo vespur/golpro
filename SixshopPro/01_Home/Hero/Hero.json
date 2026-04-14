@@ -1,0 +1,494 @@
+{
+  "title": "Home_히어로",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "기본",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 모바일 캐러셀 자동 슬라이드 기능을 변경합니다.\n끄면 수동 스와이프만 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "autoPlay",
+          "label": "모바일 자동 슬라이드",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 자동 슬라이드 전환 시간을 변경합니다.\n권장: 3~5초.\n문제가 생기면 4로 되돌리세요.",
+          "id": "autoPlayInterval",
+          "isVisible": "property.autoPlay === true",
+          "label": "자동 슬라이드 간격 (초)",
+          "max": 10,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 첫 로딩 시 활성화될 탭을 변경합니다.\n문제가 생기면 'free'로 되돌리세요.",
+          "id": "defaultTab",
+          "label": "기본 활성 탭 키",
+          "placeholder": "예: free",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 카드 위 레이블 표시 여부를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "showSectionLabel",
+          "label": "섹션 레이블 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "description": "이 값은 카드 위 레이블 문구를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "sectionLabel",
+          "isVisible": "property.showSectionLabel === true",
+          "label": "섹션 레이블 텍스트",
+          "placeholder": "예: GOLPRO 게시판",
+          "type": "TEXT"
+        },
+        {
+          "content": "카드 목록",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 히어로 카드 목록을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "cards",
+          "label": "카드",
+          "maxCount": 6,
+          "settings": [
+            {
+              "description": "이 값은 Feed 블록과 연결되는 탭 키를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "tabKey",
+              "label": "탭 키",
+              "placeholder": "예: free, gear, cc, event, live",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드 하단에 표시될 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "title",
+              "label": "카드 레이블",
+              "placeholder": "예: 자유게시판",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 카드 배경 이미지를 변경합니다.\n권장: 340×480px JPG.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "bgImage",
+              "label": "배경 이미지",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 평상시 표시할 캐릭터 이미지를 변경합니다.\n권장: 340×520px PNG 투명배경.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "normalImage",
+              "label": "기본 캐릭터 이미지",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 마우스 오버 시 표시할 캐릭터 이미지를 변경합니다.\n권장: 700×520px PNG 투명배경(카드 너비의 2배).\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "hoverImage",
+              "label": "호버 캐릭터 이미지",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 레이블 앞 아이콘을 변경합니다.\n권장: 40×40px PNG.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "iconImage",
+              "label": "아이콘 이미지",
+              "type": "IMAGE_PICKER"
+            },
+            {
+              "description": "이 값은 카드 좌상단 배지 문구를 변경합니다.\n비워두면 배지가 숨겨집니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "badge",
+              "label": "배지 텍스트",
+              "placeholder": "예: HOT, NEW",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 우상단 LIVE 배지 표시 여부를 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "isLive",
+              "label": "LIVE 배지 표시",
+              "type": "CHECKBOX"
+            },
+            {
+              "description": "이 값은 카드 클릭 시 이동 링크를 변경합니다.\n비워두면 피드 탭 전환으로 동작합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "link",
+              "label": "링크 (비우면 탭 전환)",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "색상",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 배지·인디케이터·활성 오버레이 색상을 변경합니다.\n문제가 생기면 #166534로 되돌리세요.",
+          "id": "accentColor",
+          "label": "포인트 컬러",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 히어로 섹션 전체 배경색을 변경합니다.\n문제가 생기면 #f8fafc로 되돌리세요.",
+          "id": "heroBg",
+          "label": "섹션 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 배경 이미지가 없을 때 카드 배경색을 변경합니다.\n문제가 생기면 #1c1c1f로 되돌리세요.",
+          "id": "cardNoImgBg",
+          "label": "카드 기본 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 하단 레이블 기본 글자색을 변경합니다.\n문제가 생기면 #6b7280으로 되돌리세요.",
+          "id": "labelColor",
+          "label": "레이블 기본 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 호버·활성 시 레이블 글자색을 변경합니다.\n문제가 생기면 #111827로 되돌리세요.",
+          "id": "labelActiveColor",
+          "label": "레이블 활성/호버 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "description": "이 값은 카드 위 섹션 레이블 글자색을 변경합니다.\n문제가 생기면 #374151로 되돌리세요.",
+          "id": "eyebrowColor",
+          "label": "섹션 레이블 색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "카드 크기 — 데스크탑",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑 카드 이미지 영역 너비를 변경합니다.\n권장: 160~200.\n문제가 생기면 170으로 되돌리세요.",
+          "id": "cardW",
+          "label": "카드 너비 (px)",
+          "max": 260,
+          "min": 120,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 데스크탑 카드 이미지 영역 높이를 변경합니다.\n권장: 220~260.\n문제가 생기면 240으로 되돌리세요.",
+          "id": "cardH",
+          "label": "카드 높이 (px)",
+          "max": 360,
+          "min": 160,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 캐릭터 이미지 표시 높이를 변경합니다.\n권장: 카드 높이 + 20.\n문제가 생기면 260으로 되돌리세요.",
+          "id": "charH",
+          "label": "캐릭터 이미지 높이 (px)",
+          "max": 400,
+          "min": 180,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 호버 캐릭터 이미지 너비를 변경합니다.\n권장: 카드 너비의 2배(340).\n문제가 생기면 350으로 되돌리세요.",
+          "id": "hoverW",
+          "label": "호버 이미지 너비 (px)",
+          "max": 600,
+          "min": 200,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "카드 크기 — 모바일",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 모바일 카드 너비를 변경합니다.\n권장: 120~140.\n문제가 생기면 130으로 되돌리세요.",
+          "id": "cardWMobile",
+          "label": "카드 너비 (px)",
+          "max": 200,
+          "min": 90,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 카드 높이를 변경합니다.\n권장: 175~195.\n문제가 생기면 185으로 되돌리세요.",
+          "id": "cardHMobile",
+          "label": "카드 높이 (px)",
+          "max": 280,
+          "min": 120,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 캐릭터 이미지 높이를 변경합니다.\n권장: 카드 높이 + 20.\n문제가 생기면 200으로 되돌리세요.",
+          "id": "charHMobile",
+          "label": "캐릭터 이미지 높이 (px)",
+          "max": 320,
+          "min": 140,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 호버 캐릭터 너비를 변경합니다.\n권장: 카드 너비의 2배.\n문제가 생기면 270으로 되돌리세요.",
+          "id": "hoverWMobile",
+          "label": "호버 이미지 너비 (px)",
+          "max": 400,
+          "min": 160,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "간격 · 여백",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑 카드 사이 간격을 변경합니다.\n권장: 10~16.\n문제가 생기면 12로 되돌리세요.",
+          "id": "cardGap",
+          "label": "카드 간격 — 데스크탑 (px)",
+          "max": 32,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 카드 사이 간격을 변경합니다.\n권장: 6~10.\n문제가 생기면 8로 되돌리세요.",
+          "id": "cardGapMobile",
+          "label": "카드 간격 — 모바일 (px)",
+          "max": 20,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 카드 트랙 상단 여백을 변경합니다.\n캐릭터가 카드 위로 삐져나오는 공간입니다.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "cardPadTop",
+          "label": "카드 상단 여백 (px)",
+          "max": 80,
+          "min": 10,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 이미지 영역과 하단 레이블 사이 간격을 변경합니다.\n권장: 6~10.\n문제가 생기면 8로 되돌리세요.",
+          "id": "labelGap",
+          "label": "카드-레이블 간격 (px)",
+          "max": 20,
+          "min": 2,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 히어로 섹션 상하 패딩을 변경합니다.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "heroPadV",
+          "label": "섹션 상하 여백 (px)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 데스크탑 섹션 좌우 패딩을 변경합니다.\n문제가 생기면 16으로 되돌리세요.",
+          "id": "heroPadH",
+          "label": "섹션 좌우 여백 — 데스크탑 (px)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 섹션 좌우 패딩을 변경합니다.\n문제가 생기면 12으로 되돌리세요.",
+          "id": "heroPadHMobile",
+          "label": "섹션 좌우 여백 — 모바일 (px)",
+          "max": 40,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "카드 형태",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 카드 이미지 영역 모서리 둥글기를 변경합니다.\n권장: 8~16.\n문제가 생기면 12으로 되돌리세요.",
+          "id": "cardRadius",
+          "label": "카드 모서리 (px)",
+          "max": 24,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 활성 카드 하단 인디케이터 높이를 변경합니다.\n0으로 설정하면 숨겨집니다.\n문제가 생기면 3으로 되돌리세요.",
+          "id": "indicatorH",
+          "label": "탭 인디케이터 높이 (px)",
+          "max": 6,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "content": "텍스트 크기",
+          "type": "TITLE"
+        },
+        {
+          "description": "이 값은 데스크탑 카드 레이블 폰트 크기를 변경합니다.\n문제가 생기면 13으로 되돌리세요.",
+          "id": "cardTitleSize",
+          "label": "레이블 크기 — 데스크탑 (px)",
+          "max": 18,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 모바일 카드 레이블 폰트 크기를 변경합니다.\n문제가 생기면 11으로 되돌리세요.",
+          "id": "cardTitleSizeMobile",
+          "label": "레이블 크기 — 모바일 (px)",
+          "max": 15,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 섹션 상단 레이블 폰트 크기를 변경합니다.\n문제가 생기면 12으로 되돌리세요.",
+          "id": "eyebrowSize",
+          "label": "섹션 레이블 크기 (px)",
+          "max": 18,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "description": "이 값은 섹션 레이블과 카드 트랙 사이 간격을 변경합니다.\n문제가 생기면 12으로 되돌리세요.",
+          "id": "eyebrowGap",
+          "label": "섹션 레이블 하단 여백 (px)",
+          "max": 32,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#166534",
+    "autoPlay": true,
+    "autoPlayInterval": 4,
+    "cardGap": 12,
+    "cardGapMobile": 8,
+    "cardH": 240,
+    "cardHMobile": 185,
+    "cardNoImgBg": "#1c1c1f",
+    "cardPadTop": 36,
+    "cardRadius": 12,
+    "cardTitleSize": 13,
+    "cardTitleSizeMobile": 11,
+    "cardW": 170,
+    "cardWMobile": 130,
+    "cards": [
+      {
+        "badge": "HOT",
+        "bgImage": "",
+        "hoverImage": "",
+        "iconImage": "",
+        "isLive": false,
+        "link": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "normalImage": "",
+        "tabKey": "free",
+        "title": "자유게시판"
+      },
+      {
+        "badge": "",
+        "bgImage": "",
+        "hoverImage": "",
+        "iconImage": "",
+        "isLive": false,
+        "link": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "normalImage": "",
+        "tabKey": "gear",
+        "title": "내 장비 자랑"
+      },
+      {
+        "badge": "",
+        "bgImage": "",
+        "hoverImage": "",
+        "iconImage": "",
+        "isLive": false,
+        "link": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "normalImage": "",
+        "tabKey": "cc",
+        "title": "CC 리얼 후기"
+      },
+      {
+        "badge": "NEW",
+        "bgImage": "",
+        "hoverImage": "",
+        "iconImage": "",
+        "isLive": false,
+        "link": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "normalImage": "",
+        "tabKey": "event",
+        "title": "진행중인 이벤트"
+      },
+      {
+        "badge": "",
+        "bgImage": "",
+        "hoverImage": "",
+        "iconImage": "",
+        "isLive": true,
+        "link": {
+          "id": null,
+          "label": "",
+          "type": "url",
+          "value": ""
+        },
+        "normalImage": "",
+        "tabKey": "live",
+        "title": "라이브 스레드"
+      }
+    ],
+    "charH": 260,
+    "charHMobile": 200,
+    "defaultTab": "free",
+    "eyebrowColor": "#374151",
+    "eyebrowGap": 12,
+    "eyebrowSize": 12,
+    "heroBg": "#f8fafc",
+    "heroPadH": 16,
+    "heroPadHMobile": 12,
+    "heroPadV": 20,
+    "hoverW": 350,
+    "hoverWMobile": 270,
+    "indicatorH": 3,
+    "labelActiveColor": "#111827",
+    "labelColor": "#6b7280",
+    "labelGap": 8,
+    "sectionLabel": "GOLPRO 게시판",
+    "showSectionLabel": true
+  }
+}
