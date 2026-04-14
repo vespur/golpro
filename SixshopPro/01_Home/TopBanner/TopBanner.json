@@ -1,0 +1,238 @@
+{
+  "title": "Home_최상단 배너",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "📐 광고 사이즈 안내 (2026 IAB 표준)",
+          "type": "TITLE"
+        },
+        {
+          "content": "광고주에게 아래 중 하나의 사이즈로 제작 요청하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "content": "🖥️ 데스크탑: 728×90(권장) / 970×90 / 970×250 | JPG·PNG, 150KB 이하",
+          "type": "DESCRIPTION"
+        },
+        {
+          "content": "📱 모바일: 320×50(권장) / 320×100 | JPG·PNG, 100KB 이하",
+          "type": "DESCRIPTION"
+        },
+        {
+          "content": "⚠️ 1920px 전폭 이미지는 IAB 비표준입니다. 위 사이즈를 사용하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "content": "광고 타입 선택",
+          "type": "TITLE"
+        },
+        {
+          "content": "광고주에게 받은 이미지 사이즈와 같은 타입을 선택하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": "leaderboard",
+          "description": "광고주에게 받은 데스크탑 이미지 사이즈에 맞는 타입을 선택하세요. 문제가 생기면 '리더보드'로 되돌리세요.",
+          "id": "typeDesktop",
+          "label": "데스크탑 광고 타입",
+          "options": [
+            {
+              "label": "리더보드: 728×90(권장)",
+              "value": "leaderboard"
+            },
+            {
+              "label": "(L)리더보드: 970×90(와이드)",
+              "value": "large-leaderboard"
+            },
+            {
+              "label": "빌보드: 970×250(프리미엄)",
+              "value": "billboard"
+            },
+            {
+              "label": "사용자 지정",
+              "value": "custom"
+            }
+          ],
+          "type": "SELECT"
+        },
+        {
+          "default": 90,
+          "description": "사용자 지정 타입 선택 시 높이를 입력하세요. 권장값: 90. 문제가 생기면 90으로 되돌리세요.",
+          "id": "customHeightD",
+          "isVisible": "property.typeDesktop === 'custom'",
+          "label": "데스크탑 높이 (px) — 사용자 지정",
+          "max": 400,
+          "min": 40,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": "mobile-banner",
+          "description": "광고주에게 받은 모바일 이미지 사이즈에 맞는 타입을 선택하세요. 문제가 생기면 '모바일 배너'로 되돌리세요.",
+          "id": "typeMobile",
+          "label": "모바일 광고 타입",
+          "options": [
+            {
+              "label": "모바일 배너: 320×50(권장)",
+              "value": "mobile-banner"
+            },
+            {
+              "label": "(L)모바일: 320×100(높은 클릭률)",
+              "value": "large-mobile"
+            },
+            {
+              "label": "사용자 지정",
+              "value": "custom"
+            }
+          ],
+          "type": "SELECT"
+        },
+        {
+          "default": 50,
+          "description": "사용자 지정 타입 선택 시 높이를 입력하세요. 권장값: 50. 문제가 생기면 50으로 되돌리세요.",
+          "id": "customHeightM",
+          "isVisible": "property.typeMobile === 'custom'",
+          "label": "모바일 높이 (px) — 사용자 지정",
+          "max": 200,
+          "min": 30,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "content": "배너 이미지",
+          "type": "TITLE"
+        },
+        {
+          "description": "데스크탑 배너 이미지를 업로드하세요. 위에서 선택한 광고 타입과 동일한 사이즈로 준비하세요.",
+          "id": "imageDesktop",
+          "label": "데스크탑 이미지",
+          "type": "IMAGE_PICKER"
+        },
+        {
+          "description": "모바일 배너 이미지를 업로드하세요. 비워두면 데스크탑 이미지가 자동 사용됩니다.",
+          "id": "imageMobile",
+          "label": "모바일 이미지",
+          "type": "IMAGE_PICKER"
+        },
+        {
+          "default": "배너 광고",
+          "description": "스크린리더·이미지 로딩 실패 시 표시되는 텍스트입니다. 배너 내용을 간략히 입력하세요.",
+          "id": "altText",
+          "label": "이미지 설명 (접근성)",
+          "placeholder": "예: 여름 시즌 10% 할인 이벤트",
+          "type": "TEXT"
+        },
+        {
+          "content": "링크",
+          "type": "TITLE"
+        },
+        {
+          "description": "배너 클릭 시 이동할 URL을 입력하세요. 비워두면 클릭해도 이동하지 않습니다.",
+          "id": "linkUrl",
+          "label": "배너 클릭 링크",
+          "type": "LINK"
+        },
+        {
+          "default": false,
+          "description": "켜면 새 탭(창)으로, 끄면 현재 탭에서 이동합니다.",
+          "id": "openInNewTab",
+          "label": "새 탭에서 열기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "표시 설정",
+          "type": "TITLE"
+        },
+        {
+          "default": "home_only",
+          "description": "배너를 표시할 페이지 범위를 설정합니다. 문제가 생기면 '홈 페이지만'으로 되돌리세요.",
+          "id": "showPage",
+          "label": "표시 페이지",
+          "options": [
+            {
+              "label": "홈 페이지만",
+              "value": "home_only"
+            },
+            {
+              "label": "전체 페이지",
+              "value": "all"
+            }
+          ],
+          "type": "RADIO"
+        },
+        {
+          "default": true,
+          "description": "방문자가 배너를 직접 닫을 수 있게 하려면 켜세요.",
+          "id": "showClose",
+          "label": "닫기 버튼 표시",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "배경",
+          "type": "TITLE"
+        },
+        {
+          "default": "#f5f5f5",
+          "description": "배너 영역의 배경색을 설정합니다. 이미지 로딩 전 표시되며 여백 색상에도 적용됩니다.",
+          "id": "bgColor",
+          "label": "배너 배경색",
+          "type": "COLOR_PICKER"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "개발자",
+      "settings": [
+        {
+          "content": "개발자 설정",
+          "type": "TITLE"
+        },
+        {
+          "content": "⚠️ 이 탭의 설정은 개발 담당자만 수정하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": 1024,
+          "description": "GNB 블록과 동일한 값을 사용하세요. 권장값: 1024. 문제가 생기면 1024로 되돌리세요.",
+          "id": "mobileBreak",
+          "label": "모바일 전환 기준 (px)",
+          "max": 1280,
+          "min": 640,
+          "step": 16,
+          "type": "RANGE"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "altText": "배너 광고",
+    "bgColor": "#f5f5f5",
+    "customHeightD": 90,
+    "customHeightM": 50,
+    "imageDesktop": null,
+    "imageMobile": null,
+    "linkUrl": {
+      "id": null,
+      "label": "",
+      "type": "url",
+      "value": ""
+    },
+    "mobileBreak": 1024,
+    "openInNewTab": false,
+    "showClose": true,
+    "showPage": "home_only",
+    "typeDesktop": "leaderboard",
+    "typeMobile": "mobile-banner"
+  }
+}

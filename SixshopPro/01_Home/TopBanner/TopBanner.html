@@ -1,0 +1,268 @@
+<data value="$page" />
+
+<style>
+/* =====================================================
+   GOLPRO Banner_AD v5
+   IAB 2026 표준 사이즈 기반 재설계
+   GNB 블록 바로 위 섹션에 배치하여 사용합니다.
+===================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { text-decoration: none; }
+
+/* [BUG2] 섹션 패딩은 JS에서 제거 (아래 script 참조) */
+
+/* ── Wrap: 배경색 + 닫기 애니메이션 ── */
+.bad-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: {{property.bgColor}};
+  transition: max-height 0.36s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+}
+.bad-wrap.is-closed { max-height: 0 !important; opacity: 0; pointer-events: none; }
+
+/* 페이지 필터 */
+.bad-wrap.page-home-only { display: none; }
+.bad-wrap.page-home-only.is-home-page { display: block; }
+
+/* ── 내부 컨테이너: 배너 이미지를 중앙 정렬 ── */
+.bad-inner {
+  position: relative;
+  margin: 0 auto;
+}
+
+/* ── 이미지 래퍼: padding-top trick으로 비율 유지 ── */
+/* [BUG1 FIX] <a> 태그는 기본 display:inline → padding-top% 높이 계산 안 됨
+   링크 있을 때 <a class="bad-img-wrap">이 되므로 display:block 강제 필수 */
+.bad-img-wrap {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.bad-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ================================================================
+   데스크탑 광고 타입별 사이즈 (mobileBreak 초과 시 적용)
+   IAB 표준 고정 픽셀 — padding-top = H/W × 100%
+   ● Leaderboard      728×90   → 12.3626%
+   ● Large Leaderboard 970×90  →  9.2784%
+   ● Billboard        970×250  → 25.7732%
+   ● Custom           사용자 지정
+================================================================ */
+@media (min-width: {{property.mobileBreak}}px) {
+  /* 데스크탑: 고정 너비 + 중앙 정렬이 IAB 표준 방식 */
+  .bad-d-leaderboard .bad-inner      { max-width: 728px; }
+  .bad-d-leaderboard .bad-img-wrap   { padding-top: 12.36264%; }
+
+  .bad-d-large-leaderboard .bad-inner    { max-width: 970px; }
+  .bad-d-large-leaderboard .bad-img-wrap { padding-top: 9.27835%; }
+
+  .bad-d-billboard .bad-inner        { max-width: 970px; }
+  .bad-d-billboard .bad-img-wrap     { padding-top: 25.77320%; }
+
+  .bad-d-custom .bad-inner           { max-width: 100%; }
+  .bad-d-custom .bad-img-wrap        { padding-top: 0; height: {{property.customHeightD}}px; }
+
+  /* 데스크탑에서 모바일 이미지 숨김 */
+  .bad-img-m { display: none; }
+  .bad-img-d { display: block; }
+}
+
+/* ================================================================
+   모바일 광고 타입별 사이즈 (mobileBreak 이하 시 적용)
+   IAB 표준 고정 픽셀
+   ● Mobile Banner     320×50  → 15.625%
+   ● Large Mobile      320×100 → 31.25%
+   ● Custom            사용자 지정
+================================================================ */
+@media (max-width: {{property.mobileBreak}}px) {
+  /* 모바일: 화면 너비에 맞게 꽉 채움 (max-width 제한 없음) */
+  .bad-m-mobile-banner .bad-img-wrap  { padding-top: 15.625%; }
+  .bad-m-large-mobile  .bad-img-wrap  { padding-top: 31.25%; }
+  .bad-m-custom        .bad-img-wrap  { padding-top: 0; height: {{property.customHeightM}}px; }
+
+  .bad-img-m { display: block; }
+  .bad-img-d { display: none; }
+}
+
+/* ── 닫기 버튼: 터치 영역 44×44px (WCAG 2.5.5) ── */
+.bad-close-wrap {
+  position: absolute;
+  top: 0; right: 0;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.bad-close-wrap.is-hidden { display: none; }
+.bad-close-icon {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.42);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.9);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background 0.15s;
+  pointer-events: none;
+}
+.bad-close-wrap:hover .bad-close-icon { background: rgba(0,0,0,0.68); }
+.bad-close-wrap:focus { outline: none; }
+.bad-close-wrap:focus-visible .bad-close-icon {
+  outline: 2px solid rgba(255,255,255,0.9);
+  outline-offset: 2px;
+}
+</style>
+
+<template>
+{{#if property.imageDesktop}}
+<div
+  class="bad-wrap bad-d-{{property.typeDesktop}} bad-m-{{property.typeMobile}}{{#if (eq property.showPage 'home_only')}} page-home-only{{/if}}{{#if (eq page.name 'HOME')}} is-home-page{{/if}}"
+  id="badWrap">
+
+  <div class="bad-inner">
+
+    {{#if property.linkUrl.value}}
+      <a href="{{property.linkUrl.value}}" class="bad-img-wrap" {{#if property.openInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}} aria-label="{{property.altText}}">
+    {{else}}
+      <div class="bad-img-wrap" role="img" aria-label="{{property.altText}}">
+    {{/if}}
+
+      {{!-- 데스크탑 이미지: LCP 최적화 (eager + high priority) --}}
+      <img class="bad-img bad-img-d"
+           src="{{property.imageDesktop}}"
+           alt=""
+           loading="eager"
+           fetchpriority="high" />
+
+      {{!-- 모바일 이미지: lazy (데스크탑에서 숨김) --}}
+      {{#if property.imageMobile}}
+      <img class="bad-img bad-img-m"
+           src="{{property.imageMobile}}"
+           alt=""
+           loading="lazy" />
+      {{else}}
+      <img class="bad-img bad-img-m"
+           src="{{property.imageDesktop}}"
+           alt=""
+           loading="lazy" />
+      {{/if}}
+
+    {{#if property.linkUrl.value}}</a>{{else}}</div>{{/if}}
+
+    {{!-- 닫기 버튼 --}}
+    <button class="bad-close-wrap js-close{{#if property.showClose}}{{else}} is-hidden{{/if}}" aria-label="배너 닫기" type="button">
+      <span class="bad-close-icon" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </button>
+
+  </div>
+</div>
+{{/if}}
+</template>
+
+<script>
+var container = bm.container;
+var SESSION_KEY = 'golpro_banner_closed';
+
+/* [BUG2 FIX] GNB 하단 여백 제거
+   식스샵 섹션 wrapper가 기본 padding을 가지므로 JS로 직접 제거
+   container의 부모 체인을 올라가며 padding/margin을 0으로 리셋 */
+(function attachGap() {
+  /* ── 1단계: container 자신부터 조상까지 padding/margin/gap 제거 ──
+     식스샵은 data-custom-wrapper="true" flex 컨테이너에 gap:20px을 주입.
+     이것이 GNB 블록과 배너 블록 사이의 여백 원인.
+     gap은 부모에 있으므로 자식 margin:0으로는 제거 불가 → 조상 순회 필요 */
+  var el = container;
+  var depth = 0;
+  while (el && depth < 10) {
+    var tag = el.tagName ? el.tagName.toLowerCase() : '';
+    if (tag === 'body' || tag === 'html') break;
+    el.style.setProperty('padding-top',    '0', 'important');
+    el.style.setProperty('padding-bottom', '0', 'important');
+    el.style.setProperty('margin-top',     '0', 'important');
+    el.style.setProperty('margin-bottom',  '0', 'important');
+    /* [핵심] data-custom-wrapper="true" 요소의 gap:20px 제거 */
+    if (el.dataset && el.dataset.customWrapper === 'true') {
+      el.style.setProperty('gap',     '0', 'important');
+      el.style.setProperty('row-gap', '0', 'important');
+    }
+    /* 그 외에도 실제 row-gap이 있으면 제거 */
+    var cs = doc.defaultView.getComputedStyle(el);
+    var rowGap = parseFloat(cs.rowGap || cs.getPropertyValue('row-gap') || '0');
+    if (rowGap > 0) {
+      el.style.setProperty('row-gap', '0', 'important');
+      el.style.setProperty('gap',     '0', 'important');
+    }
+    el = el.parentElement;
+    depth++;
+  }
+
+  /* ── 2단계: rAF 두 번으로 렌더 완료 후 실제 갭을 측정해 보정 ──
+     식스샵 에디터는 섹션 순서를 SPA로 주입해 1프레임 후에도
+     레이아웃이 확정되지 않을 수 있음 → 2프레임 보장 */
+  var win = doc.defaultView;
+  function fixGap() {
+    var wrap = container.querySelector('.bad-wrap');
+    if (!wrap || wrap.classList.contains('is-closed')) return;
+    var gnbEl = doc.querySelector('#gpHeader') || doc.querySelector('.gp-header');
+    if (!gnbEl) return;
+    var gnbBottom = gnbEl.getBoundingClientRect().bottom;
+    var wrapTop  = wrap.getBoundingClientRect().top;
+    var gap = Math.round(wrapTop - gnbBottom);
+    if (gap !== 0) {
+      /* 현재 container margin-top 읽어서 보정값 누산 */
+      var curMT = parseFloat(doc.defaultView.getComputedStyle(container).marginTop) || 0;
+      container.style.setProperty('margin-top', (curMT - gap) + 'px', 'important');
+    }
+  }
+  win.requestAnimationFrame(function() {
+    win.requestAnimationFrame(fixGap);
+  });
+})();
+
+function isClosed() {
+  try { return bm.sessionStorage.getItem(SESSION_KEY) === true; } catch(e) { return false; }
+}
+
+function applyClosedState() {
+  if (!isClosed()) return;
+  var wrap = container.querySelector('.bad-wrap');
+  if (!wrap) return;
+  wrap.style.transition = 'none';
+  wrap.style.maxHeight = '0';
+  wrap.style.opacity = '0';
+  wrap.style.pointerEvents = 'none';
+  wrap.classList.add('is-closed');
+}
+
+applyClosedState();
+
+container.addEventListener('click', function(e) {
+  if (!e.target.closest('.js-close')) return;
+  e.preventDefault();
+  e.stopPropagation();
+  var wrap = container.querySelector('.bad-wrap');
+  if (!wrap) return;
+  wrap.style.transition = '';
+  wrap.style.maxHeight = wrap.getBoundingClientRect().height + 'px';
+  wrap.offsetHeight;
+  wrap.classList.add('is-closed');
+  try { bm.sessionStorage.setItem(SESSION_KEY, true); } catch(e) {}
+}, true);
+
+bm.onContextChange = function() { applyClosedState(); };
+bm.onDestroy = function() {};
+</script>
