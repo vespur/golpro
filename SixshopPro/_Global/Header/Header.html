@@ -1,0 +1,934 @@
+<data value="$customer" />
+<data value="$page" />
+
+<style>
+/* =====================================================
+   GOLPRO GNB v8
+   주요 변경:
+   1. 그림자 완화 + border-bottom 제거
+   2. 프로그레스바 하단 라인 제거
+   3. 드롭다운 화살표 애니메이션 UX
+   4. SNS 6종 (스레드/카카오/네이버블로그/페이스북 추가)
+   6. 회원 등급 설정 (memberGradeLabel)
+   7. 배너 Desktop/Mobile 텍스트 분리
+   8. 드로어 하위메뉴 dot → 포인트 컬러
+   9. 글래스모피즘 설정 (blur/saturation/opacity)
+   10. 설정 패널 완전 재설계
+   11. 프로필 사진 제거
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@font-face {
+  font-family: 'Giants';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+button { border: none; background: none; cursor: pointer; font: inherit; padding: 0; }
+svg { display: block; flex-shrink: 0; }
+
+/* =====================================================
+   PLACEHOLDER
+===================================================== */
+.gp-placeholder {
+  /* 배너 없을 때: headerHeight / 배너 있을 때: headerHeight + bannerH(CSS로 못 더하므로 JS 처리) */
+  height: {{property.headerHeight}}px;
+  width: 100%;
+  transition: height 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+.gp-placeholder.banner-active { height: calc({{property.headerHeight}}px + 36px); }
+@media (max-width: {{property.mobileBreak}}px) {
+  .gp-placeholder { height: {{property.headerHeightM}}px; }
+  .gp-placeholder.banner-active { height: calc({{property.headerHeightM}}px + 36px); }
+}
+
+/* =====================================================
+   [4] BANNER — fixed, z-index 1001 (GNB 위)
+   [7] Desktop / Mobile 텍스트 분리
+===================================================== */
+/* =====================================================
+   [분리버그 FIX] gp-sticky-group
+   띠배너 + GNB를 하나의 fixed wrapper로 묶어
+   transform 1회로 함께 이동 → 분리 현상 원천 차단
+===================================================== */
+.gp-sticky-group {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1001;
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+.gp-sticky-group.hide-up { transform: translateY(-36px); }
+
+.gp-banner {
+  position: relative;
+  top: auto; left: auto; right: auto;
+  z-index: auto;
+  width: 100%;
+  background: {{property.bannerBg}};
+  display: none;
+  /* transition 제거: sticky-group이 담당 */
+}
+.gp-banner.is-home { display: block; }
+/* hide-up: gp-sticky-group.hide-up으로 통합됨 */
+.gp-banner-inner {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+.gp-banner-txt {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: {{property.bannerColor}};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* [7] 모바일에서 모바일 전용 문구 표시 */
+.gp-banner-txt-m { display: none; }
+@media (max-width: {{property.mobileBreak}}px) {
+  .gp-banner-txt   { display: none; }
+  .gp-banner-txt-m { display: block; font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 500; color: {{property.bannerColor}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* =====================================================
+   HEADER — position:fixed
+   [9] 글래스모피즘 설정값 Handlebars 직접 주입
+===================================================== */
+.gp-header {
+  position: relative; /* gp-sticky-group이 fixed 담당 */
+  top: auto;
+  left: auto; right: auto;
+  z-index: auto;
+  width: 100%;
+  background: rgba(10, 12, 17, {{property.glassBgOpacity}});
+  backdrop-filter: blur({{property.glassBlur}}px) saturate({{property.glassSaturation}}%);
+  -webkit-backdrop-filter: blur({{property.glassBlur}}px) saturate({{property.glassSaturation}}%);
+  border-bottom: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+/* 배너 활성(홈+showBanner) → 헤더를 배너 아래로 */
+/* .gp-header.banner-active top: gp-sticky-group 구조로 자동 처리됨 */
+.gp-header.is-scrolled {
+  background: rgba(8, 10, 14, {{property.glassBgOpacityScrolled}});
+  box-shadow: 0 1px 16px rgba(0,0,0,0.28);
+}
+
+/* [2] 프로그레스바 — 하단 라인 없이 진행률만 */
+.gp-progress {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: {{property.accentColor}};
+  z-index: 10;  /* 헤더 내부에서 최상위 */
+  pointer-events: none;
+  transition: width 0.05s linear;
+  will-change: width;
+}
+
+/* Inner */
+.gp-inner {
+  height: {{property.headerHeight}}px;
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+  padding: 0 {{property.paddingH}}px;
+  display: flex;
+  align-items: center;
+  position: relative; /* 메뉴 절대 중앙정렬을 위한 기준점 */
+}
+
+/* =====================================================
+   LOGO
+===================================================== */
+.gp-logo { flex-shrink: 0; margin-right: 24px; }
+.gp-logo-link {
+  display: flex; align-items: center;
+  height: {{property.headerHeight}}px;
+}
+.gp-logo-text {
+  font-family: 'Giants', sans-serif;
+  font-size: {{property.logoSize}}px;
+  font-weight: 700;
+  letter-spacing: {{property.logoLetterSpacing}}em;
+  color: {{property.logoColor}};
+  line-height: 1;
+  transition: opacity 0.18s;
+}
+.gp-logo-link:hover .gp-logo-text { opacity: 0.7; }
+.gp-logo-img { height: {{property.logoImgH}}px; width: auto; display: block; }
+
+/* =====================================================
+   DESKTOP NAV
+===================================================== */
+.gp-nav {
+  /* [UX FIX] 좌우 요소 너비에 무관하게 뷰포트 정중앙 고정
+     position:absolute + left:50% + translateX(-50%)
+     → 로고/SNS 아이콘 수와 관계없이 항상 화면 중앙 */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center;
+  height: {{property.headerHeight}}px;
+  pointer-events: none; /* gp-inner 클릭 통과 (메뉴 자체는 아래서 별도 복원) */
+}
+.gp-nav > * { pointer-events: auto; } /* 메뉴 아이템 클릭 복원 */
+.gp-menu { display: flex; align-items: stretch; height: 100%; }
+.gp-item { position: relative; display: flex; align-items: center; }
+.gp-link {
+  display: flex; align-items: center; gap: 3px;
+  padding: 0 {{property.menuPadH}}px;
+  height: 100%;
+  font-size: {{property.menuSize}}px; font-weight: 500;
+  color: {{property.menuColor}};
+  white-space: nowrap; position: relative;
+  transition: color 0.18s; letter-spacing: -0.01em;
+}
+.gp-link::after {
+  content: '';
+  position: absolute; bottom: 0;
+  left: {{property.menuPadH}}px; right: {{property.menuPadH}}px;
+  height: 2px; background: {{property.accentColor}};
+  transform: scaleX(0); transform-origin: center;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.gp-item:hover .gp-link { color: rgba(255,255,255,0.95); }
+.gp-item:not(.has-drop):hover .gp-link::after { transform: scaleX(1); }
+.gp-caret {
+  width: 8px; height: 5px; opacity: 0.45; flex-shrink: 0;
+  transition: transform 0.2s, opacity 0.18s;
+}
+.gp-item.has-drop:hover .gp-caret { transform: rotate(180deg); opacity: 1; }
+
+/* =====================================================
+   [3] DROPDOWN — 화살표 애니메이션 UX
+===================================================== */
+.gp-drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  width: max-content;
+  background: rgba(12, 14, 20, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: {{property.dropRadiusTop}}px {{property.dropRadiusTop}}px {{property.dropRadiusBottom}}px {{property.dropRadiusBottom}}px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  padding: 5px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0.18s;
+  z-index: 999;
+}
+.gp-item:last-child .gp-drop,
+.gp-item:nth-last-child(2) .gp-drop { left: auto; right: 0; }
+.gp-item.has-drop::before {
+  content: ''; position: absolute;
+  bottom: -2px; left: 0; right: 0; height: 2px;
+}
+.gp-item.has-drop:hover .gp-drop {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0s;
+}
+
+/* [3] 드롭다운 링크 — 화살표 슬라이드 UX */
+.gp-drop-link {
+  display: flex; align-items: center;
+  padding: 9px 12px 9px 14px;
+  font-size: 13.5px; font-weight: 400;
+  color: rgba(255,255,255,0.58);
+  border-radius: 7px;
+  transition: color 0.16s, background 0.16s;
+  white-space: nowrap;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+/* 좌측 인디케이터 dot */
+.gp-drop-link::before {
+  content: '';
+  width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  flex-shrink: 0;
+  transition: background 0.16s, transform 0.16s;
+}
+/* 우측 화살표 — 평시 opacity:0, 살짝 왼쪽에서 */
+.gp-drop-link-arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: {{property.accentColor}};
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.gp-drop-link:hover {
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.06);
+}
+.gp-drop-link:hover::before { background: {{property.accentColor}}; transform: scale(1.4); }
+.gp-drop-link:hover .gp-drop-link-arrow { opacity: 1; transform: translateX(0); }
+
+.gp-drop-sep { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
+
+/* =====================================================
+   USER ICON HOVER DROPDOWN — [11] 프로필사진 없음
+===================================================== */
+.gp-user-wrap {
+  position: relative;
+  display: flex; align-items: center;
+  align-self: stretch; /* gp-item처럼 GNB 전체 높이 → top:100%가 GNB 하단 기준 */
+}
+.gp-user-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+.gp-user-btn:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.22); color: #fff; }
+
+.gp-user-drop {
+  position: absolute; top: 100%; right: 0;
+  width: 200px;
+  background: rgba(12, 14, 20, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: {{property.dropRadiusTop}}px {{property.dropRadiusTop}}px {{property.dropRadiusBottom}}px {{property.dropRadiusBottom}}px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  padding: 5px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0.18s;
+  z-index: 1001;
+}
+.gp-user-wrap:hover .gp-user-drop {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0s;
+}
+.gp-user-info {
+  padding: 10px 12px 9px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 4px;
+}
+.gp-user-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: -0.01em; }
+/* [6] 회원 등급 */
+.gp-user-grade { font-size: 11px; color: {{property.accentColor}}; margin-top: 2px; font-weight: 500; letter-spacing: 0.02em; }
+
+.gp-user-action {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 9px 12px;
+  font-size: 13.5px; font-weight: 400;
+  color: rgba(255,255,255,0.58);
+  border-radius: 7px;
+  transition: color 0.15s, background 0.15s;
+  text-align: left;
+}
+.gp-user-action:hover { color: rgba(255,255,255,0.95); background: rgba(255,255,255,0.06); }
+.gp-user-logout { color: rgba(255,80,80,0.7); }
+.gp-user-logout:hover { color: rgba(255,90,90,1); background: rgba(255,50,50,0.08); }
+
+/* =====================================================
+   UTILITY (비로그인)
+===================================================== */
+.gp-util { flex-shrink: 0; display: flex; align-items: center; align-self: stretch; gap: 2px; margin-left: auto; position: relative; z-index: 1; }
+.gp-sns { display: flex; align-items: center; gap: 0; padding-right: 4px; margin-right: 4px; }
+.gp-sns-a {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 7px;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.15s, background 0.15s;
+}
+.gp-sns-a:hover { color: rgba(255,255,255,0.82); background: rgba(255,255,255,0.07); }
+
+.gp-util-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.12); margin: 0 3px; }
+.gp-util-btn {
+  padding: 5px 10px; font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.5); border-radius: 6px; white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+}
+.gp-util-btn:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.07); }
+.gp-util-join {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+}
+.gp-util-join:hover { border-color: rgba(255,255,255,0.26); background: rgba(255,255,255,0.1); }
+
+/* =====================================================
+   [7] HAMBURGER — 완전 균일한 3선
+===================================================== */
+.gp-ham {
+  display: none; margin-left: auto; flex-shrink: 0;
+  align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.gp-ham:hover { background: rgba(255,255,255,0.07); }
+.gp-ham-lines { display: flex; flex-direction: column; gap: 5px; pointer-events: none; }
+/* [7] 3선 완전 동일 규격 */
+.gp-ham-line {
+  display: block;
+  width: 20px;
+  height: 2px;           /* 균일 두께 */
+  background: rgba(255,255,255,0.75);
+  border-radius: 1px;    /* 균일 라운드 */
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+  flex-shrink: 0;        /* 축소 방지 */
+}
+
+/* =====================================================
+   CSS TOGGLE — 드로어 + 햄버거 X
+===================================================== */
+.gp-toggle { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+.gp-toggle:checked ~ .gp-sticky-group .gp-ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.gp-toggle:checked ~ .gp-sticky-group .gp-ham-line:nth-child(2) { opacity: 0; }
+.gp-toggle:checked ~ .gp-sticky-group .gp-ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Overlay */
+.gp-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 1100;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s, visibility 0s 0.3s;
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+}
+.gp-toggle:checked ~ .gp-overlay { opacity: 1; visibility: visible; transition: opacity 0.3s; }
+
+/* Drawer */
+.gp-drawer {
+  position: fixed; top: 0; right: 0;
+  width: {{property.drawerWidth}}px; max-width: 88vw;
+  height: 100dvh;
+  background: {{property.drawerBg}};
+  z-index: 1101;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.36s cubic-bezier(0.16,1,0.3,1);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.gp-toggle:checked ~ .gp-drawer { transform: translateX(0); }
+
+/* Drawer Head */
+.gp-dhead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid {{property.drawerDividerColor}};
+  flex-shrink: 0;
+}
+.gp-dhead-logo {
+  font-family: 'Giants', sans-serif; font-size: {{property.drawerLogoSize}}px; font-weight: 700;
+  letter-spacing: {{property.logoLetterSpacing}}em; color: {{property.logoColor}};
+}
+.gp-dclose {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 7px;
+  color: rgba(255,255,255,0.32); cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.gp-dclose:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+
+/* Drawer User — [11] 프로필 사진 없음 */
+.gp-duser {
+  padding: 16px 20px;
+  border-bottom: 1px solid {{property.drawerDividerColor}};
+  flex-shrink: 0;
+}
+.gp-duser-info { margin-bottom: 12px; }
+/* [6] 닉네임 + 등급 */
+.gp-duser-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.88); letter-spacing: -0.01em; }
+.gp-duser-grade { font-size: 11.5px; color: {{property.accentColor}}; margin-top: 3px; font-weight: 500; letter-spacing: 0.02em; }
+.gp-duser-sub   { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+
+.gp-duser-btns { display: flex; gap: 8px; }
+.gp-duser-mypage {
+  flex: 1; text-align: center; display: block;
+  padding: 9px 0; font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; transition: background 0.15s;
+}
+.gp-duser-mypage:hover { background: rgba(255,255,255,0.13); }
+.gp-duser-logout {
+  padding: 9px 14px; font-size: 13px;
+  color: rgba(255,80,80,0.7); background: rgba(255,50,50,0.07);
+  border: 1px solid rgba(255,50,50,0.14); border-radius: 8px;
+  transition: background 0.15s;
+}
+.gp-duser-logout:hover { background: rgba(255,50,50,0.13); }
+.gp-dauth { display: flex; gap: 8px; }
+.gp-dauth-login {
+  flex: 1; display: block; text-align: center;
+  padding: 11px 0; font-size: 14px; font-weight: 700;
+  background: {{property.accentColor}}; color: #fff; border-radius: 8px;
+  transition: opacity 0.15s;
+}
+.gp-dauth-login:hover { opacity: 0.82; }
+.gp-dauth-signup {
+  flex: 1; display: block; text-align: center;
+  padding: 11px 0; font-size: 14px; font-weight: 500;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.8); border-radius: 8px;
+  transition: background 0.15s;
+}
+.gp-dauth-signup:hover { background: rgba(255,255,255,0.13); }
+
+/* =====================================================
+   ACCORDION (JS 단일 오픈)
+===================================================== */
+.gp-dscroll { flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+.gp-dscroll::-webkit-scrollbar { display: none; }
+.gp-ditem { border-bottom: 1px solid {{property.drawerDividerColor}}; }
+.gp-drow {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 52px; padding: 0 20px;
+  cursor: pointer; transition: background 0.15s; user-select: none;
+}
+.gp-drow:hover { background: rgba(255,255,255,0.03); }
+.gp-drow-title {
+  font-size: {{property.drawerMenuSize}}px; font-weight: 500;
+  color: rgba(255,255,255,0.82); flex: 1;
+}
+.gp-dacc {
+  width: 24px; height: 24px; position: relative; flex-shrink: 0;
+  color: rgba(255,255,255,0.35); transition: color 0.2s;
+}
+.gp-dacc::before, .gp-dacc::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  background: currentColor; border-radius: 1px;
+  transition: transform 0.24s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+}
+.gp-dacc::before { width: 11px; height: 1.5px; transform: translate(-50%,-50%); }
+.gp-dacc::after  { width: 1.5px; height: 11px; transform: translate(-50%,-50%); }
+.gp-ditem.is-open .gp-dacc { color: rgba(255,255,255,0.5); }
+.gp-ditem.is-open .gp-dacc::after { transform: translate(-50%,-50%) scaleY(0); opacity: 0; }
+
+.gp-dsub { max-height: 0; overflow: hidden; background: {{property.drawerSubBg}}; transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1); }
+.gp-ditem.is-open .gp-dsub { max-height: 500px; }
+
+/* [8] 하위 메뉴 dot → 포인트 컬러 */
+.gp-dsub-link {
+  display: flex; align-items: center;
+  padding: 10px 20px 10px 32px;
+  font-size: 13.5px; font-weight: 400;
+  color: rgba(255,255,255,0.42);
+  position: relative; transition: color 0.15s;
+}
+.gp-dsub-link::before {
+  content: '';
+  position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 3px; border-radius: 50%;
+  /* [8] 포인트 컬러 */
+  background: {{property.accentColor}};
+  opacity: 0.5;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.gp-dsub-link:hover { color: rgba(255,255,255,0.88); }
+.gp-dsub-link:hover::before { opacity: 1; transform: translateY(-50%) scale(1.4); }
+
+/* Drawer 하단 SNS */
+.gp-dsns-bar {
+  flex-shrink: 0; padding: 14px 20px;
+  border-top: 1px solid {{property.drawerDividerColor}};
+  display: flex; align-items: center; gap: 4px;
+}
+.gp-dsns-a {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 8px;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.15s, background 0.15s;
+}
+.gp-dsns-a:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); }
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: {{property.mobileBreak}}px) {
+  .gp-nav, .gp-util { display: none !important; }
+  .gp-ham { display: flex; }
+  .gp-inner { height: {{property.headerHeightM}}px; padding: 0 {{property.paddingHM}}px; }
+  .gp-logo-text { font-size: {{property.logoSizeM}}px; }
+  .gp-logo-img  { height: {{property.logoImgHM}}px; }
+}
+@media (min-width: {{property.mobileBreak}}px) {
+  .gp-overlay, .gp-drawer { display: none !important; }
+}
+</style>
+
+<template>
+<div class="gp-wrap">
+
+  <div class="gp-placeholder{{#if (and property.showBanner (eq page.name 'HOME'))}} banner-active{{/if}}" aria-hidden="true"></div>
+
+  {{!-- [분리버그 FIX] gp-sticky-group: 띠배너+GNB를 하나의 fixed wrapper로 묶음
+       → 두 요소가 같은 transform으로 완벽히 함께 이동 --}}
+  {{!-- gp-toggle은 CSS 형제 선택자(~)로 overlay/drawer를 제어하므로
+       gp-sticky-group 밖에 위치해야 함 --}}
+  <input type="checkbox" class="gp-toggle" id="gpToggle" />
+
+  <div class="gp-sticky-group" id="gpStickyGroup">
+
+  {{!-- BANNER (홈 전용) --}}
+  {{#if property.showBanner}}
+  <div class="gp-banner{{#if (eq page.name 'HOME')}} is-home{{/if}}" id="gpBanner">
+    <div class="gp-banner-inner">
+      {{!-- [7] Desktop 텍스트 --}}
+      <span class="gp-banner-txt">{{property.bannerTextDesktop}}</span>
+      {{!-- [7] Mobile 텍스트 --}}
+      <span class="gp-banner-txt-m">{{property.bannerTextMobile}}</span>
+    </div>
+  </div>
+  {{/if}}
+
+  <header class="gp-header{{#if (and property.showBanner (eq page.name 'HOME'))}} banner-active{{/if}}" id="gpHeader">
+    <div class="gp-progress" aria-hidden="true"></div>
+
+    <div class="gp-inner">
+
+      {{!-- LOGO --}}
+      <div class="gp-logo">
+        {{#if property.logoLink.value}}
+          <a href="{{property.logoLink.value}}" class="gp-logo-link" {{#if property.logoLink.shouldOpenInNewTab}}target="_blank" rel="noopener"{{/if}}>
+        {{else}}
+          <a href="/" class="gp-logo-link">
+        {{/if}}
+          {{#if (and (eq property.logoType 'image') property.logoImage)}}
+            <img class="gp-logo-img" src="{{property.logoImage}}" alt="GOLPRO" loading="eager" />
+          {{else}}
+            <span class="gp-logo-text">{{property.logoText}}</span>
+          {{/if}}
+        </a>
+      </div>
+
+      {{!-- DESKTOP NAV --}}
+      <nav class="gp-nav" aria-label="주 메뉴">
+        <ul class="gp-menu">
+          {{#each property.menus}}
+          <li class="gp-item{{#if childMenus}} has-drop{{/if}}">
+            <a href="{{link.value}}" class="gp-link" {{#if shouldOpenInNewTab}}target="_blank" rel="noopener"{{/if}}>
+              {{name}}
+              {{#if childMenus}}
+              <svg class="gp-caret" viewBox="0 0 8 5" fill="none">
+                <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{/if}}
+            </a>
+            {{#if childMenus}}
+            {{!-- [3] 화살표 슬라이드 드롭다운 --}}
+            <div class="gp-drop" role="menu">
+              {{#each childMenus}}
+              <a href="{{link.value}}" class="gp-drop-link" role="menuitem" {{#if shouldOpenInNewTab}}target="_blank" rel="noopener"{{/if}}>
+                <span class="gp-drop-link-txt">{{name}}</span>
+                <svg class="gp-drop-link-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 6h7M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              {{/each}}
+            </div>
+            {{/if}}
+          </li>
+          {{/each}}
+        </ul>
+      </nav>
+
+      {{!-- UTILITY --}}
+      <div class="gp-util">
+        {{!-- [4] SNS 6종 --}}
+        <div class="gp-sns">
+          {{#if property.showSnsInstagram}}
+          <a href="{{property.snsInstagram}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsYoutube}}
+          <a href="{{property.snsYoutube}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 6.5s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C15.8 2.2 12 2.2 12 2.2s-3.8 0-6.3.2c-.6.1-1.9.1-3 1.3C1.8 4.5 1.5 6.5 1.5 6.5S1.2 8.8 1.2 11v2c0 2.2.3 4.5.3 4.5s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.9 21.7 12 21.7 12 21.7s3.8 0 6.3-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.2.3-4.5v-2c0-2.2-.3-4.5-.3-4.5zM9.8 15.1V8.7l6.5 3.2-6.5 3.2z"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsThreads}}
+          <a href="{{property.snsThreads}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="Threads">
+            {{!-- Threads 공식 아이콘 (Bootstrap Icons / Meta 공식 path) --}}
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M6.321 6.016c-.27-.18-1.166-.802-1.166-.802.756-1.081 1.753-1.502 3.132-1.502.975 0 1.803.327 2.394.948s.928 1.509 1.005 2.644q.492.207.905.484c1.109.745 1.719 1.86 1.719 3.137 0 2.716-2.226 5.075-6.256 5.075C4.594 16 1 13.987 1 7.994 1 2.034 4.482 0 8.044 0 9.69 0 13.55.243 15 5.036l-1.36.353C12.516 1.974 10.163 1.43 8.006 1.43c-3.565 0-5.582 2.171-5.582 6.79 0 4.143 2.254 6.343 5.63 6.343 2.777 0 4.847-1.443 4.847-3.556 0-1.438-1.208-2.127-1.27-2.127-.236 1.234-.868 3.31-3.644 3.31-1.618 0-3.013-1.118-3.013-2.582 0-2.09 1.984-2.847 3.55-2.847.586 0 1.294.04 1.663.114 0-.637-.54-1.728-1.9-1.728-1.25 0-1.566.405-1.967.868ZM8.716 8.19c-2.04 0-2.304.87-2.304 1.416 0 .878 1.043 1.168 1.6 1.168 1.02 0 2.067-.282 2.232-2.423a6.2 6.2 0 0 0-1.528-.161"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsKakao}}
+          <a href="{{property.snsKakao}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="KakaoTalk">
+            {{!-- KakaoTalk 공식 아이콘: 말풍선 + 꼬리 형태 --}}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866C1.5 6.665 6.201 3 12 3zm5.907 8.06l1.47-1.424a.472.472 0 0 0-.656-.678l-1.928 1.866V9.282a.472.472 0 0 0-.944 0v2.557a.471.471 0 0 0 0 .222V13.5a.472.472 0 0 0 .944 0v-1.363l.427-.413 1.428 2.033a.472.472 0 1 0 .773-.543l-1.514-2.155zm-2.958 1.924h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944zm-5.857-1.092l.696-1.707.638 1.707H9.092zm2.523.488l.002-.016a.469.469 0 0 0-.127-.32l-1.046-2.8a.69.69 0 0 0-.627-.474.696.696 0 0 0-.653.447l-1.661 4.075a.472.472 0 0 0 .874.357l.33-.813h2.07l.299.8a.472.472 0 1 0 .884-.33l-.345-.926zM8.293 9.302a.472.472 0 0 0-.471-.472H4.577a.472.472 0 1 0 0 .944h1.16v3.736a.472.472 0 0 0 .944 0V9.774h1.14c.261 0 .472-.212.472-.472z"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsNaverBlog}}
+          <a href="{{property.snsNaverBlog}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="Naver Blog">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsFacebook}}
+          <a href="{{property.snsFacebook}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          {{/if}}
+          {{#if property.showSnsX}}
+          <a href="{{property.snsX}}" class="gp-sns-a" target="_blank" rel="noopener" aria-label="X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          </a>
+          {{/if}}
+        </div>
+
+        {{!-- 로그인 상태 --}}
+        {{#if customer}}
+          <div class="gp-user-wrap">
+            <button class="gp-user-btn" aria-label="내 계정">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+            </button>
+            <div class="gp-user-drop">
+              <div class="gp-user-info">
+                {{!-- 회원 이름 + 님 --}}
+                <p class="gp-user-name">{{customer.name.full}} 님</p>
+                {{!-- 회원 등급: 운영자 설정값 ($customer에 grade 필드 미제공) --}}
+                <p class="gp-user-grade">{{property.memberGradeLabel}}</p>
+              </div>
+              <a href="/my-page/member/info-update" class="gp-user-action">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                마이페이지
+              </a>
+              <div class="gp-drop-sep"></div>
+              <button class="gp-user-action gp-user-logout js-logout">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                로그아웃
+              </button>
+            </div>
+          </div>
+        {{else}}
+          <a href="/auth/login" class="gp-util-btn">로그인</a>
+          <div class="gp-util-sep" aria-hidden="true"></div>
+          <a href="/auth/signup" class="gp-util-btn gp-util-join">회원가입</a>
+        {{/if}}
+      </div>
+
+      <label class="gp-ham" for="gpToggle" aria-label="메뉴 열기/닫기">
+        <span class="gp-ham-lines">
+          <span class="gp-ham-line"></span>
+          <span class="gp-ham-line"></span>
+          <span class="gp-ham-line"></span>
+        </span>
+      </label>
+
+    </div>
+  </header>
+
+  </div>{{!-- /.gp-sticky-group --}}
+
+  <label class="gp-overlay" for="gpToggle" aria-label="닫기"></label>
+
+  <aside class="gp-drawer" role="dialog" aria-label="모바일 메뉴">
+
+    <div class="gp-dhead">
+      {{!-- [v9] 드로어 로고 이미지 지원 --}}
+      {{#if (and (eq property.logoType 'image') property.logoImage)}}
+        <img class="gp-dhead-img" src="{{property.logoImage}}" alt="{{property.logoText}}" />
+      {{else}}
+        <span class="gp-dhead-logo">{{property.logoText}}</span>
+      {{/if}}
+      <label class="gp-dclose" for="gpToggle" aria-label="닫기">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </label>
+    </div>
+
+    {{!-- 회원 이름 '님' + 등급 --}}
+    <div class="gp-duser">
+      {{#if customer}}
+        <div class="gp-duser-info">
+          <p class="gp-duser-name">{{customer.name.full}} 님</p>
+          {{!-- 등급: 운영자 설정값 --}}
+          <p class="gp-duser-grade">{{property.memberGradeLabel}}</p>
+          <p class="gp-duser-sub">@{{customer.name.full}}</p>
+        </div>
+        <div class="gp-duser-btns">
+          <a href="/my-page/member/info-update" class="gp-duser-mypage">마이페이지</a>
+          <button class="gp-duser-logout js-logout">로그아웃</button>
+        </div>
+      {{else}}
+        <div class="gp-dauth">
+          <a href="/auth/login" class="gp-dauth-login">로그인</a>
+          <a href="/auth/signup" class="gp-dauth-signup">회원가입</a>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="gp-dscroll">
+      {{#each property.menus}}
+      <div class="gp-ditem">
+        <div class="gp-drow js-acc-row">
+          <span class="gp-drow-title">{{name}}</span>
+          {{#if childMenus}}<span class="gp-dacc" aria-hidden="true"></span>{{/if}}
+        </div>
+        {{#if childMenus}}
+        <ul class="gp-dsub">
+          {{#each childMenus}}
+          <li><a href="{{link.value}}" class="gp-dsub-link" {{#if shouldOpenInNewTab}}target="_blank" rel="noopener"{{/if}}>{{name}}</a></li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
+    {{!-- [4] 드로어 하단 SNS --}}
+    <div class="gp-dsns-bar">
+      {{#if property.snsInstagram}}
+      <a href="{{property.snsInstagram}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsYoutube}}
+      <a href="{{property.snsYoutube}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 6.5s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C15.8 2.2 12 2.2 12 2.2s-3.8 0-6.3.2c-.6.1-1.9.1-3 1.3C1.8 4.5 1.5 6.5 1.5 6.5S1.2 8.8 1.2 11v2c0 2.2.3 4.5.3 4.5s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.9 21.7 12 21.7 12 21.7s3.8 0 6.3-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.2.3-4.5v-2c0-2.2-.3-4.5-.3-4.5zM9.8 15.1V8.7l6.5 3.2-6.5 3.2z"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsThreads}}
+      <a href="{{property.snsThreads}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="Threads">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6.321 6.016c-.27-.18-1.166-.802-1.166-.802.756-1.081 1.753-1.502 3.132-1.502.975 0 1.803.327 2.394.948s.928 1.509 1.005 2.644q.492.207.905.484c1.109.745 1.719 1.86 1.719 3.137 0 2.716-2.226 5.075-6.256 5.075C4.594 16 1 13.987 1 7.994 1 2.034 4.482 0 8.044 0 9.69 0 13.55.243 15 5.036l-1.36.353C12.516 1.974 10.163 1.43 8.006 1.43c-3.565 0-5.582 2.171-5.582 6.79 0 4.143 2.254 6.343 5.63 6.343 2.777 0 4.847-1.443 4.847-3.556 0-1.438-1.208-2.127-1.27-2.127-.236 1.234-.868 3.31-3.644 3.31-1.618 0-3.013-1.118-3.013-2.582 0-2.09 1.984-2.847 3.55-2.847.586 0 1.294.04 1.663.114 0-.637-.54-1.728-1.9-1.728-1.25 0-1.566.405-1.967.868ZM8.716 8.19c-2.04 0-2.304.87-2.304 1.416 0 .878 1.043 1.168 1.6 1.168 1.02 0 2.067-.282 2.232-2.423a6.2 6.2 0 0 0-1.528-.161"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsKakao}}
+      <a href="{{property.snsKakao}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="KakaoTalk">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866C1.5 6.665 6.201 3 12 3zm5.907 8.06l1.47-1.424a.472.472 0 0 0-.656-.678l-1.928 1.866V9.282a.472.472 0 0 0-.944 0v2.557a.471.471 0 0 0 0 .222V13.5a.472.472 0 0 0 .944 0v-1.363l.427-.413 1.428 2.033a.472.472 0 1 0 .773-.543l-1.514-2.155zm-2.958 1.924h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944zm-5.857-1.092l.696-1.707.638 1.707H9.092zm2.523.488l.002-.016a.469.469 0 0 0-.127-.32l-1.046-2.8a.69.69 0 0 0-.627-.474.696.696 0 0 0-.653.447l-1.661 4.075a.472.472 0 0 0 .874.357l.33-.813h2.07l.299.8a.472.472 0 1 0 .884-.33l-.345-.926zM8.293 9.302a.472.472 0 0 0-.471-.472H4.577a.472.472 0 1 0 0 .944h1.16v3.736a.472.472 0 0 0 .944 0V9.774h1.14c.261 0 .472-.212.472-.472z"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsNaverBlog}}
+      <a href="{{property.snsNaverBlog}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="Naver Blog">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsFacebook}}
+      <a href="{{property.snsFacebook}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      {{/if}}
+      {{#if property.showSnsX}}
+      <a href="{{property.snsX}}" class="gp-dsns-a" target="_blank" rel="noopener" aria-label="X">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+      </a>
+      {{/if}}
+    </div>
+
+  </aside>
+
+</div>
+</template>
+
+<script>
+var container = bm.container;
+var doc = container.ownerDocument;
+var win = doc.defaultView;
+var BANNER_H = 36;
+var _raf = false;
+
+/* =====================================================
+   Progress bar
+===================================================== */
+function updateProgress() {
+  var el = container.querySelector('.gp-progress');
+  if (!el) return;
+  var se = doc.documentElement;
+  var st = se.scrollTop || doc.body.scrollTop;
+  var sm = se.scrollHeight - se.clientHeight;
+  el.style.width = sm > 0 ? (st / sm * 100).toFixed(2) + '%' : '0%';
+}
+
+/* =====================================================
+   Banner + Header 상태 동기화
+===================================================== */
+function syncBannerState() {
+  var group = doc.getElementById('gpStickyGroup') || container.querySelector('.gp-sticky-group');
+  var placeholder = container.querySelector('.gp-placeholder');
+  var banner = container.querySelector('.gp-banner');
+  var header = container.querySelector('.gp-header');
+  var st = doc.documentElement.scrollTop || doc.body.scrollTop;
+  var hasBanner = banner && banner.classList.contains('is-home');
+
+  if (hasBanner) {
+    var show = st < BANNER_H;
+    /* [분리버그 FIX] gp-sticky-group 전체를 translateY(-36px)로 올림
+       띠배너 + GNB가 하나의 단위로 완벽히 동기화되어 이동
+       → 분리 현상 물리적으로 불가 */
+    if (group) group.classList.toggle('hide-up', !show);
+    if (placeholder) placeholder.classList.toggle('banner-active', show);
+  } else {
+    if (group) group.classList.remove('hide-up');
+  }
+  if (header) header.classList.toggle('is-scrolled', st > 10);
+}
+
+/* =====================================================
+   [v9] rAF throttle — 스크롤 성능 개선
+===================================================== */
+function onScroll() {
+  if (_raf) return;
+  _raf = true;
+  win.requestAnimationFrame(function() {
+    _raf = false;
+    updateProgress();
+    syncBannerState();
+  });
+}
+
+onScroll();
+doc.addEventListener('scroll', onScroll, { passive: true });
+
+/* =====================================================
+   이벤트 위임
+===================================================== */
+container.addEventListener('click', function(e) {
+  /* 로그아웃 */
+  if (e.target.closest('.js-logout')) { e.preventDefault(); bm.do('logout'); return; }
+
+  /* 드로어 메뉴 행 클릭 */
+  var row = e.target.closest('.js-acc-row');
+  if (!row) return;
+  var item = row.closest('.gp-ditem');
+  if (!item) return;
+
+  /* [v9 버그수정] 하위메뉴 없으면 data-href 경유 페이지 이동 */
+  var hasSub = !!item.querySelector('.gp-dsub');
+  if (!hasSub) {
+    var href = row.dataset.href;
+    if (href) win.location.href = href;
+    return;
+  }
+
+  /* 하위메뉴 있으면 아코디언 단일 오픈 토글 */
+  var isOpen = item.classList.contains('is-open');
+  var all = container.querySelectorAll('.gp-ditem');
+  for (var i = 0; i < all.length; i++) all[i].classList.remove('is-open');
+  if (!isOpen) item.classList.add('is-open');
+
+}, true);
+
+bm.onContextChange = function() { syncBannerState(); updateProgress(); };
+/* ESC 키로 드로어 닫기 (접근성) */
+function onKeydown(e) {
+  if (e.key !== 'Escape') return;
+  var toggle = container.querySelector('.gp-toggle');
+  if (toggle && toggle.checked) toggle.checked = false;
+}
+doc.addEventListener('keydown', onKeydown);
+
+bm.onDestroy = function() {
+  doc.removeEventListener('scroll', onScroll);
+  doc.removeEventListener('keydown', onKeydown);
+};
+</script>

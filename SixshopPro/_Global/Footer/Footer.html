@@ -1,0 +1,467 @@
+<data value="$legal" />
+
+<template>
+<footer class="gpf" id="{{property.anchorId}}">
+
+  <!-- ━━━ 상단: 브랜드 + 네비게이션 ━━━ -->
+  <div class="gpf__top">
+
+    <!-- 브랜드 컬럼 -->
+    <div class="gpf__brand">
+
+      {{#if (eq property.logoType "text")}}
+        <a href="/" class="gpf__logo-text" aria-label="{{property.logoText}} 홈으로">{{property.logoText}}</a>
+      {{/if}}
+      {{#if (eq property.logoType "image")}}
+        {{#if property.logoImage}}
+          <a href="/" class="gpf__logo-img-wrap" aria-label="홈으로">
+            <img class="gpf__logo-img" src="{{property.logoImage}}" alt="로고" loading="lazy" />
+          </a>
+        {{/if}}
+      {{/if}}
+
+      {{#if property.slogan}}
+        <p class="gpf__slogan">{{property.slogan}}</p>
+      {{/if}}
+
+      {{#if property.showSns}}
+      <nav class="gpf__sns" aria-label="SNS 바로가기">
+        {{#if property.snsInstagram}}<a class="gpf__sns-btn" href="{{property.snsInstagram}}" target="_blank" rel="noopener noreferrer" aria-label="인스타그램"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{{/if}}
+        {{#if property.snsYoutube}}<a class="gpf__sns-btn" href="{{property.snsYoutube}}" target="_blank" rel="noopener noreferrer" aria-label="유튜브"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98l5.75 3.02-5.75 3.02z" fill="currentColor"/></svg></a>{{/if}}
+        {{#if property.snsX}}<a class="gpf__sns-btn" href="{{property.snsX}}" target="_blank" rel="noopener noreferrer" aria-label="X (트위터)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>{{/if}}
+        {{#if property.snsBlog}}<a class="gpf__sns-btn" href="{{property.snsBlog}}" target="_blank" rel="noopener noreferrer" aria-label="블로그"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></a>{{/if}}
+      </nav>
+      {{/if}}
+    </div>
+
+    <!-- ⑤ 네비게이션: auto-fill 컬럼으로 내용량 기반 자연스러운 분포 -->
+    <nav class="gpf__nav" aria-label="사이트맵">
+
+      {{#if property.nav1Links.length}}
+      <div class="gpf__nav-group">
+        {{!-- ⑩ 접근성: p → h3 role 부여 --}}
+        <h3 class="gpf__nav-title">{{property.nav1Title}}</h3>
+        <ul class="gpf__nav-list">
+          {{#each property.nav1Links}}
+          <li><a class="gpf__nav-link" href="{{this.url.value}}" {{#if this.url.shouldOpenInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>{{this.label}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{#if property.nav2Links.length}}
+      <div class="gpf__nav-group">
+        <h3 class="gpf__nav-title">{{property.nav2Title}}</h3>
+        <ul class="gpf__nav-list">
+          {{#each property.nav2Links}}
+          <li><a class="gpf__nav-link" href="{{this.url.value}}" {{#if this.url.shouldOpenInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>{{this.label}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{#if property.nav3Links.length}}
+      <div class="gpf__nav-group">
+        <h3 class="gpf__nav-title">{{property.nav3Title}}</h3>
+        <ul class="gpf__nav-list">
+          {{#each property.nav3Links}}
+          <li><a class="gpf__nav-link" href="{{this.url.value}}" {{#if this.url.shouldOpenInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>{{this.label}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{#if property.nav4Links.length}}
+      <div class="gpf__nav-group">
+        <h3 class="gpf__nav-title">{{property.nav4Title}}</h3>
+        <ul class="gpf__nav-list">
+          {{#each property.nav4Links}}
+          <li><a class="gpf__nav-link" href="{{this.url.value}}" {{#if this.url.shouldOpenInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>{{this.label}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{#if property.nav5Links.length}}
+      <div class="gpf__nav-group">
+        <h3 class="gpf__nav-title">{{property.nav5Title}}</h3>
+        <ul class="gpf__nav-list">
+          {{#each property.nav5Links}}
+          <li><a class="gpf__nav-link" href="{{this.url.value}}" {{#if this.url.shouldOpenInNewTab}}target="_blank" rel="noopener noreferrer"{{/if}}>{{this.label}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+    </nav>
+  </div>
+
+  <!-- ━━━ 구분선 ━━━ -->
+  <div class="gpf__divider" role="separator"></div>
+
+  <!-- ━━━ 하단 ━━━ -->
+  <div class="gpf__bottom">
+
+    <!-- ⑦ 사업자 정보: 모바일에서 block 전환 -->
+    <div class="gpf__biz" aria-label="사업자 정보">
+      {{#if legal.businessName}}<span class="gpf__biz-item">{{legal.businessName}}</span>{{/if}}
+      {{#if legal.representativeName}}{{#if legal.businessName}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">대표자: {{legal.representativeName}}</span>{{/if}}
+      {{#if legal.businessRegistrationNumber}}{{#if (or legal.businessName legal.representativeName)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">사업자등록번호: {{legal.businessRegistrationNumber}}</span>{{/if}}
+      {{#if legal.mailOrderSalesRegistrationNumber}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">통신판매업신고번호: {{legal.mailOrderSalesRegistrationNumber}}</span>{{/if}}
+      {{#if legal.businessAddress}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber legal.mailOrderSalesRegistrationNumber)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">{{legal.businessAddress}}{{#if legal.businessAddressDetail}} {{legal.businessAddressDetail}}{{/if}}</span>{{/if}}
+      {{#if legal.contactPhone}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber legal.mailOrderSalesRegistrationNumber legal.businessAddress)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">Tel: {{legal.contactPhone}}</span>{{/if}}
+      {{#if legal.contactEmail}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber legal.mailOrderSalesRegistrationNumber legal.businessAddress legal.contactPhone)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item"><a class="gpf__email" href="mailto:{{legal.contactEmail}}">{{legal.contactEmail}}</a></span>{{/if}}
+      {{#if legal.privacyOfficerName}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber legal.mailOrderSalesRegistrationNumber legal.businessAddress legal.contactPhone legal.contactEmail)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">개인정보책임자: {{legal.privacyOfficerName}}</span>{{/if}}
+      {{#if legal.hostingProvider}}{{#if (or legal.businessName legal.representativeName legal.businessRegistrationNumber legal.mailOrderSalesRegistrationNumber legal.businessAddress legal.contactPhone legal.contactEmail legal.privacyOfficerName)}}<span class="gpf__biz-sep" aria-hidden="true">|</span>{{/if}}<span class="gpf__biz-item">호스팅: {{legal.hostingProvider}}</span>{{/if}}
+    </div>
+
+    <!-- 저작권 + 약관 -->
+    <div class="gpf__legal-row">
+      <span class="gpf__copy-text">{{property.copyrightText}}</span>
+      <nav class="gpf__policy" aria-label="약관 링크">
+        {{!-- ⑩ 첫 자식 조건부 렌더 문제: data-first 속성으로 JS 처리 대신 CSS :first-of-type 우회 --}}
+        {{#if legal.termsOfServiceUrl}}<a class="gpf__policy-link gpf__policy-link--bold gpf__policy-link--first" href="{{legal.termsOfServiceUrl}}">이용약관</a>{{/if}}
+        {{#if legal.privacyPolicyUrl}}<a class="gpf__policy-link" href="{{legal.privacyPolicyUrl}}">개인정보처리방침</a>{{/if}}
+        {{#if legal.businessInfoUrl}}<a class="gpf__policy-link" href="{{legal.businessInfoUrl}}" target="_blank" rel="noopener noreferrer">사업자정보확인</a>{{/if}}
+      </nav>
+    </div>
+
+  </div>
+
+</footer>
+</template>
+
+
+<style>
+/* ── Reset ─────────────────────────────────── */
+.gpf *, .gpf *::before, .gpf *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.gpf a { text-decoration: none; color: inherit; }
+.gpf ul { list-style: none; }
+.gpf h3 { font-weight: inherit; }
+
+/* ── Root ─────────────────────────────────── */
+.gpf {
+  background-color: {{property.bgColor}};
+  color: {{property.textColor}};
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-body);
+  padding: {{property.paddingTopD}}px {{property.paddingHzD}}px {{property.paddingBottomD}}px;
+  {{#if property.showAccentBar}}border-top: {{property.accentBarH}}px solid {{property.accentColor}};{{/if}}
+  {{#if property.showTopShadow}}box-shadow: 0 -6px {{property.shadowBlur}}px 0 {{property.shadowColor}};{{/if}}
+}
+
+/* ── 상단: 브랜드 + 네비 ───────────────────── */
+.gpf__top {
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+  display: grid;
+  /* ① 브랜드 컬럼을 min-content 기반으로: 너비 고정 대신 비율로 */
+  grid-template-columns: {{property.brandColW}}px 1fr;
+  gap: {{property.topGapD}}px;
+  align-items: start;
+}
+
+/* ── 로고: 텍스트형 ──────────────────────── */
+.gpf__logo-text {
+  display: inline-block;
+  font-family: 'Giants', var(--font-family-heading);
+  font-weight: 700;
+  font-size: {{property.logoTextSize}}px;
+  letter-spacing: 0em;
+  color: {{property.accentColor}};
+  line-height: 1;
+  margin-bottom: {{property.logoMb}}px;
+  transition: opacity 0.2s ease;
+}
+.gpf__logo-text:hover { opacity: 0.7; }
+
+/* ── 로고: 이미지형 ──────────────────────── */
+.gpf__logo-img-wrap {
+  display: inline-block;
+  margin-bottom: {{property.logoMb}}px;
+  transition: opacity 0.2s ease;
+}
+.gpf__logo-img-wrap:hover { opacity: 0.7; }
+.gpf__logo-img {
+  display: block;
+  height: {{property.logoImgH}}px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+/* ── 슬로건 ──────────────────────────────── */
+.gpf__slogan {
+  font-size: {{property.sloganSzD}}px;
+  color: {{property.mutedColor}};
+  /* ② 줄간격 완화 */
+  line-height: 1.65;
+  margin-bottom: {{property.sloganMb}}px;
+  white-space: pre-line;
+  /* ② 슬로건 최대 너비: 브랜드 컬럼 안에서만 */
+  max-width: 100%;
+}
+
+/* ── SNS ──────────────────────────────────── */
+.gpf__sns { display: flex; align-items: center; gap: {{property.snsGap}}px; flex-wrap: wrap; }
+.gpf__sns-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: {{property.snsBtnSz}}px; height: {{property.snsBtnSz}}px;
+  border-radius: {{property.snsBtnR}}px;
+  color: {{property.snsIconColor}};
+  background: {{property.snsIconBg}};
+  border: 1px solid {{property.snsIconBorder}};
+  flex-shrink: 0;
+  /* ⑧ transform 기반 hover: layout shift 없음 */
+  transition: background 0.2s, color 0.2s, transform 0.18s, border-color 0.2s;
+}
+.gpf__sns-btn:hover {
+  background: {{property.accentColor}};
+  color: #fff;
+  border-color: {{property.accentColor}};
+  transform: translateY(-2px);
+}
+
+/* ── 네비게이션: ① auto-fill로 내용량 기반 컬럼 ─ */
+.gpf__nav {
+  /* ① repeat(5,1fr) 대신 auto-fill + min-width로 자연스러운 분포 */
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: {{property.navColGapD}}px;
+  align-items: start;
+}
+
+/* ② 그룹 제목: 크기+여백 비율 조정으로 계층 강화 */
+.gpf__nav-title {
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  font-size: {{property.navTitleSzD}}px;
+  color: {{property.navTitleColor}};
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  margin-bottom: {{property.navTitleMb}}px;
+  border-bottom: 1px solid {{property.navTitleBorder}};
+  /* ② 제목 아래 포인트 라인 효과 */
+  position: relative;
+}
+.gpf__nav-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 20px; height: 1px;
+  background: {{property.accentColor}};
+  opacity: 0.7;
+}
+
+.gpf__nav-list { display: flex; flex-direction: column; gap: {{property.navLinkGap}}px; }
+.gpf__nav-link {
+  font-size: {{property.navLinkSzD}}px;
+  color: {{property.navLinkColor}};
+  line-height: 1.45;
+  display: inline-block;
+  /* ⑧ padding 대신 transform: layout shift 없음 */
+  transition: color 0.18s, transform 0.18s;
+}
+.gpf__nav-link:hover {
+  color: {{property.accentColor}};
+  transform: translateX(4px);
+}
+
+/* ── 구분선 ──────────────────────────────── */
+.gpf__divider {
+  max-width: {{property.maxWidth}}px;
+  /* ① dividerMyD 기본값 축소(40→28) 로 여백 완화 */
+  margin: {{property.dividerMyD}}px auto;
+  height: 1px;
+  background: {{property.dividerColor}};
+}
+
+/* ── 하단 ─────────────────────────────────── */
+.gpf__bottom {
+  max-width: {{property.maxWidth}}px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: {{property.bottomGap}}px;
+}
+
+/* ── 사업자 정보: 데스크탑 inline-flex wrap ── */
+.gpf__biz {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  row-gap: 4px;
+  font-size: {{property.bizSzD}}px;
+  color: {{property.mutedColor}};
+  line-height: 1.8;
+}
+.gpf__biz-sep {
+  display: inline-flex;
+  align-items: center;
+  color: {{property.dividerColor}};
+  font-weight: 300;
+  font-size: 0.85em;
+  opacity: 0.5;
+  margin: 0 8px;
+  user-select: none;
+  flex-shrink: 0;
+}
+.gpf__biz-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.gpf__email { color: {{property.accentColor}}; transition: opacity 0.18s; }
+.gpf__email:hover { opacity: 0.7; }
+
+/* ── 저작권 행 ───────────────────────────── */
+.gpf__legal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 16px;
+}
+.gpf__copy-text {
+  font-size: {{property.copySzD}}px;
+  color: {{property.mutedColor}};
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.gpf__policy {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.gpf__policy-link {
+  font-size: {{property.copySzD}}px;
+  color: {{property.mutedColor}};
+  padding: 0 14px;
+  position: relative;
+  transition: color 0.18s;
+  white-space: nowrap;
+}
+/* ⑩ 첫 항목 padding 제거: 조건부 렌더 대응 전용 클래스 */
+.gpf__policy-link--first { padding-left: 0; }
+.gpf__policy-link + .gpf__policy-link::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 1px; height: 0.75em;
+  background: {{property.navTitleBorder}};
+  opacity: 0.45;
+}
+.gpf__policy-link--bold { font-weight: 700; color: {{property.navTitleColor}}; }
+.gpf__policy-link:hover { color: {{property.accentColor}}; }
+
+/* ── 스크롤 인 애니메이션 ─────────────────── */
+{{#if property.enableAnim}}
+.gpf__brand, .gpf__nav-group {
+  opacity: 0;
+  transform: translateY(20px);
+  /* ⑨ transition-duration 조정: 너무 빠르지 않게 */
+  transition: opacity 0.52s ease, transform 0.52s ease;
+}
+.gpf__brand.gpf--vis, .gpf__nav-group.gpf--vis {
+  opacity: 1; transform: none;
+}
+{{/if}}
+
+/* ── Tablet (1024px) ────────────────────── */
+@media (max-width: 1024px) {
+  .gpf__top { grid-template-columns: 220px 1fr; gap: 40px; }
+  .gpf__nav { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+}
+
+/* ── Tablet small (768px) ───────────────── */
+@media (max-width: 768px) {
+  .gpf__nav { grid-template-columns: repeat(2, 1fr); gap: 24px 20px; }
+}
+
+/* ── Mobile (767px 이하) ─────────────────── */
+@media (max-width: 767px) {
+  .gpf {
+    padding: {{property.paddingTopM}}px {{property.paddingHzM}}px {{property.paddingBottomM}}px;
+  }
+
+  /* ⑥ 모바일: 브랜드+네비 단일 컬럼 */
+  .gpf__top {
+    grid-template-columns: 1fr;
+    gap: {{property.topGapM}}px;
+  }
+
+  /* ⑤ 모바일 네비: 2컬럼 고정 제거, auto-fill 최소 140px */
+  .gpf__nav {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 20px;
+    /* ⑤ align-items: start → 그룹별 높이 독립 유지 */
+    align-items: start;
+  }
+
+  .gpf__slogan { font-size: {{property.sloganSzM}}px; }
+  .gpf__nav-title { font-size: {{property.navTitleSzM}}px; }
+  .gpf__nav-link { font-size: {{property.navLinkSzM}}px; }
+
+  /* ⑦ 모바일 사업자 정보: flex-col로 줄바꿈 문제 완전 해결 */
+  .gpf__biz {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: {{property.bizSzM}}px;
+  }
+  /* 모바일에서 | 구분자 숨김 (한 줄씩 표시되므로 불필요) */
+  .gpf__biz-sep { display: none; }
+  /* 모바일에서 biz-item: 각각 독립 행 */
+  .gpf__biz-item { white-space: normal; }
+
+  .gpf__legal-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .gpf__copy-text { font-size: {{property.copySzM}}px; }
+  .gpf__policy-link { font-size: {{property.copySzM}}px; }
+  .gpf__divider { margin: {{property.dividerMyM}}px auto; }
+}
+</style>
+
+
+<script>
+var container = bm.container;
+var ctx = bm.context;
+var obs = null;
+
+/* ── 스크롤 인 애니메이션 ──────────────── */
+function runAnim() {
+  if (!ctx.property.enableAnim) return;
+  var els = container.querySelectorAll('.gpf__brand, .gpf__nav-group');
+  if (!els.length) return;
+  /* ⑨ threshold 0.06→0.12: 어느 정도 보일 때 시작 */
+  obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function() { entry.target.classList.add('gpf--vis'); }, i * 70);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
+  els.forEach(function(el) { obs.observe(el); });
+}
+
+runAnim();
+
+bm.onContextChange = function() {
+  if (obs) { obs.disconnect(); obs = null; }
+  container.querySelectorAll('.gpf__brand, .gpf__nav-group').forEach(function(el) {
+    el.classList.remove('gpf--vis');
+  });
+  runAnim();
+};
+
+bm.onDestroy = function() {
+  if (obs) { obs.disconnect(); obs = null; }
+};
+</script>

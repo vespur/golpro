@@ -1,0 +1,712 @@
+{
+  "title": "Header_GNB",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "로고",
+          "type": "TITLE"
+        },
+        {
+          "default": "text",
+          "description": "이 값은 로고 표시 방식을 변경합니다. '텍스트'는 폰트 로고, '이미지'는 업로드 파일을 사용합니다. 문제가 생기면 '텍스트'로 되돌리세요.",
+          "id": "logoType",
+          "label": "로고 유형",
+          "options": [
+            {
+              "label": "텍스트 로고",
+              "value": "text"
+            },
+            {
+              "label": "이미지 로고",
+              "value": "image"
+            }
+          ],
+          "type": "RADIO"
+        },
+        {
+          "default": "GOLPRO",
+          "description": "이 값은 텍스트 로고에 표시되는 브랜드명을 변경합니다. 대문자 사용을 권장합니다. 문제가 생기면 'GOLPRO'로 되돌리세요.",
+          "id": "logoText",
+          "isVisible": "property.logoType === 'text'",
+          "label": "로고 텍스트",
+          "placeholder": "브랜드명 입력",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 이미지형 로고 파일을 변경합니다. PNG 투명 배경을 권장하며 권장 높이는 32~40px입니다. 문제가 생기면 이미지를 삭제하고 텍스트 로고로 전환하세요.",
+          "id": "logoImage",
+          "isVisible": "property.logoType === 'image'",
+          "label": "로고 이미지",
+          "type": "IMAGE_PICKER"
+        },
+        {
+          "description": "이 값은 로고 클릭 시 이동할 URL을 변경합니다. 비워두면 홈('/')으로 이동합니다. 문제가 생기면 비워두세요.",
+          "id": "logoLink",
+          "label": "로고 클릭 링크",
+          "type": "LINK"
+        },
+        {
+          "content": "메뉴 구성",
+          "type": "TITLE"
+        },
+        {
+          "content": "주메뉴와 하위 메뉴를 자유롭게 추가·수정·삭제할 수 있습니다. 메뉴 우측 '>' 버튼으로 하위 메뉴를 추가하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "label": "GNB 메뉴 구성",
+          "type": "MENU"
+        },
+        {
+          "content": "SNS 링크",
+          "type": "TITLE"
+        },
+        {
+          "content": "URL을 입력하면 아이콘이 표시되고, 비워두면 숨겨집니다.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": true,
+          "description": "이 값은 Instagram 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsInstagram",
+          "label": "Instagram 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "https://www.instagram.com/golpro_official",
+          "description": "이 값은 Instagram 아이콘의 링크를 변경합니다. 권장값: https://instagram.com/계정명. 문제가 생기면 비워두세요.",
+          "id": "snsInstagram",
+          "isVisible": "property.showSnsInstagram",
+          "label": "Instagram URL",
+          "placeholder": "https://instagram.com/...",
+          "type": "TEXT"
+        },
+        {
+          "default": true,
+          "description": "이 값은 YouTube 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsYoutube",
+          "label": "YouTube 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "https://www.youtube.com/@golpro",
+          "description": "이 값은 YouTube 아이콘의 링크를 변경합니다. 권장값: https://youtube.com/@채널명. 문제가 생기면 비워두세요.",
+          "id": "snsYoutube",
+          "isVisible": "property.showSnsYoutube",
+          "label": "YouTube URL",
+          "placeholder": "https://youtube.com/...",
+          "type": "TEXT"
+        },
+        {
+          "default": false,
+          "description": "이 값은 Threads 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsThreads",
+          "label": "Threads 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 Threads 아이콘의 링크를 변경합니다. 권장값: https://threads.net/@계정명. 문제가 생기면 비워두세요.",
+          "id": "snsThreads",
+          "isVisible": "property.showSnsThreads",
+          "label": "Threads URL",
+          "placeholder": "https://threads.net/@...",
+          "type": "TEXT"
+        },
+        {
+          "default": false,
+          "description": "이 값은 KakaoTalk 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsKakao",
+          "label": "KakaoTalk 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 카카오톡 아이콘의 링크를 변경합니다. 권장값: https://pf.kakao.com/채널ID. 문제가 생기면 비워두세요.",
+          "id": "snsKakao",
+          "isVisible": "property.showSnsKakao",
+          "label": "카카오톡 채널 URL",
+          "placeholder": "https://pf.kakao.com/...",
+          "type": "TEXT"
+        },
+        {
+          "default": false,
+          "description": "이 값은 네이버 블로그 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsNaverBlog",
+          "label": "네이버 블로그 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 네이버 블로그 아이콘의 링크를 변경합니다. 권장값: https://blog.naver.com/아이디. 문제가 생기면 비워두세요.",
+          "id": "snsNaverBlog",
+          "isVisible": "property.showSnsNaverBlog",
+          "label": "네이버 블로그 URL",
+          "placeholder": "https://blog.naver.com/...",
+          "type": "TEXT"
+        },
+        {
+          "default": false,
+          "description": "이 값은 Facebook 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsFacebook",
+          "label": "Facebook 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 Facebook 아이콘의 링크를 변경합니다. 권장값: https://facebook.com/페이지명. 문제가 생기면 비워두세요.",
+          "id": "snsFacebook",
+          "isVisible": "property.showSnsFacebook",
+          "label": "Facebook URL",
+          "placeholder": "https://facebook.com/...",
+          "type": "TEXT"
+        },
+        {
+          "default": false,
+          "description": "이 값은 X (Twitter) 아이콘 표시 여부를 변경합니다. 꺼도 URL은 유지됩니다.",
+          "id": "showSnsX",
+          "label": "X (Twitter) 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 X 아이콘의 링크를 변경합니다. 권장값: https://x.com/계정명. 문제가 생기면 비워두세요.",
+          "id": "snsX",
+          "isVisible": "property.showSnsX",
+          "label": "X (Twitter) URL",
+          "placeholder": "https://x.com/...",
+          "type": "TEXT"
+        },
+        {
+          "content": "회원 정보",
+          "type": "TITLE"
+        },
+        {
+          "default": "GOLPRO 멤버",
+          "description": "이 값은 로그인한 회원의 이름 아래 표시되는 등급 텍스트를 변경합니다. 예: GOLPRO 멤버, VIP, 프리미엄. 문제가 생기면 'GOLPRO 멤버'로 되돌리세요.",
+          "id": "memberGradeLabel",
+          "label": "회원 등급 표시 텍스트",
+          "placeholder": "예: GOLPRO 멤버",
+          "type": "TEXT"
+        },
+        {
+          "content": "띠 배너 (홈 전용)",
+          "type": "TITLE"
+        },
+        {
+          "content": "띠 배너는 홈(HOME) 페이지에서만 노출됩니다. 스크롤 시 위로 사라지며 GNB는 최상단에 고정됩니다.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": true,
+          "description": "이 값은 헤더 위 띠 배너의 노출을 변경합니다. 이벤트 기간에만 켜는 것을 권장합니다. 문제가 생기면 체크를 해제하세요.",
+          "id": "showBanner",
+          "label": "띠 배너 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "🏌️ GOLPRO 런칭 이벤트 — 지금 가입하면 프리미엄 1개월 무료!",
+          "description": "이 값은 데스크탑 화면의 띠 배너 문구를 변경합니다. 충분한 내용을 담을 수 있습니다. 문제가 생기면 기본값으로 되돌리세요.",
+          "id": "bannerTextDesktop",
+          "isVisible": "property.showBanner === true",
+          "label": "배너 문구 — 데스크탑",
+          "placeholder": "데스크탑용 배너 문구",
+          "type": "TEXT"
+        },
+        {
+          "default": "🏌️ 지금 가입하면 프리미엄 1개월 무료!",
+          "description": "이 값은 모바일 화면의 띠 배너 문구를 변경합니다. 짧고 핵심적인 문구를 권장합니다. 문제가 생기면 기본값으로 되돌리세요.",
+          "id": "bannerTextMobile",
+          "isVisible": "property.showBanner === true",
+          "label": "배너 문구 — 모바일",
+          "placeholder": "모바일용 짧은 배너 문구",
+          "type": "TEXT"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "디자인 고급 옵션",
+          "type": "TITLE"
+        },
+        {
+          "default": false,
+          "description": "이 값은 디자인 및 개발자 고급 옵션의 표시를 변경합니다. 시각 디자이너 / 개발자 전용입니다. 문제가 생기면 체크를 해제하세요.",
+          "id": "developerMode",
+          "label": "⚙️ 디자인 고급 옵션 열기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "레이아웃",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 1400,
+          "description": "이 값은 헤더 내 콘텐츠 영역의 최대 가로 너비를 변경합니다. 권장값: 1400. 문제가 생기면 1400으로 되돌리세요.",
+          "id": "maxWidth",
+          "isVisible": "property.developerMode === true",
+          "label": "콘텐츠 최대 너비 (px)",
+          "max": 1920,
+          "min": 960,
+          "step": 20,
+          "type": "RANGE"
+        },
+        {
+          "default": 40,
+          "description": "이 값은 데스크탑 헤더의 좌우 내부 여백을 변경합니다. 권장값: 40. 문제가 생기면 40으로 되돌리세요.",
+          "id": "paddingH",
+          "isVisible": "property.developerMode === true",
+          "label": "좌우 여백 — 데스크탑 (px)",
+          "max": 80,
+          "min": 16,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 16,
+          "description": "이 값은 모바일 헤더의 좌우 내부 여백을 변경합니다. 권장값: 16. 문제가 생기면 16으로 되돌리세요.",
+          "id": "paddingHM",
+          "isVisible": "property.developerMode === true",
+          "label": "좌우 여백 — 모바일 (px)",
+          "max": 40,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 64,
+          "description": "이 값은 데스크탑 GNB 헤더의 높이를 변경합니다. 권장값: 64. 문제가 생기면 64로 되돌리세요.",
+          "id": "headerHeight",
+          "isVisible": "property.developerMode === true",
+          "label": "헤더 높이 — 데스크탑 (px)",
+          "max": 96,
+          "min": 48,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 52,
+          "description": "이 값은 모바일 GNB 헤더의 높이를 변경합니다. 권장값: 52. 문제가 생기면 52로 되돌리세요.",
+          "id": "headerHeightM",
+          "isVisible": "property.developerMode === true",
+          "label": "헤더 높이 — 모바일 (px)",
+          "max": 80,
+          "min": 44,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 300,
+          "description": "이 값은 모바일 슬라이드 메뉴의 가로 너비를 변경합니다. 권장값: 300. 문제가 생기면 300으로 되돌리세요.",
+          "id": "drawerWidth",
+          "isVisible": "property.developerMode === true",
+          "label": "모바일 메뉴 너비 (px)",
+          "max": 400,
+          "min": 240,
+          "step": 10,
+          "type": "RANGE"
+        },
+        {
+          "content": "글래스모피즘",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "content": "헤더 배경의 글래스 효과를 세밀하게 조정합니다. 블러가 클수록 성능 부담이 증가합니다.",
+          "isVisible": "property.developerMode === true",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": 20,
+          "description": "이 값은 헤더 배경의 블러(흐림) 강도를 변경합니다. 값이 클수록 불투명하게 보입니다. 권장값: 20. 문제가 생기면 20으로 되돌리세요.",
+          "id": "glassBlur",
+          "isVisible": "property.developerMode === true",
+          "label": "블러 강도 (px)",
+          "max": 40,
+          "min": 0,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 180,
+          "description": "이 값은 헤더 배경의 색상 채도 보정을 변경합니다. 값이 높을수록 배경색이 선명해집니다. 권장값: 180. 문제가 생기면 180으로 되돌리세요.",
+          "id": "glassSaturation",
+          "isVisible": "property.developerMode === true",
+          "label": "채도 보정 (%)",
+          "max": 220,
+          "min": 100,
+          "step": 10,
+          "type": "RANGE"
+        },
+        {
+          "default": 0.82,
+          "description": "이 값은 GNB 헤더 배경의 기본 불투명도를 변경합니다. 0에 가까울수록 투명합니다. 권장값: 0.82. 문제가 생기면 0.82로 되돌리세요.",
+          "id": "glassBgOpacity",
+          "isVisible": "property.developerMode === true",
+          "label": "배경 불투명도 — 기본 (0.0~1.0)",
+          "max": 1,
+          "min": 0.1,
+          "step": 0.02,
+          "type": "RANGE"
+        },
+        {
+          "default": 0.95,
+          "description": "이 값은 스크롤 후 GNB 헤더 배경의 불투명도를 변경합니다. 기본값보다 높게 설정해 대비를 주세요. 권장값: 0.95. 문제가 생기면 0.95로 되돌리세요.",
+          "id": "glassBgOpacityScrolled",
+          "isVisible": "property.developerMode === true",
+          "label": "배경 불투명도 — 스크롤 후 (0.0~1.0)",
+          "max": 1,
+          "min": 0.5,
+          "step": 0.01,
+          "type": "RANGE"
+        },
+        {
+          "content": "색상",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": "#22C55EFF",
+          "description": "이 값은 메뉴 하이라이트·버튼·회원 등급 텍스트 등 포인트 색상을 변경합니다. 권장값: #22C55EFF. 문제가 생기면 #22C55EFF로 되돌리세요.",
+          "id": "accentColor",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#CBD5E1FF",
+          "description": "이 값은 GNB 주메뉴 텍스트의 기본 색상을 변경합니다. 권장값: #CBD5E1FF. 문제가 생기면 #CBD5E1FF로 되돌리세요.",
+          "id": "menuColor",
+          "isVisible": "property.developerMode === true",
+          "label": "메뉴 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#FFFFFFFF",
+          "description": "이 값은 텍스트 로고의 색상을 변경합니다. 권장값: #FFFFFFFF. 문제가 생기면 #FFFFFFFF로 되돌리세요.",
+          "id": "logoColor",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#166534FF",
+          "description": "이 값은 띠 배너의 배경색을 변경합니다. 권장값: #166534FF. 문제가 생기면 #166534FF로 되돌리세요.",
+          "id": "bannerBg",
+          "isVisible": "property.developerMode === true",
+          "label": "띠 배너 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#DCFCE7FF",
+          "description": "이 값은 띠 배너 문구의 텍스트 색상을 변경합니다. 권장값: #DCFCE7FF. 문제가 생기면 #DCFCE7FF로 되돌리세요.",
+          "id": "bannerColor",
+          "isVisible": "property.developerMode === true",
+          "label": "띠 배너 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#0E1117FF",
+          "description": "이 값은 모바일 슬라이드 메뉴의 배경색을 변경합니다. 권장값: #0E1117FF. 문제가 생기면 #0E1117FF로 되돌리세요.",
+          "id": "drawerBg",
+          "isVisible": "property.developerMode === true",
+          "label": "모바일 메뉴 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": 12,
+          "description": "이 값은 데스크탑 드롭다운 메뉴의 상단 좌우 모퉁이 둥글기를 변경합니다. 권장값: 12. 문제가 생기면 12로 되돌리세요.",
+          "id": "dropRadiusTop",
+          "label": "드롭다운 상단 모퉁이 (px)",
+          "max": 24,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 12,
+          "description": "이 값은 데스크탑 드롭다운 메뉴의 하단 좌우 모퉁이 둥글기를 변경합니다. 권장값: 12. 문제가 생기면 12로 되돌리세요.",
+          "id": "dropRadiusBottom",
+          "label": "드롭다운 하단 모퉁이 (px)",
+          "max": 24,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": "#FFFFFF10",
+          "description": "이 값은 모바일 메뉴(드로어) 내 모든 구분선의 색상을 변경합니다. 권장값: #FFFFFF10. 문제가 생기면 #FFFFFF10으로 되돌리세요.",
+          "id": "drawerDividerColor",
+          "isVisible": "property.developerMode === true",
+          "label": "드로어 구분선 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#0000001A",
+          "description": "이 값은 드로어에서 아코디언이 펼쳐졌을 때 하위 메뉴 영역의 배경색을 변경합니다. 권장값: #0000001A. 문제가 생기면 #0000001A로 되돌리세요.",
+          "id": "drawerSubBg",
+          "isVisible": "property.developerMode === true",
+          "label": "드로어 하위메뉴 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "타이포그래피",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 22,
+          "description": "이 값은 데스크탑 텍스트 로고의 글자 크기를 변경합니다. 권장값: 22. 문제가 생기면 22로 되돌리세요.",
+          "id": "logoSize",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 텍스트 크기 — 데스크탑 (px)",
+          "max": 36,
+          "min": 14,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 18,
+          "description": "이 값은 모바일 텍스트 로고의 글자 크기를 변경합니다. 권장값: 18. 문제가 생기면 18로 되돌리세요.",
+          "id": "logoSizeM",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 텍스트 크기 — 모바일 (px)",
+          "max": 28,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": -0.05,
+          "description": "이 값은 로고 텍스트의 자간(글자 사이 간격)을 변경합니다. 음수는 좁게, 양수는 넓게 설정합니다. 권장값: -0.05. 문제가 생기면 -0.05로 되돌리세요.",
+          "id": "logoLetterSpacing",
+          "label": "로고 자간 (em)",
+          "max": 0.5,
+          "min": -0.5,
+          "step": 0.05,
+          "type": "RANGE"
+        },
+        {
+          "default": 34,
+          "description": "이 값은 데스크탑 이미지 로고의 높이를 변경합니다. 권장값: 34. 문제가 생기면 34로 되돌리세요.",
+          "id": "logoImgH",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 이미지 높이 — 데스크탑 (px)",
+          "max": 56,
+          "min": 18,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 26,
+          "description": "이 값은 모바일 이미지 로고의 높이를 변경합니다. 권장값: 26. 문제가 생기면 26으로 되돌리세요.",
+          "id": "logoImgHM",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 이미지 높이 — 모바일 (px)",
+          "max": 44,
+          "min": 14,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 14,
+          "description": "이 값은 데스크탑 주메뉴 텍스트의 크기를 변경합니다. 권장값: 14. 문제가 생기면 14로 되돌리세요.",
+          "id": "menuSize",
+          "isVisible": "property.developerMode === true",
+          "label": "메뉴 텍스트 크기 (px)",
+          "max": 18,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 14,
+          "description": "이 값은 각 메뉴 항목의 좌우 클릭 영역 여백을 변경합니다. 권장값: 14. 문제가 생기면 14로 되돌리세요.",
+          "id": "menuPadH",
+          "isVisible": "property.developerMode === true",
+          "label": "메뉴 좌우 여백 (px)",
+          "max": 28,
+          "min": 6,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 16,
+          "description": "이 값은 모바일 슬라이드 메뉴의 주메뉴 텍스트 크기를 변경합니다. 권장값: 16. 문제가 생기면 16으로 되돌리세요.",
+          "id": "drawerMenuSize",
+          "isVisible": "property.developerMode === true",
+          "label": "모바일 메뉴 텍스트 크기 (px)",
+          "max": 20,
+          "min": 14,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 16,
+          "description": "이 값은 모바일 메뉴(드로어) 상단에 표시되는 로고 텍스트의 크기를 변경합니다. 권장값: 16. 문제가 생기면 16으로 되돌리세요.",
+          "id": "drawerLogoSize",
+          "isVisible": "property.developerMode === true",
+          "label": "드로어 로고 크기 (px)",
+          "max": 28,
+          "min": 12,
+          "step": 1,
+          "type": "RANGE"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "개발자",
+      "settings": [
+        {
+          "content": "개발자 설정",
+          "type": "TITLE"
+        },
+        {
+          "content": "⚠️ 이 탭의 설정은 레이아웃·충돌 해결·성능 조정용입니다. 개발 담당자만 수정하세요.",
+          "type": "DESCRIPTION"
+        },
+        {
+          "default": false,
+          "description": "이 값은 개발자 전용 고급 설정 항목의 표시를 변경합니다. 비개발자는 건드리지 마세요. 문제가 생기면 체크를 해제하세요.",
+          "id": "developerMode",
+          "label": "고급 옵션 열기",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "충돌 해결",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 1024,
+          "description": "이 값은 모바일 메뉴(햄버거)로 전환되는 기준 화면 너비를 변경합니다. 권장값: 1024. 문제가 생기면 1024로 되돌리세요.",
+          "id": "mobileBreak",
+          "isVisible": "property.developerMode === true",
+          "label": "모바일 전환 기준 (px)",
+          "max": 1280,
+          "min": 640,
+          "step": 16,
+          "type": "RANGE"
+        },
+        {
+          "default": 1000,
+          "description": "이 값은 GNB 헤더의 레이어 순서를 변경합니다. 다른 요소와 겹침 문제가 있을 때만 조정하세요. 권장값: 1000. 문제가 생기면 1000으로 되돌리세요.",
+          "id": "zIndexHeader",
+          "isVisible": "property.developerMode === true",
+          "label": "헤더 z-index",
+          "max": 9999,
+          "min": 100,
+          "step": 100,
+          "type": "RANGE"
+        },
+        {
+          "content": "성능 / 호환",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": false,
+          "description": "이 값은 헤더 내 전환 애니메이션을 변경합니다. 저사양 기기나 motion sensitivity 환경에서 유용합니다. 문제가 생기면 체크를 해제하세요.",
+          "id": "disableAnimation",
+          "isVisible": "property.developerMode === true",
+          "label": "애니메이션 비활성화",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": false,
+          "description": "이 값은 backdrop-filter 블러 효과를 변경합니다. 구형 브라우저 호환 또는 성능 문제 시 비활성화하세요. 문제가 생기면 체크를 해제하세요.",
+          "id": "disableBackdropFilter",
+          "isVisible": "property.developerMode === true",
+          "label": "블러 효과 비활성화",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "디버그",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": false,
+          "description": "이 값은 브라우저 콘솔에 스크롤·상태 로그를 출력합니다. 개발 중에만 사용하고 운영 시 반드시 해제하세요. 문제가 생기면 체크를 해제하세요.",
+          "id": "debugLog",
+          "isVisible": "property.developerMode === true",
+          "label": "콘솔 로그 출력",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentColor": "#22C55EFF",
+    "bannerBg": "#166534FF",
+    "bannerColor": "#DCFCE7FF",
+    "bannerTextDesktop": "🏌️ GOLPRO 런칭 이벤트 — 지금 가입하면 프리미엄 1개월 무료!",
+    "bannerTextMobile": "🏌️ 지금 가입하면 프리미엄 1개월 무료!",
+    "debugLog": false,
+    "developerMode": false,
+    "disableAnimation": false,
+    "disableBackdropFilter": false,
+    "drawerBg": "#0E1117FF",
+    "drawerDividerColor": "#FFFFFF10",
+    "drawerLogoSize": 16,
+    "drawerMenuSize": 16,
+    "drawerSubBg": "#0000001A",
+    "drawerWidth": 300,
+    "dropRadiusBottom": 12,
+    "dropRadiusTop": 12,
+    "glassBgOpacity": 0.82,
+    "glassBgOpacityScrolled": 0.95,
+    "glassBlur": 20,
+    "glassSaturation": 180,
+    "headerHeight": 64,
+    "headerHeightM": 52,
+    "logoColor": "#FFFFFFFF",
+    "logoImage": null,
+    "logoImgH": 34,
+    "logoImgHM": 26,
+    "logoLetterSpacing": -0.05,
+    "logoLink": {
+      "id": null,
+      "label": "/",
+      "type": "url",
+      "value": "/"
+    },
+    "logoSize": 22,
+    "logoSizeM": 18,
+    "logoText": "GOLPRO",
+    "logoType": "text",
+    "maxWidth": 1400,
+    "memberGradeLabel": "GOLPRO 멤버",
+    "menuColor": "#CBD5E1FF",
+    "menuPadH": 14,
+    "menuSize": 14,
+    "mobileBreak": 1024,
+    "paddingH": 40,
+    "paddingHM": 16,
+    "showBanner": true,
+    "showSnsFacebook": false,
+    "showSnsInstagram": true,
+    "showSnsKakao": false,
+    "showSnsNaverBlog": false,
+    "showSnsThreads": false,
+    "showSnsX": false,
+    "showSnsYoutube": true,
+    "snsFacebook": "",
+    "snsInstagram": "https://www.instagram.com/golpro_official",
+    "snsKakao": "",
+    "snsNaverBlog": "",
+    "snsThreads": "",
+    "snsX": "",
+    "snsYoutube": "https://www.youtube.com/@golpro",
+    "zIndexHeader": 1000
+  }
+}

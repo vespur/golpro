@@ -1,0 +1,1175 @@
+{
+  "title": "Footer",
+  "status": "active",
+  "settings": [
+    {
+      "content": "콘텐츠",
+      "settings": [
+        {
+          "content": "로고",
+          "type": "TITLE"
+        },
+        {
+          "default": "text",
+          "description": "이 값은 로고 표시 방식을 변경합니다.\n텍스트형: 자이언츠체로 브랜드명 표시.\n이미지형: 업로드한 이미지 파일 표시.\n문제가 생기면 텍스트형으로 되돌리세요.",
+          "id": "logoType",
+          "label": "로고 유형",
+          "options": [
+            {
+              "label": "텍스트형",
+              "value": "text"
+            },
+            {
+              "label": "이미지형",
+              "value": "image"
+            }
+          ],
+          "type": "RADIO"
+        },
+        {
+          "default": "GOLPRO",
+          "description": "이 값은 텍스트 로고 문구를 변경합니다.\n자이언츠체, 자간 0으로 자동 렌더링됩니다.\n문제가 생기면 GOLPRO로 되돌리세요.",
+          "id": "logoText",
+          "isVisible": "property.logoType === 'text'",
+          "label": "로고 텍스트",
+          "type": "TEXT"
+        },
+        {
+          "description": "이 값은 이미지 로고 파일을 변경합니다.\nSVG 또는 투명 PNG를 권장합니다.\n문제가 생기면 이미지를 삭제하세요.",
+          "id": "logoImage",
+          "isVisible": "property.logoType === 'image'",
+          "label": "로고 이미지",
+          "type": "IMAGE_PICKER"
+        },
+        {
+          "content": "슬로건",
+          "type": "TITLE"
+        },
+        {
+          "default": "골프를 사랑하는 모든 이들을 위한\n대한민국 No.1 골프 커뮤니티",
+          "description": "이 값은 로고 아래 슬로건을 변경합니다.\n엔터로 줄바꿈이 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "slogan",
+          "label": "브랜드 슬로건",
+          "type": "TEXTAREA"
+        },
+        {
+          "content": "SNS 링크",
+          "type": "TITLE"
+        },
+        {
+          "default": true,
+          "description": "이 값은 SNS 아이콘 영역 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showSns",
+          "label": "SNS 아이콘 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": "",
+          "description": "이 값은 인스타그램 링크를 변경합니다.\n비워두면 아이콘이 숨겨집니다.\n문제가 생기면 빈칸으로 되돌리세요.",
+          "id": "snsInstagram",
+          "label": "인스타그램 URL",
+          "type": "TEXT"
+        },
+        {
+          "default": "",
+          "description": "이 값은 유튜브 링크를 변경합니다.\n비워두면 아이콘이 숨겨집니다.\n문제가 생기면 빈칸으로 되돌리세요.",
+          "id": "snsYoutube",
+          "label": "유튜브 URL",
+          "type": "TEXT"
+        },
+        {
+          "default": "",
+          "description": "이 값은 X 링크를 변경합니다.\n비워두면 아이콘이 숨겨집니다.\n문제가 생기면 빈칸으로 되돌리세요.",
+          "id": "snsX",
+          "label": "X (트위터) URL",
+          "type": "TEXT"
+        },
+        {
+          "default": "",
+          "description": "이 값은 블로그 링크를 변경합니다.\n비워두면 아이콘이 숨겨집니다.\n문제가 생기면 빈칸으로 되돌리세요.",
+          "id": "snsBlog",
+          "label": "블로그 URL",
+          "type": "TEXT"
+        },
+        {
+          "content": "네비게이션 — 커뮤니티",
+          "type": "TITLE"
+        },
+        {
+          "default": "커뮤니티",
+          "description": "이 값은 커뮤니티 그룹의 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "nav1Title",
+          "label": "그룹 제목",
+          "type": "TEXT"
+        },
+        {
+          "default": [
+            {
+              "label": "자유게시판",
+              "newTab": false,
+              "url": "/board"
+            },
+            {
+              "label": "내 장비 자랑",
+              "newTab": false,
+              "url": "/board/gear"
+            },
+            {
+              "label": "라이브 스레드",
+              "newTab": false,
+              "url": "/live"
+            }
+          ],
+          "description": "이 값은 커뮤니티 메뉴 항목을 추가·수정·삭제합니다.\n+ 버튼으로 항목을 추가할 수 있습니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "nav1Links",
+          "label": "메뉴 항목",
+          "maxCount": 20,
+          "settings": [
+            {
+              "default": "메뉴",
+              "description": "이 값은 표시될 메뉴 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "label",
+              "label": "메뉴 이름",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 클릭 시 이동할 주소를 변경합니다.\n내부 페이지 또는 외부 URL 모두 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "url",
+              "label": "링크 주소",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        },
+        {
+          "content": "네비게이션 — CC 리얼 후기",
+          "type": "TITLE"
+        },
+        {
+          "default": "CC 리얼 후기",
+          "description": "이 값은 CC 리얼 후기 그룹의 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "nav2Title",
+          "label": "그룹 제목",
+          "type": "TEXT"
+        },
+        {
+          "default": [
+            {
+              "label": "실시간 CC 랭킹",
+              "newTab": false,
+              "url": "/cc-rating"
+            },
+            {
+              "label": "CC 리얼 평가",
+              "newTab": false,
+              "url": "/cc-rating/review"
+            },
+            {
+              "label": "야디지북",
+              "newTab": false,
+              "url": "/cc-rating/yardage"
+            }
+          ],
+          "description": "이 값은 CC 리얼 후기 메뉴 항목을 추가·수정·삭제합니다.\n+ 버튼으로 항목을 추가할 수 있습니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "nav2Links",
+          "label": "메뉴 항목",
+          "maxCount": 20,
+          "settings": [
+            {
+              "default": "메뉴",
+              "description": "이 값은 표시될 메뉴 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "label",
+              "label": "메뉴 이름",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 클릭 시 이동할 주소를 변경합니다.\n내부 페이지 또는 외부 URL 모두 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "url",
+              "label": "링크 주소",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        },
+        {
+          "content": "네비게이션 — 프로 선수 장비",
+          "type": "TITLE"
+        },
+        {
+          "default": "프로 선수 장비",
+          "description": "이 값은 프로 선수 장비 그룹의 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "nav3Title",
+          "label": "그룹 제목",
+          "type": "TEXT"
+        },
+        {
+          "default": [
+            {
+              "label": "PGA",
+              "newTab": false,
+              "url": "/witb/pga"
+            },
+            {
+              "label": "LPGA",
+              "newTab": false,
+              "url": "/witb/lpga"
+            },
+            {
+              "label": "KPGA",
+              "newTab": false,
+              "url": "/witb/kpga"
+            },
+            {
+              "label": "KLPGA",
+              "newTab": false,
+              "url": "/witb/klpga"
+            }
+          ],
+          "description": "이 값은 프로 선수 장비 메뉴 항목을 추가·수정·삭제합니다.\n+ 버튼으로 항목을 추가할 수 있습니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "nav3Links",
+          "label": "메뉴 항목",
+          "maxCount": 20,
+          "settings": [
+            {
+              "default": "메뉴",
+              "description": "이 값은 표시될 메뉴 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "label",
+              "label": "메뉴 이름",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 클릭 시 이동할 주소를 변경합니다.\n내부 페이지 또는 외부 URL 모두 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "url",
+              "label": "링크 주소",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        },
+        {
+          "content": "네비게이션 — 이벤트/공지",
+          "type": "TITLE"
+        },
+        {
+          "default": "이벤트/공지",
+          "description": "이 값은 이벤트/공지 그룹의 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "nav4Title",
+          "label": "그룹 제목",
+          "type": "TEXT"
+        },
+        {
+          "default": [
+            {
+              "label": "공지사항",
+              "newTab": false,
+              "url": "/notice"
+            },
+            {
+              "label": "이벤트",
+              "newTab": false,
+              "url": "/event"
+            }
+          ],
+          "description": "이 값은 이벤트/공지 메뉴 항목을 추가·수정·삭제합니다.\n+ 버튼으로 항목을 추가할 수 있습니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "nav4Links",
+          "label": "메뉴 항목",
+          "maxCount": 20,
+          "settings": [
+            {
+              "default": "메뉴",
+              "description": "이 값은 표시될 메뉴 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "label",
+              "label": "메뉴 이름",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 클릭 시 이동할 주소를 변경합니다.\n내부 페이지 또는 외부 URL 모두 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "url",
+              "label": "링크 주소",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        },
+        {
+          "content": "네비게이션 — 연락하기",
+          "type": "TITLE"
+        },
+        {
+          "default": "연락하기",
+          "description": "이 값은 연락하기 그룹의 제목을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "nav5Title",
+          "label": "그룹 제목",
+          "type": "TEXT"
+        },
+        {
+          "default": [
+            {
+              "label": "광고/제휴 문의",
+              "newTab": false,
+              "url": "/contact/ad"
+            },
+            {
+              "label": "장비정보 수정/저작권 문의",
+              "newTab": false,
+              "url": "/contact/witb"
+            }
+          ],
+          "description": "이 값은 연락하기 메뉴 항목을 추가·수정·삭제합니다.\n+ 버튼으로 항목을 추가할 수 있습니다.\n문제가 생기면 항목을 삭제하거나 초기화하세요.",
+          "id": "nav5Links",
+          "label": "메뉴 항목",
+          "maxCount": 20,
+          "settings": [
+            {
+              "default": "메뉴",
+              "description": "이 값은 표시될 메뉴 이름을 변경합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "label",
+              "label": "메뉴 이름",
+              "type": "TEXT"
+            },
+            {
+              "description": "이 값은 클릭 시 이동할 주소를 변경합니다.\n내부 페이지 또는 외부 URL 모두 가능합니다.\n문제가 생기면 기본값으로 되돌리세요.",
+              "id": "url",
+              "label": "링크 주소",
+              "type": "LINK"
+            }
+          ],
+          "type": "LIST"
+        },
+        {
+          "content": "저작권",
+          "type": "TITLE"
+        },
+        {
+          "default": "© 2026 GOLPRO. All rights reserved.",
+          "description": "이 값은 하단 저작권 문구를 변경합니다.\n연도는 직접 수정해 주세요.\n문제가 생기면 기본값으로 되돌리세요.",
+          "id": "copyrightText",
+          "label": "저작권 문구",
+          "type": "TEXT"
+        },
+        {
+          "content": "💡 사업자 정보 · 이용약관 · 개인정보처리방침은 관리자 > [약관 및 필수 정보]에서 입력하면 자동으로 반영됩니다.",
+          "type": "DESCRIPTION"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "디자인",
+      "settings": [
+        {
+          "content": "고급 옵션",
+          "type": "TITLE"
+        },
+        {
+          "default": false,
+          "description": "이 값은 세부 디자인 설정 노출 여부를 변경합니다.\n비개발자는 켜지 않는 것을 권장합니다.\n문제가 생기면 체크 해제 후 저장하세요.",
+          "id": "developerMode",
+          "label": "고급 디자인 옵션 표시",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "브랜드 색상",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": "#1A6B3A",
+          "description": "이 값은 로고·링크 호버·SNS 호버 등 브랜드 포인트 색을 변경합니다.\n권장값: #1A6B3A.\n문제가 생기면 #1A6B3A로 되돌리세요.",
+          "id": "accentColor",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 컬러",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#0A0A0A",
+          "description": "이 값은 푸터 전체 배경색을 변경합니다.\n권장값: #0A0A0A.\n문제가 생기면 #0A0A0A로 되돌리세요.",
+          "id": "bgColor",
+          "isVisible": "property.developerMode === true",
+          "label": "배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#E5E5E5",
+          "description": "이 값은 기본 텍스트 색상을 변경합니다.\n권장값: #E5E5E5.\n문제가 생기면 #E5E5E5로 되돌리세요.",
+          "id": "textColor",
+          "isVisible": "property.developerMode === true",
+          "label": "기본 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#6B7280",
+          "description": "이 값은 슬로건·사업자 정보·저작권 등 보조 텍스트 색을 변경합니다.\n권장값: #6B7280.\n문제가 생기면 #6B7280으로 되돌리세요.",
+          "id": "mutedColor",
+          "isVisible": "property.developerMode === true",
+          "label": "보조 텍스트 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "네비게이션 색상",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": "#FFFFFF",
+          "description": "이 값은 네비게이션 그룹 제목 색을 변경합니다.\n권장값: #FFFFFF.\n문제가 생기면 #FFFFFF로 되돌리세요.",
+          "id": "navTitleColor",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 제목 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#2A2A2A",
+          "description": "이 값은 그룹 제목 하단 구분선 색을 변경합니다.\n권장값: #2A2A2A.\n문제가 생기면 #2A2A2A로 되돌리세요.",
+          "id": "navTitleBorder",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 제목 밑줄 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#9CA3AF",
+          "description": "이 값은 네비게이션 링크 기본 색을 변경합니다.\n권장값: #9CA3AF.\n문제가 생기면 #9CA3AF로 되돌리세요.",
+          "id": "navLinkColor",
+          "isVisible": "property.developerMode === true",
+          "label": "링크 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#252525",
+          "description": "이 값은 구분선 및 사업자 정보 | 구분자 색을 변경합니다.\n권장값: #252525.\n문제가 생기면 #252525로 되돌리세요.",
+          "id": "dividerColor",
+          "isVisible": "property.developerMode === true",
+          "label": "구분선 / | 구분자 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "레이아웃",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 1200,
+          "description": "이 값은 푸터 콘텐츠 최대 너비를 변경합니다.\n권장값: 1200.\n문제가 생기면 1200으로 되돌리세요.",
+          "id": "maxWidth",
+          "isVisible": "property.developerMode === true",
+          "label": "콘텐츠 최대 너비 (px)",
+          "max": 1600,
+          "min": 800,
+          "step": 40,
+          "type": "RANGE"
+        },
+        {
+          "default": 260,
+          "description": "이 값은 로고·슬로건 영역의 너비를 변경합니다.\n권장값: 260.\n문제가 생기면 260으로 되돌리세요.",
+          "id": "brandColW",
+          "isVisible": "property.developerMode === true",
+          "label": "브랜드 영역 너비 — 데스크탑 (px)",
+          "max": 360,
+          "min": 160,
+          "step": 10,
+          "type": "RANGE"
+        },
+        {
+          "default": 64,
+          "description": "이 값은 데스크탑 브랜드-네비 사이 간격을 변경합니다.\n권장값: 64.\n문제가 생기면 64로 되돌리세요.",
+          "id": "topGapD",
+          "isVisible": "property.developerMode === true",
+          "label": "브랜드↔네비 간격 — 데스크탑 (px)",
+          "max": 120,
+          "min": 16,
+          "step": 8,
+          "type": "RANGE"
+        },
+        {
+          "default": 36,
+          "description": "이 값은 모바일 브랜드-네비 사이 간격을 변경합니다.\n권장값: 36.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "topGapM",
+          "isVisible": "property.developerMode === true",
+          "label": "브랜드↔네비 간격 — 모바일 (px)",
+          "max": 60,
+          "min": 16,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "여백 — 데스크탑",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 72,
+          "description": "이 값은 데스크탑 상단 여백을 변경합니다.\n권장값: 72.\n문제가 생기면 72로 되돌리세요.",
+          "id": "paddingTopD",
+          "isVisible": "property.developerMode === true",
+          "label": "상단 여백 (px)",
+          "max": 120,
+          "min": 24,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 48,
+          "description": "이 값은 데스크탑 하단 여백을 변경합니다.\n권장값: 48.\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingBottomD",
+          "isVisible": "property.developerMode === true",
+          "label": "하단 여백 (px)",
+          "max": 80,
+          "min": 16,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 40,
+          "description": "이 값은 데스크탑 좌우 여백을 변경합니다.\n권장값: 40.\n문제가 생기면 40으로 되돌리세요.",
+          "id": "paddingHzD",
+          "isVisible": "property.developerMode === true",
+          "label": "좌우 여백 (px)",
+          "max": 80,
+          "min": 0,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "여백 — 모바일",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 48,
+          "description": "이 값은 모바일 상단 여백을 변경합니다.\n권장값: 48.\n문제가 생기면 48로 되돌리세요.",
+          "id": "paddingTopM",
+          "isVisible": "property.developerMode === true",
+          "label": "상단 여백 (px)",
+          "max": 80,
+          "min": 16,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 36,
+          "description": "이 값은 모바일 하단 여백을 변경합니다.\n권장값: 36.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "paddingBottomM",
+          "isVisible": "property.developerMode === true",
+          "label": "하단 여백 (px)",
+          "max": 60,
+          "min": 12,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 20,
+          "description": "이 값은 모바일 좌우 여백을 변경합니다.\n권장값: 20.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "paddingHzM",
+          "isVisible": "property.developerMode === true",
+          "label": "좌우 여백 (px)",
+          "max": 40,
+          "min": 12,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "로고 크기",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 26,
+          "description": "이 값은 자이언츠체 텍스트 로고 크기를 변경합니다.\n권장값: 26.\n문제가 생기면 26으로 되돌리세요.",
+          "id": "logoTextSize",
+          "isVisible": "property.developerMode === true",
+          "label": "텍스트 로고 크기 (px)",
+          "max": 48,
+          "min": 16,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 36,
+          "description": "이 값은 이미지 로고 높이를 변경합니다.\n권장값: 36.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "logoImgH",
+          "isVisible": "property.developerMode === true",
+          "label": "이미지 로고 높이 (px)",
+          "max": 80,
+          "min": 20,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 16,
+          "description": "이 값은 로고와 슬로건 사이 간격을 변경합니다.\n권장값: 16.\n문제가 생기면 16으로 되돌리세요.",
+          "id": "logoMb",
+          "isVisible": "property.developerMode === true",
+          "label": "로고 하단 여백 (px)",
+          "max": 40,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "content": "슬로건 타이포",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 13,
+          "description": "이 값은 데스크탑 슬로건 크기를 변경합니다.\n권장값: 13.\n문제가 생기면 13으로 되돌리세요.",
+          "id": "sloganSzD",
+          "isVisible": "property.developerMode === true",
+          "label": "슬로건 크기 — 데스크탑 (px)",
+          "max": 18,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 12,
+          "description": "이 값은 모바일 슬로건 크기를 변경합니다.\n권장값: 12.\n문제가 생기면 12로 되돌리세요.",
+          "id": "sloganSzM",
+          "isVisible": "property.developerMode === true",
+          "label": "슬로건 크기 — 모바일 (px)",
+          "max": 16,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 20,
+          "description": "이 값은 슬로건과 SNS 아이콘 사이 간격을 변경합니다.\n권장값: 20.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "sloganMb",
+          "isVisible": "property.developerMode === true",
+          "label": "슬로건 하단 여백 (px)",
+          "max": 40,
+          "min": 4,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "SNS 아이콘",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 36,
+          "description": "이 값은 SNS 버튼 크기를 변경합니다.\n권장값: 36.\n문제가 생기면 36으로 되돌리세요.",
+          "id": "snsBtnSz",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 크기 (px)",
+          "max": 52,
+          "min": 28,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 8,
+          "description": "이 값은 SNS 버튼 모서리 둥글기를 변경합니다.\n0=직각, 50=원형. 권장값: 8.\n문제가 생기면 8로 되돌리세요.",
+          "id": "snsBtnR",
+          "isVisible": "property.developerMode === true",
+          "label": "버튼 모서리 둥글기 (px)",
+          "max": 50,
+          "min": 0,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 8,
+          "description": "이 값은 SNS 아이콘 간격을 변경합니다.\n권장값: 8.\n문제가 생기면 8로 되돌리세요.",
+          "id": "snsGap",
+          "isVisible": "property.developerMode === true",
+          "label": "아이콘 간격 (px)",
+          "max": 20,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": "#9CA3AF",
+          "description": "이 값은 SNS 아이콘 기본 색을 변경합니다.\n권장값: #9CA3AF.\n문제가 생기면 #9CA3AF로 되돌리세요.",
+          "id": "snsIconColor",
+          "isVisible": "property.developerMode === true",
+          "label": "아이콘 기본 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#1A1A1A",
+          "description": "이 값은 SNS 버튼 배경색을 변경합니다.\n권장값: #1A1A1A.\n문제가 생기면 #1A1A1A로 되돌리세요.",
+          "id": "snsIconBg",
+          "isVisible": "property.developerMode === true",
+          "label": "아이콘 배경색",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "default": "#2D2D2D",
+          "description": "이 값은 SNS 버튼 테두리 색을 변경합니다.\n권장값: #2D2D2D.\n문제가 생기면 #2D2D2D로 되돌리세요.",
+          "id": "snsIconBorder",
+          "isVisible": "property.developerMode === true",
+          "label": "아이콘 테두리 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "네비게이션 타이포",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 11,
+          "description": "이 값은 데스크탑 그룹 제목 크기를 변경합니다.\n권장값: 11.\n문제가 생기면 11로 되돌리세요.",
+          "id": "navTitleSzD",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 제목 크기 — 데스크탑 (px)",
+          "max": 16,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 10,
+          "description": "이 값은 모바일 그룹 제목 크기를 변경합니다.\n권장값: 10.\n문제가 생기면 10으로 되돌리세요.",
+          "id": "navTitleSzM",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 제목 크기 — 모바일 (px)",
+          "max": 14,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 14,
+          "description": "이 값은 제목과 첫 링크 사이 간격을 변경합니다.\n권장값: 14.\n문제가 생기면 14로 되돌리세요.",
+          "id": "navTitleMb",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 제목 하단 여백 (px)",
+          "max": 32,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 14,
+          "description": "이 값은 데스크탑 링크 텍스트 크기를 변경합니다.\n권장값: 14.\n문제가 생기면 14로 되돌리세요.",
+          "id": "navLinkSzD",
+          "isVisible": "property.developerMode === true",
+          "label": "링크 크기 — 데스크탑 (px)",
+          "max": 18,
+          "min": 11,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 13,
+          "description": "이 값은 모바일 링크 텍스트 크기를 변경합니다.\n권장값: 13.\n문제가 생기면 13으로 되돌리세요.",
+          "id": "navLinkSzM",
+          "isVisible": "property.developerMode === true",
+          "label": "링크 크기 — 모바일 (px)",
+          "max": 16,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 10,
+          "description": "이 값은 링크 사이 세로 간격을 변경합니다.\n권장값: 10.\n문제가 생기면 10으로 되돌리세요.",
+          "id": "navLinkGap",
+          "isVisible": "property.developerMode === true",
+          "label": "링크 세로 간격 (px)",
+          "max": 24,
+          "min": 4,
+          "step": 2,
+          "type": "RANGE"
+        },
+        {
+          "default": 32,
+          "description": "이 값은 데스크탑 그룹 간격을 변경합니다.\n권장값: 32.\n문제가 생기면 32로 되돌리세요.",
+          "id": "navColGapD",
+          "isVisible": "property.developerMode === true",
+          "label": "그룹 간격 — 데스크탑 (px)",
+          "max": 72,
+          "min": 12,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "하단 구분선",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 40,
+          "description": "이 값은 데스크탑 구분선 여백을 변경합니다.\n권장값: 40.\n문제가 생기면 40으로 되돌리세요.",
+          "id": "dividerMyD",
+          "isVisible": "property.developerMode === true",
+          "label": "구분선 상하 여백 — 데스크탑 (px)",
+          "max": 80,
+          "min": 16,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": 28,
+          "description": "이 값은 모바일 구분선 여백을 변경합니다.\n권장값: 28.\n문제가 생기면 28으로 되돌리세요.",
+          "id": "dividerMyM",
+          "isVisible": "property.developerMode === true",
+          "label": "구분선 상하 여백 — 모바일 (px)",
+          "max": 60,
+          "min": 12,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "사업자 정보 & 저작권 텍스트",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": 12,
+          "description": "이 값은 데스크탑 사업자 정보 텍스트 크기를 변경합니다.\n권장값: 12.\n문제가 생기면 12로 되돌리세요.",
+          "id": "bizSzD",
+          "isVisible": "property.developerMode === true",
+          "label": "사업자 정보 크기 — 데스크탑 (px)",
+          "max": 15,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 11,
+          "description": "이 값은 모바일 사업자 정보 텍스트 크기를 변경합니다.\n권장값: 11.\n문제가 생기면 11로 되돌리세요.",
+          "id": "bizSzM",
+          "isVisible": "property.developerMode === true",
+          "label": "사업자 정보 크기 — 모바일 (px)",
+          "max": 13,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 12,
+          "description": "이 값은 데스크탑 저작권 문구 크기를 변경합니다.\n권장값: 12.\n문제가 생기면 12로 되돌리세요.",
+          "id": "copySzD",
+          "isVisible": "property.developerMode === true",
+          "label": "저작권 텍스트 크기 — 데스크탑 (px)",
+          "max": 14,
+          "min": 10,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 11,
+          "description": "이 값은 모바일 저작권 문구 크기를 변경합니다.\n권장값: 11.\n문제가 생기면 11로 되돌리세요.",
+          "id": "copySzM",
+          "isVisible": "property.developerMode === true",
+          "label": "저작권 텍스트 크기 — 모바일 (px)",
+          "max": 13,
+          "min": 9,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": 16,
+          "description": "이 값은 사업자 정보와 저작권 행 사이 간격을 변경합니다.\n권장값: 16.\n문제가 생기면 16으로 되돌리세요.",
+          "id": "bottomGap",
+          "isVisible": "property.developerMode === true",
+          "label": "사업자 정보↔저작권 행 간격 (px)",
+          "max": 40,
+          "min": 8,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "content": "상단 바 & 그림자",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": true,
+          "description": "이 값은 푸터 최상단 포인트 컬러 라인 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showAccentBar",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 컬러 상단 바",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": 3,
+          "description": "이 값은 상단 포인트 바 두께를 변경합니다.\n권장값: 3.\n문제가 생기면 3으로 되돌리세요.",
+          "id": "accentBarH",
+          "isVisible": "property.developerMode === true",
+          "label": "포인트 바 두께 (px)",
+          "max": 8,
+          "min": 1,
+          "step": 1,
+          "type": "RANGE"
+        },
+        {
+          "default": false,
+          "description": "이 값은 푸터 상단 그림자 표시 여부를 변경합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "showTopShadow",
+          "isVisible": "property.developerMode === true",
+          "label": "상단 그림자",
+          "type": "CHECKBOX"
+        },
+        {
+          "default": 20,
+          "description": "이 값은 상단 그림자 블러 범위를 변경합니다.\n권장값: 20.\n문제가 생기면 20으로 되돌리세요.",
+          "id": "shadowBlur",
+          "isVisible": "property.developerMode === true",
+          "label": "그림자 블러 (px)",
+          "max": 60,
+          "min": 4,
+          "step": 4,
+          "type": "RANGE"
+        },
+        {
+          "default": "#00000033",
+          "description": "이 값은 상단 그림자 색상을 변경합니다.\n권장값: #00000033.\n문제가 생기면 #00000033으로 되돌리세요.",
+          "id": "shadowColor",
+          "isVisible": "property.developerMode === true",
+          "label": "그림자 색상",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "애니메이션",
+          "isVisible": "property.developerMode === true",
+          "type": "TITLE"
+        },
+        {
+          "default": true,
+          "description": "이 값은 스크롤 인 애니메이션 사용 여부를 변경합니다.\n저사양 기기에서는 끄는 것을 권장합니다.\n문제가 생기면 체크 해제하세요.",
+          "id": "enableAnim",
+          "isVisible": "property.developerMode === true",
+          "label": "스크롤 진입 애니메이션",
+          "type": "CHECKBOX"
+        }
+      ],
+      "type": "TAB"
+    },
+    {
+      "content": "개발자",
+      "settings": [
+        {
+          "content": "앵커 & 클래스",
+          "type": "TITLE"
+        },
+        {
+          "default": "gp-footer",
+          "description": "이 값은 푸터 요소의 HTML id를 변경합니다.\n#id 형식으로 다른 블록에서 스크롤 이동 시 활용합니다.\n문제가 생기면 gp-footer로 되돌리세요.",
+          "id": "anchorId",
+          "label": "앵커 ID",
+          "type": "TEXT"
+        },
+        {
+          "default": "",
+          "description": "이 값은 루트 요소에 추가 CSS 클래스를 부여합니다.\n캠페인·테마 스타일 재정의에 활용하세요.\n문제가 생기면 빈칸으로 되돌리세요.",
+          "id": "customClass",
+          "label": "커스텀 CSS 클래스",
+          "type": "TEXT"
+        }
+      ],
+      "type": "TAB"
+    }
+  ],
+  "property": {
+    "accentBarH": 3,
+    "accentColor": "#1A6B3A",
+    "anchorId": "gp-footer",
+    "bgColor": "#0A0A0A",
+    "bizSzD": 12,
+    "bizSzM": 12,
+    "bottomGap": 14,
+    "brandColW": 260,
+    "copySzD": 12,
+    "copySzM": 11,
+    "copyrightText": "© 2026 GOLPRO. All rights reserved.",
+    "customClass": "",
+    "developerMode": false,
+    "dividerColor": "#252525",
+    "dividerMyD": 28,
+    "dividerMyM": 22,
+    "enableAnim": true,
+    "logoImage": null,
+    "logoImgH": 36,
+    "logoMb": 20,
+    "logoText": "GOLPRO",
+    "logoTextSize": 26,
+    "logoType": "text",
+    "maxWidth": 1200,
+    "mutedColor": "#6B7280",
+    "nav1Links": [
+      {
+        "label": "자유게시판",
+        "url": {
+          "id": null,
+          "label": "/board",
+          "type": "url",
+          "value": "/board"
+        }
+      },
+      {
+        "label": "내 장비 자랑",
+        "url": {
+          "id": null,
+          "label": "/board/gear",
+          "type": "url",
+          "value": "/board/gear"
+        }
+      },
+      {
+        "label": "라이브 스레드",
+        "url": {
+          "id": null,
+          "label": "/live",
+          "type": "url",
+          "value": "/live"
+        }
+      }
+    ],
+    "nav1Title": "커뮤니티",
+    "nav2Links": [
+      {
+        "label": "실시간 CC 랭킹",
+        "url": {
+          "id": null,
+          "label": "/cc-rating",
+          "type": "url",
+          "value": "/cc-rating"
+        }
+      },
+      {
+        "label": "CC 리얼 평가",
+        "url": {
+          "id": null,
+          "label": "/cc-rating/review",
+          "type": "url",
+          "value": "/cc-rating/review"
+        }
+      },
+      {
+        "label": "야디지북",
+        "url": {
+          "id": null,
+          "label": "/cc-rating/yardage",
+          "type": "url",
+          "value": "/cc-rating/yardage"
+        }
+      }
+    ],
+    "nav2Title": "CC 리얼 후기",
+    "nav3Links": [
+      {
+        "label": "PGA",
+        "url": {
+          "id": null,
+          "label": "/witb/pga",
+          "type": "url",
+          "value": "/witb/pga"
+        }
+      },
+      {
+        "label": "LPGA",
+        "url": {
+          "id": null,
+          "label": "/witb/lpga",
+          "type": "url",
+          "value": "/witb/lpga"
+        }
+      },
+      {
+        "label": "KPGA",
+        "url": {
+          "id": null,
+          "label": "/witb/kpga",
+          "type": "url",
+          "value": "/witb/kpga"
+        }
+      },
+      {
+        "label": "KLPGA",
+        "url": {
+          "id": null,
+          "label": "/witb/klpga",
+          "type": "url",
+          "value": "/witb/klpga"
+        }
+      }
+    ],
+    "nav3Title": "프로 선수 장비",
+    "nav4Links": [
+      {
+        "label": "공지사항",
+        "url": {
+          "id": null,
+          "label": "/notice",
+          "type": "url",
+          "value": "/notice"
+        }
+      },
+      {
+        "label": "이벤트",
+        "url": {
+          "id": null,
+          "label": "/event",
+          "type": "url",
+          "value": "/event"
+        }
+      }
+    ],
+    "nav4Title": "이벤트/공지",
+    "nav5Links": [
+      {
+        "label": "광고/제휴 문의",
+        "url": {
+          "id": null,
+          "label": "/contact/ad",
+          "type": "url",
+          "value": "/contact/ad"
+        }
+      },
+      {
+        "label": "장비정보 수정/저작권 문의",
+        "url": {
+          "id": null,
+          "label": "/contact/witb",
+          "type": "url",
+          "value": "/contact/witb"
+        }
+      }
+    ],
+    "nav5Title": "연락하기",
+    "navColGapD": 32,
+    "navLinkColor": "#9CA3AF",
+    "navLinkGap": 11,
+    "navLinkSzD": 13,
+    "navLinkSzM": 13,
+    "navTitleBorder": "#2A2A2A",
+    "navTitleColor": "#FFFFFF",
+    "navTitleMb": 16,
+    "navTitleSzD": 11,
+    "navTitleSzM": 10,
+    "paddingBottomD": 48,
+    "paddingBottomM": 36,
+    "paddingHzD": 40,
+    "paddingHzM": 20,
+    "paddingTopD": 72,
+    "paddingTopM": 48,
+    "shadowBlur": 20,
+    "shadowColor": "#00000033",
+    "showAccentBar": true,
+    "showSns": true,
+    "showTopShadow": false,
+    "slogan": "골프를 사랑하는 모든 이들을 위한\n대한민국 No.1 골프 커뮤니티",
+    "sloganMb": 24,
+    "sloganSzD": 13,
+    "sloganSzM": 12,
+    "snsBlog": "",
+    "snsBtnR": 8,
+    "snsBtnSz": 36,
+    "snsGap": 8,
+    "snsIconBg": "#1A1A1A",
+    "snsIconBorder": "#2D2D2D",
+    "snsIconColor": "#9CA3AF",
+    "snsInstagram": "",
+    "snsX": "",
+    "snsYoutube": "",
+    "textColor": "#E5E5E5",
+    "topGapD": 64,
+    "topGapM": 32
+  }
+}
