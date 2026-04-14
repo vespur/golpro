@@ -13,14 +13,14 @@
 .ccRankToolbar__sort{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankToolbar__regionFilter{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankGrid{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
-.ccRankCarousel{position:relative;overflow:hidden;padding:0 48px;}
-.ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);will-change:transform;}
+.ccRankCarousel{position:relative;overflow:visible;}
+.ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);will-change:transform;touch-action:pan-y;}
 .ccRankCarousel__track .ccCard{flex-shrink:0;min-width:0;box-sizing:border-box;}
-.ccRankCarousel__nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:{{property.accentColor}};color:#ffffff;border:none;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;opacity:0.9;transition:opacity 0.2s, transform 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
-.ccRankCarousel__nav:hover{opacity:1;transform:translateY(-50%) scale(1.08);}
-.ccRankCarousel__nav--prev{left:4px;}
-.ccRankCarousel__nav--next{right:4px;}
-.ccRankCarousel__nav--disabled{opacity:0.3;cursor:default;pointer-events:none;}
+.ccRankCarousel__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.94);color:{{property.accentColor}};border:1px solid #E5E5E5;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;transition:background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;box-shadow:0 2px 10px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);}
+.ccRankCarousel__nav:hover{background:#FFFFFF;border-color:rgba(26,71,49,0.28);box-shadow:0 4px 14px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05);}
+.ccRankCarousel__nav--prev{left:-60px;}
+.ccRankCarousel__nav--next{right:-60px;}
+.ccRankCarousel__nav--disabled{opacity:0.35;cursor:default;pointer-events:none;}.ccRankCarousel__nav svg{width:20px;height:20px;display:block;}
 .ccRankCarousel__dots{display:flex;justify-content:center;gap:8px;margin-top:16px;}
 .ccRankCarousel__dot{width:8px;height:8px;border-radius:50%;background:{{property.borderColor}};border:none;padding:0;cursor:pointer;transition:background 0.2s, transform 0.2s;}
 .ccRankCarousel__dot--active{background:{{property.accentColor}};transform:scale(1.3);}
@@ -54,8 +54,8 @@
 .ccCard__btn:hover{opacity:0.85;}
 .ccCard__btn--primary{background:{{property.accentColor}};color:#ffffff;}
 .ccCard__btn--secondary{background:transparent;color:{{property.accentColor}};border:1px solid {{property.accentColor}};}
-.ccCard__btn--rate{background:{{property.rateBtnBg}};color:{{property.rateBtnColor}};border:1px solid {{property.rateBtnBorderColor}};}
-.ccRankEmpty{text-align:center;padding:60px 20px;color:{{property.subtitleColor}};font-size:15px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
+.ccCard__btn--rate{background:{{property.accentColor}};color:#FFFFFF;border:none;font-weight:600;}.ccCard__btn--rate:hover{opacity:0.92;}
+.ccRankEmpty{text-align:center;padding:60px 20px;color:{{property.subtitleColor}};font-size:15px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}.ccCard__unrated{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:9999px;background:#F5F5F5;color:#737373;font-size:12px;font-weight:500;letter-spacing:0.02em;align-self:flex-start;}.ccCard__unrated::before{content:"";width:6px;height:6px;border-radius:50%;background:#A3A3A3;display:inline-block;}.ccCard__unratedHint{font-size:12px;color:#A3A3A3;line-height:1.5;margin-top:4px;}
 .ccRankEmpty__icon{font-size:48px;margin-bottom:16px;opacity:0.4;}
 .ccRankEmpty__title{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:18px;color:{{property.titleColor}};margin-bottom:8px;}
 .ccRankSkeleton{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
@@ -77,8 +77,8 @@
 .ccRankToolbar__searchWrap{min-width:100%;}
 .ccRankToolbar__sort, .ccRankToolbar__regionFilter{width:100%;}
 .ccRankGrid{grid-template-columns:repeat({{property.gridColsMobile}}, 1fr);gap:{{property.gridGapMobile}}px;}
-.ccRankCarousel{padding:0 36px;}
-.ccRankCarousel__nav{width:32px;height:32px;font-size:16px;}
+.ccRankCarousel{padding:0;}
+.ccRankCarousel__nav{width:40px;height:40px;}.ccRankCarousel__nav--prev{left:4px;}.ccRankCarousel__nav--next{right:4px;}.ccRankCarousel__nav svg{width:18px;height:18px;}
 .ccCard__name{font-size:{{property.cardNameSizeMobile}}px;}
 .ccRankSkeleton{grid-template-columns:repeat({{property.gridColsMobile}}, 1fr);gap:{{property.gridGapMobile}}px;}
 }
@@ -113,8 +113,8 @@ var unique = []; for (var k in userMap) { if (userMap.hasOwnProperty(k)) unique.
 var ccGroups = {}; for (var u = 0; u < unique.length; u++) { var rating = unique[u]; if (!ccGroups[rating.ccId]) ccGroups[rating.ccId] = { strategy: [], condition: [], scenery: [], service: [], facility: [], price: [] }; var g = ccGroups[rating.ccId]; if (typeof rating.ratings.strategy === 'number') g.strategy.push(rating.ratings.strategy); if (typeof rating.ratings.condition === 'number') g.condition.push(rating.ratings.condition); if (typeof rating.ratings.scenery === 'number') g.scenery.push(rating.ratings.scenery); if (typeof rating.ratings.service === 'number') g.service.push(rating.ratings.service); if (typeof rating.ratings.facility === 'number') g.facility.push(rating.ratings.facility); if (typeof rating.ratings.price === 'number') g.price.push(rating.ratings.price); }
 function avg(arr) { if (arr.length === 0) return 0; var sum = 0; for (var a = 0; a < arr.length; a++) sum += arr[a]; return sum / arr.length; }
 var bridgeMap = {}; for (var b = 0; b < bridgeItems.length; b++) bridgeMap[bridgeItems[b].ccId] = bridgeItems[b];
-var results = []; for (var ccId in bridgeMap) { if (!bridgeMap.hasOwnProperty(ccId)) continue; var bridge = bridgeMap[ccId]; var grp = ccGroups[ccId]; var item = { ccId: bridge.ccId, ccName: bridge.ccName, region: bridge.region || '', tags: bridge.tags || '', image: bridge.image || null, imageRatio: bridge.imageRatio || '4_3', btn1Enabled: bridge.btn1Enabled, btn1Label: bridge.btn1Label || '', btn1Url: bridge.btn1Url || '', btn1NewTab: bridge.btn1NewTab, btn2Enabled: bridge.btn2Enabled, btn2Label: bridge.btn2Label || '', btn2Url: bridge.btn2Url || '', btn2NewTab: bridge.btn2NewTab }; if (grp) { var stAvg = avg(grp.strategy), coAvg = avg(grp.condition), scAvg = avg(grp.scenery), seAvg = avg(grp.service), faAvg = avg(grp.facility), prAvg = avg(grp.price); var rawOverall = (stAvg * wSt + coAvg * wCo + scAvg * wSc + seAvg * wSe + faAvg * wFa + prAvg * wPr) / wTotal; var v = grp.strategy.length; var adjusted = (v / (v + m)) * rawOverall + (m / (v + m)) * C; item.ratings = { strategy: stAvg, condition: coAvg, scenery: scAvg, service: seAvg, facility: faAvg, price: prAvg }; item.overall = adjusted; item.reviewCount = v; } else { item.ratings = { strategy: 0, condition: 0, scenery: 0, service: 0, facility: 0, price: 0 }; item.overall = 0; item.reviewCount = 0; } results.push(item); }
-results.sort(function(a, b) { return (b.overall || 0) - (a.overall || 0); }); return results;
+var results = []; for (var ccId in bridgeMap) { if (!bridgeMap.hasOwnProperty(ccId)) continue; var bridge = bridgeMap[ccId]; var grp = ccGroups[ccId]; var item = { ccId: bridge.ccId, ccName: bridge.ccName, region: bridge.region || '', tags: bridge.tags || '', image: bridge.image || null, imageRatio: bridge.imageRatio || '4_3', btn1Enabled: bridge.btn1Enabled, btn1Label: bridge.btn1Label || '', btn1Url: bridge.btn1Url || '', btn1NewTab: bridge.btn1NewTab, btn2Enabled: bridge.btn2Enabled, btn2Label: bridge.btn2Label || '', btn2Url: bridge.btn2Url || '', btn2NewTab: bridge.btn2NewTab }; var minReviewsForBayes = (prop.minReviewsForBayes || 3); if (grp && grp.strategy.length > 0) { var v = grp.strategy.length; var stAvg = avg(grp.strategy), coAvg = avg(grp.condition), scAvg = avg(grp.scenery), seAvg = avg(grp.service), faAvg = avg(grp.facility), prAvg = avg(grp.price); var rawOverall = (stAvg * wSt + coAvg * wCo + scAvg * wSc + seAvg * wSe + faAvg * wFa + prAvg * wPr) / wTotal; if (v >= minReviewsForBayes) { item.overall = (v / (v + m)) * rawOverall + (m / (v + m)) * C; } else { item.overall = rawOverall; } item.ratings = { strategy: stAvg, condition: coAvg, scenery: scAvg, service: seAvg, facility: faAvg, price: prAvg }; item.reviewCount = v; item.isUnrated = false; } else { item.ratings = null; item.overall = null; item.reviewCount = 0; item.isUnrated = true; } results.push(item); }
+results.sort(function(a, b) { if (a.isUnrated !== b.isUnrated) return a.isUnrated ? 1 : -1; return (b.overall || 0) - (a.overall || 0); }); return results;
 }
 function renderStars(score, size) {
 var html = '<div class="ccCard__stars">'; for (var i = 1; i <= 5; i++) { var pct = Math.min(100, Math.max(0, (score - (i - 1)) * 100)); if (pct >= 100) { html += '<svg class="ccCard__star ccCard__star--filled" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="currentColor"/></svg>'; } else if (pct <= 0) { html += '<svg class="ccCard__star ccCard__star--empty" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="currentColor"/></svg>'; } else { var uid = 's' + i + '_' + Math.random().toString(36).substr(2, 5); html += '<svg class="ccCard__star" width="' + size + '" height="' + size + '" viewBox="0 0 20 20"><defs><linearGradient id="' + uid + '"><stop offset="' + pct + '%" stop-color="' + prop.starFilledColor + '"/><stop offset="' + pct + '%" stop-color="' + prop.starEmptyColor + '"/></linearGradient></defs><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" fill="url(#' + uid + ')"/></svg>'; } } html += '</div>'; return html;
@@ -130,11 +130,9 @@ html += '<div class="ccCard__imgWrap ' + imgRatioClass + '"><img class="ccCard__
 if (item.region) html += '<div class="ccCard__region">' + item.region + '</div>';
 html += '</div><div class="ccCard__body"><h3 class="ccCard__name">' + item.ccName + '</h3>';
 if (item.tags) html += '<div class="ccCard__tags">' + item.tags + '</div>';
-var ov = item.overall || 0;
-html += '<div class="ccCard__rating">' + renderStars(ov, prop.starSize) + '<span class="ccCard__score">' + ov.toFixed(2) + '</span><span class="ccCard__reviewCount">(' + (item.reviewCount || 0) + ')</span></div>';
-if (prop.showBars && item.ratings) html += renderBars(item.ratings);
+if (item.isUnrated) { html += '<span class="ccCard__unrated">평가 대기</span>'; html += '<p class="ccCard__unratedHint">아직 리뷰가 쌓이지 않았어요. 첫 번째 평가자가 되어주세요.</p>'; } else { var ov = item.overall || 0; html += '<div class="ccCard__rating">' + renderStars(ov, prop.starSize) + '<span class="ccCard__score">' + ov.toFixed(2) + '</span><span class="ccCard__reviewCount">(' + (item.reviewCount || 0) + ')</span></div>'; if (prop.showBars && item.ratings) html += renderBars(item.ratings); }
 html += '<div class="ccCard__actions"><button class="ccCard__btn ccCard__btn--rate" data-action="rate" data-ccid="' + item.ccId + '" data-ccname="' + item.ccName + '">평가하기</button>';
-if (item.btn1Enabled && item.btn1Label) { var t1 = item.btn1NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--primary" href="' + (item.btn1Url || '#') + '"' + t1 + '>' + item.btn1Label + '</a>'; }
+if (item.btn1Enabled && item.btn1Label) { var t1 = item.btn1NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--secondary" href="' + (item.btn1Url || '#') + '"' + t1 + '>' + item.btn1Label + '</a>'; }
 if (item.btn2Enabled && item.btn2Label) { var t2 = item.btn2NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--secondary" href="' + (item.btn2Url || '#') + '"' + t2 + '>' + item.btn2Label + '</a>'; }
 html += '</div></div></div>'; return html;
 }
@@ -142,7 +140,7 @@ function renderSkeleton() { var cols = prop.gridCols || 3; var count = Math.min(
 function renderBoardMissing() { return '<div class="ccRankEmpty"><div class="ccRankEmpty__icon">&#9971;</div><div class="ccRankEmpty__title">브리지 블록을 배치해 주세요</div><p>푸터에 CC 데이터 브리지와 CC 평점 브리지 블록을 배치하면 자동으로 데이터를 읽어옵니다.</p></div>'; }
 var state = { searchQuery: '', sortBy: 'rating', regionFilter: 'all', carouselIndex: 0 };
 var ccData = [];
-function getFilteredData() { var data = ccData.slice(); if (state.searchQuery) { var q = state.searchQuery.toLowerCase(); data = data.filter(function(d) { return (d.ccName && d.ccName.toLowerCase().indexOf(q) !== -1) || (d.region && d.region.toLowerCase().indexOf(q) !== -1) || (d.tags && d.tags.toLowerCase().indexOf(q) !== -1); }); } if (state.regionFilter !== 'all') { data = data.filter(function(d) { return d.region && d.region.indexOf(state.regionFilter) !== -1; }); } if (state.sortBy === 'rating') data.sort(function(a, b) { return (b.overall || 0) - (a.overall || 0); }); else if (state.sortBy === 'name') data.sort(function(a, b) { return (a.ccName || '').localeCompare(b.ccName || ''); }); else if (state.sortBy === 'reviews') data.sort(function(a, b) { return (b.reviewCount || 0) - (a.reviewCount || 0); }); return data; }
+function getFilteredData() { var data = ccData.slice(); if (state.searchQuery) { var q = state.searchQuery.toLowerCase(); data = data.filter(function(d) { return (d.ccName && d.ccName.toLowerCase().indexOf(q) !== -1) || (d.region && d.region.toLowerCase().indexOf(q) !== -1) || (d.tags && d.tags.toLowerCase().indexOf(q) !== -1); }); } if (state.regionFilter !== 'all') { data = data.filter(function(d) { return d.region && d.region.indexOf(state.regionFilter) !== -1; }); } if (state.sortBy === 'rating') data.sort(function(a, b) { if (a.isUnrated !== b.isUnrated) return a.isUnrated ? 1 : -1; return (b.overall || 0) - (a.overall || 0); }); else if (state.sortBy === 'name') data.sort(function(a, b) { return (a.ccName || '').localeCompare(b.ccName || ''); }); else if (state.sortBy === 'reviews') data.sort(function(a, b) { if (a.isUnrated !== b.isUnrated) return a.isUnrated ? 1 : -1; return (b.reviewCount || 0) - (a.reviewCount || 0); }); return data; }
 function getRegions() { var rs = {}; for (var i = 0; i < ccData.length; i++) { if (ccData[i].region) rs[ccData[i].region.split(' ')[0]] = true; } return Object.keys(rs).sort(); }
 /* ====== Carousel Engine ====== */
 function getVisibleCount() { var isMobile = container.offsetWidth < 768; return isMobile ? (prop.carouselVisibleMobile || 1) : (prop.carouselVisible || 3); }
@@ -202,7 +200,7 @@ var maxIdx = getMaxIndex(data.length);
 var dotsHtml = '<div class="ccRankCarousel__dots">';
 for (var di = 0; di <= maxIdx; di++) { dotsHtml += '<button class="ccRankCarousel__dot' + (di === 0 ? ' ccRankCarousel__dot--active' : '') + '" data-action="carousel-dot" data-index="' + di + '" aria-label="' + (di + 1) + '페이지"></button>'; }
 dotsHtml += '</div>';
-body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전">&#8249;</button><div class="ccRankCarousel__track">' + ch + '</div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음">&#8250;</button></div>' + dotsHtml;
+body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"15 18 9 12 15 6\"/></svg></button><div class="ccRankCarousel__track">' + ch + '</div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"9 18 15 12 9 6\"/></svg></button></div>' + dotsHtml;
 state.carouselIndex = 0;
 requestAnimationFrame(function() { requestAnimationFrame(function() { sizeCarouselCards(); updateCarouselPosition(false); initCarouselTouch(); }); });
 } else { body.innerHTML = '<div class="ccRankGrid">' + ch + '</div>'; }
@@ -215,9 +213,11 @@ var touchStartX = 0, touchDelta = 0, isSwiping = false;
 function initCarouselTouch() {
 var track = container.querySelector('.ccRankCarousel__track');
 if (!track) return;
-track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; touchDelta = 0; isSwiping = true; track.style.transition = 'none'; }, { passive: true });
-track.addEventListener('touchmove', function(e) { if (!isSwiping) return; touchDelta = e.touches[0].clientX - touchStartX; var gap = getGap(); var cards = track.querySelectorAll('.ccCard'); if (cards.length === 0) return; var cardW = cards[0].offsetWidth; var baseOffset = state.carouselIndex * (cardW + gap); track.style.transform = 'translateX(' + (-baseOffset + touchDelta) + 'px)'; }, { passive: true });
-track.addEventListener('touchend', function() { if (!isSwiping) return; isSwiping = false; var threshold = container.offsetWidth * 0.15; if (touchDelta < -threshold) { state.carouselIndex++; } else if (touchDelta > threshold) { state.carouselIndex--; } updateCarouselPosition(true); }, { passive: true });
+var touchStartY = 0, horizontalLocked = false;
+track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; touchDelta = 0; isSwiping = true; horizontalLocked = false; track.style.transition = 'none'; }, { passive: true });
+track.addEventListener('touchmove', function(e) { if (!isSwiping) return; var dx = e.touches[0].clientX - touchStartX; var dy = e.touches[0].clientY - touchStartY; if (!horizontalLocked) { if (Math.abs(dx) > 8 || Math.abs(dy) > 8) { horizontalLocked = Math.abs(dx) > Math.abs(dy); if (!horizontalLocked) { isSwiping = false; return; } } } if (horizontalLocked && e.cancelable) { e.preventDefault(); } touchDelta = dx; var gap = getGap(); var cards = track.querySelectorAll('.ccCard'); if (cards.length === 0) return; var cardW = cards[0].offsetWidth; var baseOffset = state.carouselIndex * (cardW + gap); track.style.transform = 'translateX(' + (-baseOffset + touchDelta) + 'px)'; }, { passive: false });
+track.addEventListener('touchend', function() { if (!isSwiping) return; isSwiping = false; horizontalLocked = false; var threshold = container.offsetWidth * 0.12; if (touchDelta < -threshold) { state.carouselIndex++; } else if (touchDelta > threshold) { state.carouselIndex--; } updateCarouselPosition(true); }, { passive: true });
+track.addEventListener('touchcancel', function() { isSwiping = false; horizontalLocked = false; updateCarouselPosition(true); }, { passive: true });
 }
 /* ====== Resize handler ====== */
 var resizeTimer = null;
@@ -255,6 +255,6 @@ loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3 + Carousel UX v2)');
+log('CC Ranking initialized (Phase 3.6 — bugfix + UI polish)');
 })();
 </script>
