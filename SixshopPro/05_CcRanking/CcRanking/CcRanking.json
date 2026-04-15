@@ -34,12 +34,7 @@
     "inputRadius": 8,
     "maxCards": 12,
     "moreButtonLabel": "더 보기",
-    "moreButtonUrl": {
-      "id": null,
-      "type": "url",
-      "label": "/cc_ranking",
-      "value": "/cc_ranking"
-    },
+    "moreButtonUrl": "/cc_ranking",
     "paddingBottom": 40,
     "paddingBottomMobile": 24,
     "paddingLeft": 20,
@@ -121,11 +116,12 @@
           "type": "TEXT"
         },
         {
-          "description": "더 보기 버튼 클릭 시 이동할 URL. 내부 페이지(/cc_ranking 등) 또는 외부 URL",
+          "description": "더 보기 버튼 클릭 시 이동할 URL. 내부 페이지 경로(/cc_ranking) 또는 전체 URL(https://...). 문제 시 /cc_ranking으로 복구.",
           "id": "moreButtonUrl",
           "isVisible": "property.showHeader === true && property.showMoreButton === true",
           "label": "더 보기 버튼 링크",
-          "type": "LINK"
+          "type": "TEXT",
+          "placeholder": "예: /cc_ranking 또는 https://..."
         },
         {
           "content": "표시 설정",

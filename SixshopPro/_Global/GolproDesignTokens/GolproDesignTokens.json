@@ -22,9 +22,9 @@
     "sectionPaddingX": 20,
     "sectionPaddingXMobile": 16,
     "elementGapBase": 8,
-    "applyPageBackground": true,
+    "applyPageBackground": false,
     "applyTypographyToHeadings": true,
-    "developerMode": false
+    "developerMode": true
   },
   "settings": [
     {
@@ -50,7 +50,7 @@
         {
           "id": "accentSoftColor",
           "label": "액센트 연한 배경",
-          "description": "이 값은 호버 배경/선택 표시용 연한 색을 변경합니다. 알파값은 #RRGGBBAA 형식으로 자동 저장됩니다. 문제가 생기면 #1A473114로 되돌리세요.",
+          "description": "이 값은 호버 배경/선택 표시용 연한 색을 변경합니다. 알파값은 #RRGGBBAA 형식. 문제가 생기면 #1A473114로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
@@ -72,7 +72,7 @@
         {
           "id": "bgColor",
           "label": "페이지 배경",
-          "description": "이 값은 사이트 기본 배경색을 변경합니다. body 요소에 적용. 문제가 생기면 #FAFAF8로 되돌리세요.",
+          "description": "이 값은 사이트 기본 배경색을 변경합니다. 아래 '페이지 배경 자동 적용'이 체크된 경우에만 body에 반영됩니다. 문제가 생기면 #FAFAF8로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
@@ -99,8 +99,8 @@
         },
         {
           "id": "fontFamilyH1",
-          "label": "H1 폰트 패밀리",
-          "description": "이 값은 h1 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "label": "H1 폰트",
+          "description": "이 값은 h1 태그 폰트를 변경합니다. '식스샵 테마 상속'이 기본값입니다.",
           "type": "SELECT",
           "options": [
             {
@@ -163,8 +163,8 @@
         },
         {
           "id": "fontFamilyH2",
-          "label": "H2 폰트 패밀리",
-          "description": "이 값은 h2 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "label": "H2 폰트",
+          "description": "이 값은 h2 태그 폰트를 변경합니다. '식스샵 테마 상속'이 기본값입니다.",
           "type": "SELECT",
           "options": [
             {
@@ -227,8 +227,8 @@
         },
         {
           "id": "fontFamilyH3",
-          "label": "H3 폰트 패밀리",
-          "description": "이 값은 h3 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "label": "H3 폰트",
+          "description": "이 값은 h3 태그 폰트를 변경합니다. '식스샵 테마 상속'이 기본값입니다.",
           "type": "SELECT",
           "options": [
             {
@@ -291,8 +291,8 @@
         },
         {
           "id": "fontFamilyH4",
-          "label": "H4 폰트 패밀리",
-          "description": "이 값은 h4 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "label": "H4 폰트",
+          "description": "이 값은 h4 태그 폰트를 변경합니다. '식스샵 테마 상속'이 기본값입니다.",
           "type": "SELECT",
           "options": [
             {
@@ -359,8 +359,8 @@
         },
         {
           "id": "fontFamilyBody",
-          "label": "본문 폰트 패밀리",
-          "description": "이 값은 본문·입력 등 기본 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "label": "본문 폰트",
+          "description": "이 값은 본문·입력 등 기본 폰트를 변경합니다. '식스샵 테마 상속'이 기본값입니다.",
           "type": "SELECT",
           "options": [
             {
@@ -424,7 +424,7 @@
       ]
     },
     {
-      "content": "레이아웃·간격",
+      "content": "레이아웃·고급",
       "type": "TAB",
       "settings": [
         {
@@ -447,7 +447,7 @@
         },
         {
           "id": "sectionPaddingY",
-          "label": "섹션 상하 여백",
+          "label": "상하 여백",
           "description": "이 값은 섹션 상하 여백 기본값을 변경합니다. 문제가 생기면 48로 되돌리세요.",
           "type": "RANGE",
           "min": 16,
@@ -457,7 +457,7 @@
         },
         {
           "id": "sectionPaddingX",
-          "label": "섹션 좌우 여백",
+          "label": "좌우 여백",
           "description": "이 값은 섹션 좌우 여백 기본값을 변경합니다. 문제가 생기면 20으로 되돌리세요.",
           "type": "RANGE",
           "min": 0,
@@ -471,8 +471,8 @@
         },
         {
           "id": "sectionPaddingYMobile",
-          "label": "섹션 상하 여백 (모바일)",
-          "description": "이 값은 모바일 섹션 상하 여백 기본값을 변경합니다. 문제가 생기면 32로 되돌리세요.",
+          "label": "상하 여백 (모바일)",
+          "description": "이 값은 모바일 섹션 상하 여백을 변경합니다. 문제가 생기면 32로 되돌리세요.",
           "type": "RANGE",
           "min": 12,
           "max": 96,
@@ -481,8 +481,8 @@
         },
         {
           "id": "sectionPaddingXMobile",
-          "label": "섹션 좌우 여백 (모바일)",
-          "description": "이 값은 모바일 섹션 좌우 여백 기본값을 변경합니다. 문제가 생기면 16으로 되돌리세요.",
+          "label": "좌우 여백 (모바일)",
+          "description": "이 값은 모바일 섹션 좌우 여백을 변경합니다. 문제가 생기면 16으로 되돌리세요.",
           "type": "RANGE",
           "min": 0,
           "max": 40,
@@ -490,49 +490,39 @@
           "unit": "px"
         },
         {
-          "content": "요소 간격",
+          "content": "간격",
           "type": "TITLE"
         },
         {
           "id": "elementGapBase",
           "label": "기본 간격 단위",
-          "description": "이 값은 공간 스케일(--gp-space-*)의 기본 단위를 변경합니다. 카드·요소 간격이 비례해서 조정됩니다. 문제가 생기면 8로 되돌리세요.",
+          "description": "이 값은 공간 스케일(--gp-space-*)의 기본 단위를 변경합니다. 카드·요소 간격이 비례 조정됩니다. 문제가 생기면 8로 되돌리세요.",
           "type": "RANGE",
           "min": 4,
           "max": 16,
           "step": 1,
           "unit": "px"
-        }
-      ]
-    },
-    {
-      "content": "개발자",
-      "type": "TAB",
-      "settings": [
+        },
         {
-          "content": "적용 범위",
+          "content": "고급 설정",
           "type": "TITLE"
         },
         {
           "id": "applyPageBackground",
           "label": "페이지 배경 자동 적용",
-          "description": "이 값은 body 요소에 페이지 배경 토큰 자동 적용 여부를 변경합니다. 해제 시 다른 블록 스타일이 body 배경을 독자적으로 관리. 문제가 생기면 체크 상태로 되돌리세요.",
+          "description": "이 값은 body 태그에 페이지 배경 토큰을 자동 적용할지 변경합니다. 사이트 테마와 충돌 시 해제. 문제가 생기면 해제하세요.",
           "type": "CHECKBOX"
         },
         {
           "id": "applyTypographyToHeadings",
           "label": "헤딩 폰트 자동 적용",
-          "description": "이 값은 h1~h4·body 태그에 폰트 토큰 자동 적용 여부를 변경합니다. 해제 시 각 블록에서 font-family를 개별 지정. 문제가 생기면 체크 상태로 되돌리세요.",
+          "description": "이 값은 h1~h4·body 태그에 폰트 토큰을 자동 적용할지 변경합니다. 개별 블록에서 폰트 지정 시 해제. 문제가 생기면 체크 상태로 되돌리세요.",
           "type": "CHECKBOX"
         },
         {
-          "content": "디버그",
-          "type": "TITLE"
-        },
-        {
           "id": "developerMode",
-          "label": "토큰 로그 출력",
-          "description": "이 값은 콘솔에 토큰 로드 상태 로그 출력 여부를 변경합니다. 운영 시 반드시 해제하세요.",
+          "label": "콘솔 진단 로그",
+          "description": "이 값은 브라우저 콘솔에 토큰 주입 상태 출력 여부를 변경합니다. 토큰 미동작 시 체크하고 콘솔(F12) 확인. 운영 시 해제.",
           "type": "CHECKBOX"
         }
       ]
