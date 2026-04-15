@@ -1,0 +1,112 @@
+{
+  "_id": "69df5934481eed3a2b68cdda",
+  "title": "GOLPRO - 글로벌 디자인 토큰 (Global Design Tokens)",
+  "status": "active",
+  "property": {
+    "accentColor": "#1A4731",
+    "accentHoverColor": "#133526",
+    "accentSoftColor": "rgba(26,71,49,0.08)",
+    "goldColor": "#C89B3C",
+    "goldSoftColor": "rgba(200,155,60,0.12)",
+    "bgColor": "#FAFAF8",
+    "surfaceColor": "#FFFFFF",
+    "borderColor": "#E5E5E5",
+    "fontFamilyHeading": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+    "fontFamilyBody": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+    "developerMode": false
+  },
+  "settings": [
+    {
+      "content": "브랜드",
+      "type": "TAB",
+      "settings": [
+        {
+          "content": "브랜드 색상",
+          "type": "TITLE"
+        },
+        {
+          "id": "accentColor",
+          "label": "액센트 색상",
+          "description": "주 브랜드 색상(버튼·링크·포커스). 기본 #1A4731.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "id": "accentHoverColor",
+          "label": "액센트 호버 색상",
+          "description": "버튼/링크 호버 시 색상. 기본 #133526.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "id": "accentSoftColor",
+          "label": "액센트 연한 배경",
+          "description": "호버 배경/선택 표시용 연한 색. 기본 rgba(26,71,49,0.08).",
+          "type": "TEXT",
+          "placeholder": "예: rgba(26,71,49,0.08)"
+        },
+        {
+          "id": "goldColor",
+          "label": "골드 색상",
+          "description": "프리미엄 강조용 골드. 별점·1위 리본 등. 기본 #C89B3C.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "id": "goldSoftColor",
+          "label": "골드 연한 배경",
+          "description": "골드 배지 배경용 연한 색. 기본 rgba(200,155,60,0.12).",
+          "type": "TEXT",
+          "placeholder": "예: rgba(200,155,60,0.12)"
+        },
+        {
+          "content": "표면 색상",
+          "type": "TITLE"
+        },
+        {
+          "id": "bgColor",
+          "label": "페이지 배경",
+          "description": "사이트 기본 배경색. 기본 #FAFAF8.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "id": "surfaceColor",
+          "label": "카드 표면",
+          "description": "카드·모달 등 상위 표면 색. 기본 #FFFFFF.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "id": "borderColor",
+          "label": "테두리 색상",
+          "description": "카드·입력 필드 등 공통 테두리. 기본 #E5E5E5.",
+          "type": "COLOR_PICKER"
+        },
+        {
+          "content": "타이포그래피",
+          "type": "TITLE"
+        },
+        {
+          "id": "fontFamilyHeading",
+          "label": "제목 폰트 패밀리",
+          "description": "h1~h4 등 제목에 적용. CSS font-family 문법.",
+          "type": "TEXT",
+          "placeholder": "'Pretendard', -apple-system, sans-serif"
+        },
+        {
+          "id": "fontFamilyBody",
+          "label": "본문 폰트 패밀리",
+          "description": "본문·입력 등에 적용.",
+          "type": "TEXT",
+          "placeholder": "'Pretendard', -apple-system, sans-serif"
+        },
+        {
+          "content": "개발자",
+          "type": "TITLE"
+        },
+        {
+          "id": "developerMode",
+          "label": "토큰 로그 출력",
+          "description": "콘솔에 토큰 로드 상태 로그. 운영 시 해제.",
+          "type": "CHECKBOX"
+        }
+      ]
+    }
+  ]
+}
