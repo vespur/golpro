@@ -68,15 +68,15 @@
 .ccRankSkeleton--carousel{display:flex;grid-template-columns:none;gap:{{property.gridGap}}px;overflow:hidden;}
 .ccRankSkeleton--carousel .ccRankSkeleton__card{flex:1;min-width:0;}
 .ccRankSkeleton__card{border-radius:{{property.cardRadius}}px;overflow:hidden;background:{{property.cardBg}};border:1px solid {{property.cardBorderColor}};}
-.ccRankSkeleton__img{width:100%;padding-top:75%;background:{{property.cardImgPlaceholder}};animation:skeletonPulse 1s ease-in-out infinite;}
+.ccRankSkeleton__img{width:100%;padding-top:75%;background:linear-gradient(90deg,{{property.cardImgPlaceholder}} 0%,#EEEEEE 40%,#F7F7F7 50%,#EEEEEE 60%,{{property.cardImgPlaceholder}} 100%);background-size:200% 100%;animation:skeletonShimmer 1.4s linear infinite;}
 .ccRankSkeleton__body{padding:{{property.cardPadding}}px;display:flex;flex-direction:column;gap:10px;}
-.ccRankSkeleton__line{height:14px;border-radius:4px;background:{{property.cardImgPlaceholder}};animation:skeletonPulse 1s ease-in-out infinite;}
+.ccRankSkeleton__line{height:14px;border-radius:4px;background:linear-gradient(90deg,{{property.cardImgPlaceholder}} 0%,#EEEEEE 40%,#F7F7F7 50%,#EEEEEE 60%,{{property.cardImgPlaceholder}} 100%);background-size:200% 100%;animation:skeletonShimmer 1.4s linear infinite;}
 .ccRankSkeleton__line--title{width:60%;height:18px;}
 .ccRankSkeleton__line--tag{width:80%;}
 .ccRankSkeleton__line--star{width:50%;}
 .ccRankSkeleton__line--bar{width:100%;height:6px;}
 .ccRankSkeleton__line--btn{width:40%;height:32px;border-radius:{{property.btnRadius}}px;}
-@keyframes skeletonPulse{0%{opacity:0.6;}50%{opacity:0.3;}100%{opacity:0.6;}}
+@keyframes skeletonShimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
 @media (max-width:768px){
 .ccRankRoot{padding:{{property.paddingTopMobile}}px {{property.paddingRightMobile}}px {{property.paddingBottomMobile}}px {{property.paddingLeftMobile}}px;}
 .ccRankHeader__title{font-size:{{property.titleSizeMobile}}px;}
@@ -92,7 +92,7 @@
 }
 </style>
 <template>
-<div class="ccRankRoot">{{#if property.showHeader}}<div class="ccRankHeader">{{#if property.eyebrow}}<div class="ccRankHeader__eyebrow">{{property.eyebrow}}</div>{{/if}}{{#if property.headerTitle}}<div class="ccRankHeader__titleRow"><h2 class="ccRankHeader__title">{{property.headerTitle}}</h2>{{#if property.showMoreButton}}<a class="ccRankHeader__more" href="{{property.moreButtonUrl}}" data-action="more"><span>{{property.moreButtonLabel}}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></a>{{/if}}</div>{{/if}}{{#if property.headerSubtitle}}<p class="ccRankHeader__subtitle">{{property.headerSubtitle}}</p>{{/if}}</div>{{/if}}{{#if property.showToolbar}}<div class="ccRankToolbar"><div class="ccRankToolbar__searchWrap"><svg class="ccRankToolbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="ccRankToolbar__search" placeholder="골프장 검색..." data-action="search" /></div><select class="ccRankToolbar__sort" data-action="sort"><option value="rating">평점순</option><option value="name">이름순</option><option value="reviews">리뷰순</option></select><select class="ccRankToolbar__regionFilter" data-action="region"><option value="all">전체 지역</option></select></div>{{/if}}<div class="ccRankBody" data-mode="{{property.displayMode}}"></div></div>
+<div class="ccRankRoot">{{#if property.showHeader}}<div class="ccRankHeader">{{#if property.eyebrow}}<div class="ccRankHeader__eyebrow">{{property.eyebrow}}</div>{{/if}}{{#if property.headerTitle}}<div class="ccRankHeader__titleRow"><h2 class="ccRankHeader__title">{{property.headerTitle}}</h2>{{#if property.showMoreButton}}<a class="ccRankHeader__more" href="{{property.moreButtonUrl}}" data-action="more"><span>{{property.moreButtonLabel}}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></a>{{/if}}</div>{{/if}}{{#if property.headerSubtitle}}<p class="ccRankHeader__subtitle">{{property.headerSubtitle}}</p>{{/if}}</div>{{/if}}{{#if property.showToolbar}}<div class="ccRankToolbar"><div class="ccRankToolbar__searchWrap"><svg class="ccRankToolbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="ccRankToolbar__search" placeholder="골프장 검색..." data-action="search" /></div><select class="ccRankToolbar__sort" data-action="sort"><option value="rating">평점순</option><option value="name">이름순</option><option value="reviews">리뷰순</option></select><select class="ccRankToolbar__regionFilter" data-action="region"><option value="all">전체 지역</option></select></div>{{/if}}<div class="ccRankBody" data-mode="{{property.displayMode}}"><div class="ccRankSkeleton ccRankSkeleton--{{property.displayMode}} ccRankSkeleton--static"><div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div></div></div><div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div></div></div><div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div></div></div></div></div></div>
 </template>
 <script>
 (function(){
@@ -339,12 +339,11 @@ var lb = e.target.closest('a.ccCard__btn'); if (lb && lb.getAttribute('href') &&
 var lastBridgeSnapshot = '', pollTimer = null;
 function checkBridgeChanges() { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); var snapshot = ''; for (var s = 0; s < stores.length; s++) snapshot += (stores[s].textContent || '') + '|'; var ratingStores = doc.querySelectorAll('.ccRatingStore'); for (var r = 0; r < ratingStores.length; r++) snapshot += (ratingStores[r].textContent || '') + '|'; if (snapshot !== lastBridgeSnapshot && snapshot.length > 2) { lastBridgeSnapshot = snapshot; try { bm.sessionStorage.removeItem('cc_rating_cache'); } catch (e) {} loadRetryCount = 0; loadData(); } }
 /* ====== Init ====== */
-/* Show skeleton immediately to eliminate initial blank state */
-(function(){ var initBody = container.querySelector('.ccRankBody'); if (initBody) initBody.innerHTML = renderSkeleton(); })();
+/* Template provides initial skeleton — JS replaces on data load */
 loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3.13 — clean offset math + 더 보기 button)');
+log('CC Ranking initialized (Phase 3.14 — clean offset math + 더 보기 button)');
 })();
 </script>
