@@ -43,16 +43,10 @@
 
   var MARKER_REGEX = /\[\u025e\u025e!--CC_RATING:(.*?)--\u025e\u025e\]/g;
   var allCollectedPosts = [];
-  var isScanning = false;
-  var scanComplete = false;
   var currentScanPage = 1;
   var postsPerPage = 0;
-  var scanIterations = 0;
-  var MAX_ITERATIONS = 30;
-  var lastAppliedPage = 0;
-  var pendingApply = false;
-  var lastBoardId = null;
-  var lastBoardSnapshot = '';
+  var lastSnapshot = '';
+  var hasWrittenStore = false;
 
   function parseMarkers(posts) {
     var ratings = [];
@@ -74,137 +68,111 @@
     return ratings;
   }
 
-  function writeStore(ratings) {
+  function writeStore(ratings, boardSummary) {
     var store = container.querySelector('.ccRatingStore');
     if (!store) return;
-    var board = context.property.board;
     var payload = {
-      boardId: (board && board.id) ? board.id : null,
-      boardName: (board && board.name) ? board.name : '',
+      boardId: boardSummary.id,
+      boardName: boardSummary.name,
       ratings: ratings,
       collectedAt: new Date().toISOString(),
       totalPosts: allCollectedPosts.length,
       pagesScanned: currentScanPage
     };
-    store.textContent = JSON.stringify(payload);
-    log('Wrote', ratings.length, 'ratings from', allCollectedPosts.length, 'posts, boardId:', payload.boardId);
-  }
-
-  function startScan() {
-    var board = context.property.board;
-    if (!board || !board.id || !board.posts) {
-      log('No board selected, writing empty store');
-      writeStore([]);
-      return;
+    var jsonStr = JSON.stringify(payload);
+    if (store.textContent !== jsonStr) {
+      store.textContent = jsonStr;
+      log('Wrote', ratings.length, 'ratings from', allCollectedPosts.length, 'posts, boardId:', payload.boardId);
     }
-    isScanning = true;
-    scanComplete = false;
-    currentScanPage = 1;
-    scanIterations = 0;
-    lastAppliedPage = 0;
-    pendingApply = false;
-    allCollectedPosts = [];
-    lastBoardId = board.id;
-    collectCurrentPage();
-  }
-
-  function collectCurrentPage() {
-    /* Safety guard: prevent runaway loops */
-    if (scanComplete) return;
-    scanIterations++;
-    if (scanIterations > MAX_ITERATIONS) {
-      log('Max iterations reached, aborting scan');
-      finishScan();
-      return;
-    }
-
-    var board = context.property.board;
-    if (!board || !board.posts) {
-      finishScan();
-      return;
-    }
-    var posts = board.posts.data || [];
-    var totalCount = board.posts.count || 0;
-
-    for (var i = 0; i < posts.length; i++) {
-      allCollectedPosts.push(posts[i]);
-    }
-    if (currentScanPage === 1 && posts.length > 0) {
-      postsPerPage = posts.length;
-    }
-
-    log('Page', currentScanPage, ':', posts.length, 'posts. Total:', allCollectedPosts.length, '/', totalCount);
-
-    var maxPages = context.property.maxScanPages || 5;
-    var totalPages = postsPerPage > 0 ? Math.ceil(totalCount / postsPerPage) : 1;
-
-    if (currentScanPage < totalPages && currentScanPage < maxPages && posts.length > 0) {
-      var nextPage = currentScanPage + 1;
-      /* Skip if we've already requested this page (prevents re-entry loop) */
-      if (lastAppliedPage >= nextPage) {
-        log('Page', nextPage, 'already requested, skipping');
-        return;
-      }
-      currentScanPage = nextPage;
-      lastAppliedPage = nextPage;
-      pendingApply = true;
-      setTimeout(function () {
-        try {
-          bm.config('property:board.posts.page', nextPage);
-          bm.apply();
-        } catch (err) {
-          log('Apply error:', err);
-          finishScan();
-        }
-      }, 0);
-    } else {
-      finishScan();
-    }
-  }
-
-  function finishScan() {
-    isScanning = false;
-    scanComplete = true;
-    pendingApply = false;
-    var ratings = parseMarkers(allCollectedPosts);
-    writeStore(ratings);
-    log('Scan complete.', ratings.length, 'ratings parsed');
   }
 
   function snapshotBoard() {
     var board = context.property.board;
-    if (!board) return '';
-    return (board.id || '') + '|' + (board.posts && board.posts.count || 0) + '|' + (board.posts && board.posts.data && board.posts.data.length || 0);
+    if (!board) return 'none';
+    var postCount = (board.posts && board.posts.count) || 0;
+    var dataLen = (board.posts && board.posts.data && board.posts.data.length) || 0;
+    var page = (board.posts && board.posts.page) || 1;
+    return (board.id || 'none') + '|' + postCount + '|' + dataLen + '|p' + page;
   }
 
-  /* Initial scan */
-  startScan();
-  lastBoardSnapshot = snapshotBoard();
-
-  /* Context change handler — ONLY consume expected apply from pagination.
-     Never call bm.apply() from here. Any apply happens inside setTimeout from collectCurrentPage. */
-  bm.onContextChange = function () {
+  /* Process current board state passively. No bm.apply() calls — ever.
+     Sixshop will naturally re-fire onContextChange when board data arrives. */
+  function processCurrentState() {
     var board = context.property.board;
-    var newBoardId = board && board.id ? board.id : null;
-    var newSnapshot = snapshotBoard();
+    var summary = {
+      id: (board && board.id) ? board.id : null,
+      name: (board && board.name) ? board.name : ''
+    };
 
-    /* Board changed (different selection or newly selected) — restart scan */
-    if (newBoardId !== lastBoardId) {
-      lastBoardId = newBoardId;
-      lastBoardSnapshot = newSnapshot;
-      startScan();
+    /* No board or no data yet: write empty store once */
+    if (!board || !board.id || !board.posts || !board.posts.data) {
+      if (!hasWrittenStore) {
+        log('No board selected, writing empty store');
+        writeStore([], summary);
+        hasWrittenStore = true;
+      }
       return;
     }
 
-    /* If scanning and our apply resolved (new page data arrived), continue */
-    if (isScanning && !scanComplete && pendingApply) {
-      if (newSnapshot !== lastBoardSnapshot) {
-        lastBoardSnapshot = newSnapshot;
-        pendingApply = false;
-        collectCurrentPage();
+    var posts = board.posts.data || [];
+    var totalCount = board.posts.count || 0;
+    var currentPage = (board.posts.page) || 1;
+
+    /* Only collect NEW pages we haven't processed */
+    if (currentPage > currentScanPage || (currentPage === 1 && allCollectedPosts.length === 0)) {
+      currentScanPage = currentPage;
+      if (currentPage === 1) allCollectedPosts = [];
+      for (var i = 0; i < posts.length; i++) {
+        allCollectedPosts.push(posts[i]);
       }
-      /* Else: context changed for another reason (not our page data) — ignore */
+      if (currentPage === 1 && posts.length > 0) {
+        postsPerPage = posts.length;
+      }
+      log('Page', currentPage, ':', posts.length, 'posts. Total:', allCollectedPosts.length, '/', totalCount);
     }
+
+    /* Request next page via bm.config ONLY (no apply). Sixshop re-renders naturally on config change. */
+    var maxPages = context.property.maxScanPages || 5;
+    var totalPages = postsPerPage > 0 ? Math.ceil(totalCount / postsPerPage) : 1;
+    var effectiveMax = Math.min(maxPages, totalPages);
+    var nextPageNeeded = currentPage < effectiveMax && posts.length > 0;
+
+    if (nextPageNeeded) {
+      /* Only request if we haven't already */
+      var requestedPage = currentPage + 1;
+      try {
+        var currentConfigPage = bm.config('property:board.posts.page');
+        if (currentConfigPage !== requestedPage) {
+          bm.config('property:board.posts.page', requestedPage);
+          /* NO bm.apply() — rely on Sixshop's natural re-render. If Sixshop doesn't
+             auto-render on config change, scan stalls at current page (acceptable — no infinite loop). */
+        }
+      } catch (err) {
+        log('Config error:', err);
+      }
+      /* Write interim store with what we have so far */
+      writeStore(parseMarkers(allCollectedPosts), summary);
+      hasWrittenStore = true;
+    } else {
+      /* All pages collected (or reached limit): write final store */
+      var ratings = parseMarkers(allCollectedPosts);
+      writeStore(ratings, summary);
+      hasWrittenStore = true;
+      log('Scan complete.', ratings.length, 'ratings parsed from', currentScanPage, 'pages');
+    }
+  }
+
+  /* Initial pass */
+  processCurrentState();
+  lastSnapshot = snapshotBoard();
+
+  /* React to context changes — but ONLY when actual board data changes.
+     Never call bm.apply() from here to avoid Sixshop's "Infinite Loop Detected" warning. */
+  bm.onContextChange = function () {
+    var newSnapshot = snapshotBoard();
+    if (newSnapshot === lastSnapshot) return;
+    lastSnapshot = newSnapshot;
+    processCurrentState();
   };
 
   log('Rating Bridge initialized');
