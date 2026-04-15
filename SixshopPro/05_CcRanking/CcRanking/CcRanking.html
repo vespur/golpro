@@ -65,6 +65,8 @@
 .ccRankEmpty__icon{font-size:48px;margin-bottom:16px;opacity:0.4;}
 .ccRankEmpty__title{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:18px;color:{{property.titleColor}};margin-bottom:8px;}
 .ccRankSkeleton{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
+.ccRankSkeleton--carousel{display:flex;grid-template-columns:none;gap:{{property.gridGap}}px;overflow:hidden;}
+.ccRankSkeleton--carousel .ccRankSkeleton__card{flex:1;min-width:0;}
 .ccRankSkeleton__card{border-radius:{{property.cardRadius}}px;overflow:hidden;background:{{property.cardBg}};border:1px solid {{property.cardBorderColor}};}
 .ccRankSkeleton__img{width:100%;padding-top:75%;background:{{property.cardImgPlaceholder}};animation:skeletonPulse 1s ease-in-out infinite;}
 .ccRankSkeleton__body{padding:{{property.cardPadding}}px;display:flex;flex-direction:column;gap:10px;}
@@ -145,7 +147,7 @@ if (item.btn1Enabled && item.btn1Label) { var t1 = item.btn1NewTab ? ' target="_
 if (item.btn2Enabled && item.btn2Label) { var t2 = item.btn2NewTab ? ' target="_blank" rel="noopener noreferrer"' : ''; html += '<a class="ccCard__btn ccCard__btn--secondary" href="' + (item.btn2Url || '#') + '"' + t2 + '>' + item.btn2Label + '</a>'; }
 html += '</div></div></div>'; return html;
 }
-function renderSkeleton() { var cols = prop.gridCols || 3; var count = Math.min(cols * 2, prop.maxCards || 12); var html = '<div class="ccRankSkeleton">'; for (var i = 0; i < count; i++) { html += '<div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--btn"></div></div></div>'; } html += '</div>'; return html; }
+function renderSkeleton() { var mode = prop.displayMode || 'grid'; var isMobile = container.offsetWidth < 768; var count; if (mode === 'carousel') { count = isMobile ? (prop.carouselVisibleMobile || 1) + 1 : (prop.carouselVisible || 3); } else { var cols = isMobile ? (prop.gridColsMobile || 1) : (prop.gridCols || 3); count = Math.min(cols * 2, prop.maxCards || 12); } var wrapperClass = (mode === 'carousel') ? 'ccRankSkeleton ccRankSkeleton--carousel' : 'ccRankSkeleton'; var html = '<div class="' + wrapperClass + '">'; for (var i = 0; i < count; i++) { html += '<div class="ccRankSkeleton__card"><div class="ccRankSkeleton__img"></div><div class="ccRankSkeleton__body"><div class="ccRankSkeleton__line ccRankSkeleton__line--title"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--tag"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--star"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--bar"></div><div class="ccRankSkeleton__line ccRankSkeleton__line--btn"></div></div></div>'; } html += '</div>'; return html; }
 function renderBoardMissing() { return '<div class="ccRankEmpty"><div class="ccRankEmpty__icon">&#9971;</div><div class="ccRankEmpty__title">브리지 블록을 배치해 주세요</div><p>푸터에 CC 데이터 브리지와 CC 평점 브리지 블록을 배치하면 자동으로 데이터를 읽어옵니다.</p></div>'; }
 var state = { searchQuery: '', sortBy: 'rating', regionFilter: 'all', carouselIndex: 0 };
 var ccData = [];
@@ -316,7 +318,7 @@ var cacheDur = (prop.cacheDurationMin || 0) * 60 * 1000;
 if (cacheDur > 0) { try { var cached = bm.sessionStorage.getItem('cc_rating_cache'); if (cached && cached.expiry && Date.now() < cached.expiry && cached.data) { ccData = cached.data; renderAll(); return; } } catch (e) {} }
 var bridgeItems = collectBridgeData(); var allRatings = collectRatingData();
 ccData = aggregate(allRatings, bridgeItems);
-if (ccData.length === 0 && loadRetryCount < 5) { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); if (stores.length > 0) { loadRetryCount++; loadRetryTimer = setTimeout(function() { loadData(); }, 500); return; } }
+if (ccData.length === 0 && loadRetryCount < 5) { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); if (stores.length > 0) { loadRetryCount++; loadRetryTimer = setTimeout(function() { loadData(); }, 150); var rb0 = container.querySelector('.ccRankBody'); if (rb0 && rb0.innerHTML === '') rb0.innerHTML = renderSkeleton(); return; } }
 if (cacheDur > 0 && ccData.length > 0) { try { bm.sessionStorage.setItem('cc_rating_cache', { expiry: Date.now() + cacheDur, data: ccData }); } catch (e) {} }
 renderAll();
 }
@@ -337,10 +339,12 @@ var lb = e.target.closest('a.ccCard__btn'); if (lb && lb.getAttribute('href') &&
 var lastBridgeSnapshot = '', pollTimer = null;
 function checkBridgeChanges() { var doc = container.ownerDocument; var stores = doc.querySelectorAll('.ccBridgeStore'); var snapshot = ''; for (var s = 0; s < stores.length; s++) snapshot += (stores[s].textContent || '') + '|'; var ratingStores = doc.querySelectorAll('.ccRatingStore'); for (var r = 0; r < ratingStores.length; r++) snapshot += (ratingStores[r].textContent || '') + '|'; if (snapshot !== lastBridgeSnapshot && snapshot.length > 2) { lastBridgeSnapshot = snapshot; try { bm.sessionStorage.removeItem('cc_rating_cache'); } catch (e) {} loadRetryCount = 0; loadData(); } }
 /* ====== Init ====== */
+/* Show skeleton immediately to eliminate initial blank state */
+(function(){ var initBody = container.querySelector('.ccRankBody'); if (initBody) initBody.innerHTML = renderSkeleton(); })();
 loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3.12 — clean offset math + 더 보기 button)');
+log('CC Ranking initialized (Phase 3.13 — clean offset math + 더 보기 button)');
 })();
 </script>
