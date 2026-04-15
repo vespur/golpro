@@ -1,7 +1,7 @@
 {
+  "_id": "69daf85bcbdb5d0436700950",
   "title": "GOLPRO - CC 랭킹 (CC Ranking)",
   "status": "active",
-  "_id": "69daf85bcbdb5d0436700950",
   "property": {
     "barHeight": 6,
     "barRadius": 3,
@@ -34,7 +34,12 @@
     "inputRadius": 8,
     "maxCards": 12,
     "moreButtonLabel": "더 보기",
-    "moreButtonUrl": "/cc_ranking",
+    "moreButtonUrl": {
+      "id": null,
+      "type": "url",
+      "label": "/cc_ranking",
+      "value": "/cc_ranking"
+    },
     "paddingBottom": 40,
     "paddingBottomMobile": 24,
     "paddingLeft": 20,
@@ -116,12 +121,11 @@
           "type": "TEXT"
         },
         {
-          "description": "더 보기 버튼 클릭 시 이동할 URL. 예: /cc_ranking",
+          "description": "더 보기 버튼 클릭 시 이동할 URL. 내부 페이지(/cc_ranking 등) 또는 외부 URL",
           "id": "moreButtonUrl",
           "isVisible": "property.showHeader === true && property.showMoreButton === true",
           "label": "더 보기 버튼 링크",
-          "placeholder": "예: /cc_ranking",
-          "type": "TEXT"
+          "type": "LINK"
         },
         {
           "content": "표시 설정",

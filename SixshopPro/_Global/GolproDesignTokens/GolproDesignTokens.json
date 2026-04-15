@@ -5,19 +5,30 @@
   "property": {
     "accentColor": "#1A4731",
     "accentHoverColor": "#133526",
-    "accentSoftColor": "rgba(26,71,49,0.08)",
+    "accentSoftColor": "#1A473114",
     "goldColor": "#C89B3C",
-    "goldSoftColor": "rgba(200,155,60,0.12)",
+    "goldSoftColor": "#C89B3C1F",
     "bgColor": "#FAFAF8",
     "surfaceColor": "#FFFFFF",
     "borderColor": "#E5E5E5",
-    "fontFamilyHeading": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-    "fontFamilyBody": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+    "fontFamilyH1": "var(--font-family-heading)",
+    "fontFamilyH2": "var(--font-family-heading)",
+    "fontFamilyH3": "var(--font-family-heading)",
+    "fontFamilyH4": "var(--font-family-heading)",
+    "fontFamilyBody": "var(--font-family-body)",
+    "containerMaxWidth": 1200,
+    "sectionPaddingY": 48,
+    "sectionPaddingYMobile": 32,
+    "sectionPaddingX": 20,
+    "sectionPaddingXMobile": 16,
+    "elementGapBase": 8,
+    "applyPageBackground": true,
+    "applyTypographyToHeadings": true,
     "developerMode": false
   },
   "settings": [
     {
-      "content": "브랜드",
+      "content": "색상",
       "type": "TAB",
       "settings": [
         {
@@ -27,34 +38,32 @@
         {
           "id": "accentColor",
           "label": "액센트 색상",
-          "description": "주 브랜드 색상(버튼·링크·포커스). 기본 #1A4731.",
+          "description": "이 값은 주 브랜드 색상을 변경합니다. 문제가 생기면 #1A4731로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
           "id": "accentHoverColor",
           "label": "액센트 호버 색상",
-          "description": "버튼/링크 호버 시 색상. 기본 #133526.",
+          "description": "이 값은 버튼·링크 호버 시 색상을 변경합니다. 문제가 생기면 #133526으로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
           "id": "accentSoftColor",
           "label": "액센트 연한 배경",
-          "description": "호버 배경/선택 표시용 연한 색. 기본 rgba(26,71,49,0.08).",
-          "type": "TEXT",
-          "placeholder": "예: rgba(26,71,49,0.08)"
+          "description": "이 값은 호버 배경/선택 표시용 연한 색을 변경합니다. 알파값은 #RRGGBBAA 형식으로 자동 저장됩니다. 문제가 생기면 #1A473114로 되돌리세요.",
+          "type": "COLOR_PICKER"
         },
         {
           "id": "goldColor",
           "label": "골드 색상",
-          "description": "프리미엄 강조용 골드. 별점·1위 리본 등. 기본 #C89B3C.",
+          "description": "이 값은 프리미엄 강조용 골드 색상을 변경합니다. 별점·1위 리본 등에 사용. 문제가 생기면 #C89B3C로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
           "id": "goldSoftColor",
           "label": "골드 연한 배경",
-          "description": "골드 배지 배경용 연한 색. 기본 rgba(200,155,60,0.12).",
-          "type": "TEXT",
-          "placeholder": "예: rgba(200,155,60,0.12)"
+          "description": "이 값은 골드 배지 배경용 연한 색을 변경합니다. 알파값 #RRGGBBAA 형식. 문제가 생기면 #C89B3C1F로 되돌리세요.",
+          "type": "COLOR_PICKER"
         },
         {
           "content": "표면 색상",
@@ -63,47 +72,467 @@
         {
           "id": "bgColor",
           "label": "페이지 배경",
-          "description": "사이트 기본 배경색. 기본 #FAFAF8.",
+          "description": "이 값은 사이트 기본 배경색을 변경합니다. body 요소에 적용. 문제가 생기면 #FAFAF8로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
           "id": "surfaceColor",
           "label": "카드 표면",
-          "description": "카드·모달 등 상위 표면 색. 기본 #FFFFFF.",
+          "description": "이 값은 카드·모달 등 상위 표면 색을 변경합니다. 문제가 생기면 #FFFFFF로 되돌리세요.",
           "type": "COLOR_PICKER"
         },
         {
           "id": "borderColor",
           "label": "테두리 색상",
-          "description": "카드·입력 필드 등 공통 테두리. 기본 #E5E5E5.",
+          "description": "이 값은 카드·입력 필드 등 공통 테두리 색을 변경합니다. 문제가 생기면 #E5E5E5로 되돌리세요.",
           "type": "COLOR_PICKER"
-        },
+        }
+      ]
+    },
+    {
+      "content": "타이포그래피",
+      "type": "TAB",
+      "settings": [
         {
-          "content": "타이포그래피",
+          "content": "제목 폰트",
           "type": "TITLE"
         },
         {
-          "id": "fontFamilyHeading",
-          "label": "제목 폰트 패밀리",
-          "description": "h1~h4 등 제목에 적용. CSS font-family 문법.",
-          "type": "TEXT",
-          "placeholder": "'Pretendard', -apple-system, sans-serif"
+          "id": "fontFamilyH1",
+          "label": "H1 폰트 패밀리",
+          "description": "이 값은 h1 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "type": "SELECT",
+          "options": [
+            {
+              "label": "식스샵 테마 상속 (Heading)",
+              "value": "var(--font-family-heading)"
+            },
+            {
+              "label": "식스샵 테마 상속 (Body)",
+              "value": "var(--font-family-body)"
+            },
+            {
+              "label": "Pretendard",
+              "value": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif"
+            },
+            {
+              "label": "Noto Sans KR",
+              "value": "'Noto Sans KR', -apple-system, sans-serif"
+            },
+            {
+              "label": "Spoqa Han Sans Neo",
+              "value": "'Spoqa Han Sans Neo', -apple-system, sans-serif"
+            },
+            {
+              "label": "Gmarket Sans",
+              "value": "'Gmarket Sans', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Gothic",
+              "value": "'Nanum Gothic', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Myeongjo (Serif)",
+              "value": "'Nanum Myeongjo', Georgia, serif"
+            },
+            {
+              "label": "Black Han Sans",
+              "value": "'Black Han Sans', sans-serif"
+            },
+            {
+              "label": "IBM Plex Sans KR",
+              "value": "'IBM Plex Sans KR', sans-serif"
+            },
+            {
+              "label": "Inter",
+              "value": "'Inter', -apple-system, sans-serif"
+            },
+            {
+              "label": "Playfair Display (Serif)",
+              "value": "'Playfair Display', Georgia, serif"
+            },
+            {
+              "label": "Georgia (Serif)",
+              "value": "Georgia, serif"
+            },
+            {
+              "label": "System Sans",
+              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+            }
+          ]
+        },
+        {
+          "id": "fontFamilyH2",
+          "label": "H2 폰트 패밀리",
+          "description": "이 값은 h2 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "type": "SELECT",
+          "options": [
+            {
+              "label": "식스샵 테마 상속 (Heading)",
+              "value": "var(--font-family-heading)"
+            },
+            {
+              "label": "식스샵 테마 상속 (Body)",
+              "value": "var(--font-family-body)"
+            },
+            {
+              "label": "Pretendard",
+              "value": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif"
+            },
+            {
+              "label": "Noto Sans KR",
+              "value": "'Noto Sans KR', -apple-system, sans-serif"
+            },
+            {
+              "label": "Spoqa Han Sans Neo",
+              "value": "'Spoqa Han Sans Neo', -apple-system, sans-serif"
+            },
+            {
+              "label": "Gmarket Sans",
+              "value": "'Gmarket Sans', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Gothic",
+              "value": "'Nanum Gothic', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Myeongjo (Serif)",
+              "value": "'Nanum Myeongjo', Georgia, serif"
+            },
+            {
+              "label": "Black Han Sans",
+              "value": "'Black Han Sans', sans-serif"
+            },
+            {
+              "label": "IBM Plex Sans KR",
+              "value": "'IBM Plex Sans KR', sans-serif"
+            },
+            {
+              "label": "Inter",
+              "value": "'Inter', -apple-system, sans-serif"
+            },
+            {
+              "label": "Playfair Display (Serif)",
+              "value": "'Playfair Display', Georgia, serif"
+            },
+            {
+              "label": "Georgia (Serif)",
+              "value": "Georgia, serif"
+            },
+            {
+              "label": "System Sans",
+              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+            }
+          ]
+        },
+        {
+          "id": "fontFamilyH3",
+          "label": "H3 폰트 패밀리",
+          "description": "이 값은 h3 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "type": "SELECT",
+          "options": [
+            {
+              "label": "식스샵 테마 상속 (Heading)",
+              "value": "var(--font-family-heading)"
+            },
+            {
+              "label": "식스샵 테마 상속 (Body)",
+              "value": "var(--font-family-body)"
+            },
+            {
+              "label": "Pretendard",
+              "value": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif"
+            },
+            {
+              "label": "Noto Sans KR",
+              "value": "'Noto Sans KR', -apple-system, sans-serif"
+            },
+            {
+              "label": "Spoqa Han Sans Neo",
+              "value": "'Spoqa Han Sans Neo', -apple-system, sans-serif"
+            },
+            {
+              "label": "Gmarket Sans",
+              "value": "'Gmarket Sans', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Gothic",
+              "value": "'Nanum Gothic', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Myeongjo (Serif)",
+              "value": "'Nanum Myeongjo', Georgia, serif"
+            },
+            {
+              "label": "Black Han Sans",
+              "value": "'Black Han Sans', sans-serif"
+            },
+            {
+              "label": "IBM Plex Sans KR",
+              "value": "'IBM Plex Sans KR', sans-serif"
+            },
+            {
+              "label": "Inter",
+              "value": "'Inter', -apple-system, sans-serif"
+            },
+            {
+              "label": "Playfair Display (Serif)",
+              "value": "'Playfair Display', Georgia, serif"
+            },
+            {
+              "label": "Georgia (Serif)",
+              "value": "Georgia, serif"
+            },
+            {
+              "label": "System Sans",
+              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+            }
+          ]
+        },
+        {
+          "id": "fontFamilyH4",
+          "label": "H4 폰트 패밀리",
+          "description": "이 값은 h4 태그 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "type": "SELECT",
+          "options": [
+            {
+              "label": "식스샵 테마 상속 (Heading)",
+              "value": "var(--font-family-heading)"
+            },
+            {
+              "label": "식스샵 테마 상속 (Body)",
+              "value": "var(--font-family-body)"
+            },
+            {
+              "label": "Pretendard",
+              "value": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif"
+            },
+            {
+              "label": "Noto Sans KR",
+              "value": "'Noto Sans KR', -apple-system, sans-serif"
+            },
+            {
+              "label": "Spoqa Han Sans Neo",
+              "value": "'Spoqa Han Sans Neo', -apple-system, sans-serif"
+            },
+            {
+              "label": "Gmarket Sans",
+              "value": "'Gmarket Sans', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Gothic",
+              "value": "'Nanum Gothic', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Myeongjo (Serif)",
+              "value": "'Nanum Myeongjo', Georgia, serif"
+            },
+            {
+              "label": "Black Han Sans",
+              "value": "'Black Han Sans', sans-serif"
+            },
+            {
+              "label": "IBM Plex Sans KR",
+              "value": "'IBM Plex Sans KR', sans-serif"
+            },
+            {
+              "label": "Inter",
+              "value": "'Inter', -apple-system, sans-serif"
+            },
+            {
+              "label": "Playfair Display (Serif)",
+              "value": "'Playfair Display', Georgia, serif"
+            },
+            {
+              "label": "Georgia (Serif)",
+              "value": "Georgia, serif"
+            },
+            {
+              "label": "System Sans",
+              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+            }
+          ]
+        },
+        {
+          "content": "본문 폰트",
+          "type": "TITLE"
         },
         {
           "id": "fontFamilyBody",
           "label": "본문 폰트 패밀리",
-          "description": "본문·입력 등에 적용.",
-          "type": "TEXT",
-          "placeholder": "'Pretendard', -apple-system, sans-serif"
+          "description": "이 값은 본문·입력 등 기본 폰트를 변경합니다. 문제가 생기면 '식스샵 테마 상속'으로 되돌리세요.",
+          "type": "SELECT",
+          "options": [
+            {
+              "label": "식스샵 테마 상속 (Heading)",
+              "value": "var(--font-family-heading)"
+            },
+            {
+              "label": "식스샵 테마 상속 (Body)",
+              "value": "var(--font-family-body)"
+            },
+            {
+              "label": "Pretendard",
+              "value": "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif"
+            },
+            {
+              "label": "Noto Sans KR",
+              "value": "'Noto Sans KR', -apple-system, sans-serif"
+            },
+            {
+              "label": "Spoqa Han Sans Neo",
+              "value": "'Spoqa Han Sans Neo', -apple-system, sans-serif"
+            },
+            {
+              "label": "Gmarket Sans",
+              "value": "'Gmarket Sans', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Gothic",
+              "value": "'Nanum Gothic', -apple-system, sans-serif"
+            },
+            {
+              "label": "Nanum Myeongjo (Serif)",
+              "value": "'Nanum Myeongjo', Georgia, serif"
+            },
+            {
+              "label": "Black Han Sans",
+              "value": "'Black Han Sans', sans-serif"
+            },
+            {
+              "label": "IBM Plex Sans KR",
+              "value": "'IBM Plex Sans KR', sans-serif"
+            },
+            {
+              "label": "Inter",
+              "value": "'Inter', -apple-system, sans-serif"
+            },
+            {
+              "label": "Playfair Display (Serif)",
+              "value": "'Playfair Display', Georgia, serif"
+            },
+            {
+              "label": "Georgia (Serif)",
+              "value": "Georgia, serif"
+            },
+            {
+              "label": "System Sans",
+              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "content": "레이아웃·간격",
+      "type": "TAB",
+      "settings": [
+        {
+          "content": "컨테이너",
+          "type": "TITLE"
         },
         {
-          "content": "개발자",
+          "id": "containerMaxWidth",
+          "label": "최대 컨테이너 너비",
+          "description": "이 값은 콘텐츠 영역 최대 너비를 변경합니다. 문제가 생기면 1200으로 되돌리세요.",
+          "type": "RANGE",
+          "min": 960,
+          "max": 1600,
+          "step": 20,
+          "unit": "px"
+        },
+        {
+          "content": "섹션 여백 (데스크톱)",
+          "type": "TITLE"
+        },
+        {
+          "id": "sectionPaddingY",
+          "label": "섹션 상하 여백",
+          "description": "이 값은 섹션 상하 여백 기본값을 변경합니다. 문제가 생기면 48로 되돌리세요.",
+          "type": "RANGE",
+          "min": 16,
+          "max": 128,
+          "step": 4,
+          "unit": "px"
+        },
+        {
+          "id": "sectionPaddingX",
+          "label": "섹션 좌우 여백",
+          "description": "이 값은 섹션 좌우 여백 기본값을 변경합니다. 문제가 생기면 20으로 되돌리세요.",
+          "type": "RANGE",
+          "min": 0,
+          "max": 64,
+          "step": 4,
+          "unit": "px"
+        },
+        {
+          "content": "섹션 여백 (모바일)",
+          "type": "TITLE"
+        },
+        {
+          "id": "sectionPaddingYMobile",
+          "label": "섹션 상하 여백 (모바일)",
+          "description": "이 값은 모바일 섹션 상하 여백 기본값을 변경합니다. 문제가 생기면 32로 되돌리세요.",
+          "type": "RANGE",
+          "min": 12,
+          "max": 96,
+          "step": 4,
+          "unit": "px"
+        },
+        {
+          "id": "sectionPaddingXMobile",
+          "label": "섹션 좌우 여백 (모바일)",
+          "description": "이 값은 모바일 섹션 좌우 여백 기본값을 변경합니다. 문제가 생기면 16으로 되돌리세요.",
+          "type": "RANGE",
+          "min": 0,
+          "max": 40,
+          "step": 4,
+          "unit": "px"
+        },
+        {
+          "content": "요소 간격",
+          "type": "TITLE"
+        },
+        {
+          "id": "elementGapBase",
+          "label": "기본 간격 단위",
+          "description": "이 값은 공간 스케일(--gp-space-*)의 기본 단위를 변경합니다. 카드·요소 간격이 비례해서 조정됩니다. 문제가 생기면 8로 되돌리세요.",
+          "type": "RANGE",
+          "min": 4,
+          "max": 16,
+          "step": 1,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "content": "개발자",
+      "type": "TAB",
+      "settings": [
+        {
+          "content": "적용 범위",
+          "type": "TITLE"
+        },
+        {
+          "id": "applyPageBackground",
+          "label": "페이지 배경 자동 적용",
+          "description": "이 값은 body 요소에 페이지 배경 토큰 자동 적용 여부를 변경합니다. 해제 시 다른 블록 스타일이 body 배경을 독자적으로 관리. 문제가 생기면 체크 상태로 되돌리세요.",
+          "type": "CHECKBOX"
+        },
+        {
+          "id": "applyTypographyToHeadings",
+          "label": "헤딩 폰트 자동 적용",
+          "description": "이 값은 h1~h4·body 태그에 폰트 토큰 자동 적용 여부를 변경합니다. 해제 시 각 블록에서 font-family를 개별 지정. 문제가 생기면 체크 상태로 되돌리세요.",
+          "type": "CHECKBOX"
+        },
+        {
+          "content": "디버그",
           "type": "TITLE"
         },
         {
           "id": "developerMode",
           "label": "토큰 로그 출력",
-          "description": "콘솔에 토큰 로드 상태 로그. 운영 시 해제.",
+          "description": "이 값은 콘솔에 토큰 로드 상태 로그 출력 여부를 변경합니다. 운영 시 반드시 해제하세요.",
           "type": "CHECKBOX"
         }
       ]
