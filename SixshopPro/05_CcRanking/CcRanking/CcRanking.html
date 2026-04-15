@@ -34,7 +34,7 @@
 .ccCard__rank{position:absolute;top:10px;left:10px;min-width:28px;height:28px;border-radius:6px;background:{{property.accentColor}};color:#ffffff;font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:13px;display:flex;align-items:center;justify-content:center;padding:0 6px;z-index:2;}.ccCard__medal{position:absolute;top:0;left:0;width:108px;height:108px;pointer-events:none;z-index:3;overflow:hidden;}.ccCard__medal::before{content:'';position:absolute;top:-26px;left:-86px;width:200px;height:48px;transform:rotate(-45deg);transform-origin:50% 50%;box-shadow:0 1px 2px rgba(0,0,0,0.18) inset, 0 4px 12px rgba(0,0,0,0.28);}.ccCard__medal::after{content:'';position:absolute;top:-8px;left:-78px;width:184px;height:1px;transform:rotate(-45deg);transform-origin:50% 50%;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,0.72) 50%,rgba(255,255,255,0));z-index:2;}.ccCard__medal--gold::before{background:linear-gradient(135deg,#FFE9A3 0%,#F3CE6A 25%,#C99A2C 55%,#8F6714 100%);}.ccCard__medal--silver::before{background:linear-gradient(135deg,#F8FAFC 0%,#D6DBE2 25%,#9AA3AE 55%,#5E6772 100%);}.ccCard__medal--bronze::before{background:linear-gradient(135deg,#F2C7A1 0%,#D69563 25%,#A36332 55%,#6E3E16 100%);}.ccCard__medal__icon{position:absolute;top:10px;left:10px;width:28px;height:28px;color:#FFFFFF;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));z-index:3;transform:rotate(-45deg);}.ccCard__medal__num{position:absolute;top:44px;left:16px;color:#FFFFFF;font-family:var(--font-family-heading);font-weight:900;font-size:20px;text-shadow:0 1px 2px rgba(0,0,0,0.45);transform:rotate(-45deg);letter-spacing:-0.02em;z-index:3;line-height:1;}
 .ccCard__region{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:4px;background:#00000066;color:#ffffff;font-size:11px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);}
 .ccCard__body{padding:{{property.cardPadding}}px;display:flex;flex-direction:column;gap:8px;flex:1;}
-.ccCard__nameRow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}.ccCard__nameRow .ccCard__unrated{flex-shrink:0;}.ccCard__name{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.cardNameSize}}px;color:{{property.cardNameColor}};margin:0;line-height:1.3;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ccCard__name{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.cardNameSize}}px;color:{{property.cardNameColor}};margin:0;line-height:1.3;}
 .ccCard__tags{font-size:12px;color:{{property.cardTagColor}};font-family:var(--font-family-body);font-weight:var(--font-weight-body);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .ccCard__rating{display:flex;align-items:center;gap:8px;}
 .ccCard__stars{display:flex;gap:2px;}
@@ -130,9 +130,8 @@ var medalClass = ''; if (!item.isUnrated) { if (rank === 1) medalClass = 'gold';
 html += '<div class="ccCard__imgWrap ' + imgRatioClass + '"><img class="ccCard__img" src="' + imgSrc + '" alt="' + item.ccName + '" loading="lazy" onerror="this.src=\'' + fb + '\'" />';
 if (medalClass) { html += '<div class="ccCard__medal ccCard__medal--' + medalClass + '"><svg class="ccCard__medal__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2l1.8 2.6 2.6-2.1 0.8 3.3 3.2-0.6-0.9 3.2 2.9 1.4-2.4 2.2 1.9 2.7-3.2 0.4 0.3 3.3-3.1-1.1-1.2 3.1-2.2-2.5-2.2 2.5-1.2-3.1-3.1 1.1 0.3-3.3-3.2-0.4 1.9-2.7-2.4-2.2 2.9-1.4-0.9-3.2 3.2 0.6 0.8-3.3 2.6 2.1z"/><circle cx="12" cy="12" r="2.3" fill="currentColor" opacity="0.6"/></svg><span class="ccCard__medal__num">' + rank + '</span></div>'; } else { html += '<div class="ccCard__rank">' + rank + '</div>'; }
 if (item.region) html += '<div class="ccCard__region">' + item.region + '</div>';
-html += '</div><div class="ccCard__body"><div class="ccCard__nameRow"><h3 class="ccCard__name">' + item.ccName + '</h3>';
+html += '</div><div class="ccCard__body"><h3 class="ccCard__name">' + item.ccName + '</h3>';
 if (item.isUnrated) html += '<span class="ccCard__unrated">평가 대기</span>';
-html += '</div>';
 if (item.tags) html += '<div class="ccCard__tags">' + item.tags + '</div>';
 if (item.isUnrated) { html += '<div class="ccCard__rating ccCard__rating--muted">' + renderStars(0, prop.starSize) + '<span class="ccCard__score">—</span><span class="ccCard__reviewCount">(0)</span></div>'; if (prop.showBars) html += renderBars({strategy:0,condition:0,scenery:0,service:0,facility:0,price:0}, true); } else { var ov = item.overall || 0; html += '<div class="ccCard__rating">' + renderStars(ov, prop.starSize) + '<span class="ccCard__score">' + ov.toFixed(2) + '</span><span class="ccCard__reviewCount">(' + (item.reviewCount || 0) + ')</span></div>'; if (prop.showBars && item.ratings) html += renderBars(item.ratings); }
 html += '<div class="ccCard__actions"><button class="ccCard__btn ccCard__btn--rate" data-action="rate" data-ccid="' + item.ccId + '" data-ccname="' + item.ccName + '">평가하기</button>';
@@ -180,8 +179,14 @@ var maxIdx = getMaxIndex(cards.length);
 if (state.carouselIndex > maxIdx) state.carouselIndex = maxIdx;
 if (state.carouselIndex < 0) state.carouselIndex = 0;
 var gap = getGap();
+var peek = getPeek();
 var cardW = cards[0].offsetWidth;
 var offset = state.carouselIndex * (cardW + gap);
+/* Edge alignment: at first index, flush-left (cancel left peek padding). At last index, flush-right. Middle: symmetric peek centered. */
+if (maxIdx > 0) {
+if (state.carouselIndex === 0) offset = -peek;
+else if (state.carouselIndex >= maxIdx) offset = maxIdx * (cardW + gap) + peek;
+}
 track.style.transition = animate !== false ? 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none';
 track.style.transform = 'translateX(-' + offset + 'px)';
 /* Update nav disabled state */
@@ -254,10 +259,18 @@ var cardW = cards[0].offsetWidth;
 var baseOffset = state.carouselIndex * (cardW + gap);
 var maxIdx = getMaxIndex(cards.length);
 var maxOffset = maxIdx * (cardW + gap);
+var peek = getPeek();
+/* Align base offset with edge-adjusted render positions */
+if (maxIdx > 0) {
+if (state.carouselIndex === 0) baseOffset = -peek;
+else if (state.carouselIndex >= maxIdx) baseOffset = maxOffset + peek;
+}
+var minBound = (maxIdx > 0) ? -peek : 0;
+var maxBound = (maxIdx > 0) ? (maxOffset + peek) : maxOffset;
 var newOffset = baseOffset - touchDelta;
 /* Resistance at ends: don't let track move past boundaries */
-if (newOffset < 0) { newOffset = newOffset * 0.25; }
-else if (newOffset > maxOffset) { newOffset = maxOffset + (newOffset - maxOffset) * 0.25; }
+if (newOffset < minBound) { newOffset = minBound + (newOffset - minBound) * 0.25; }
+else if (newOffset > maxBound) { newOffset = maxBound + (newOffset - maxBound) * 0.25; }
 track.style.transform = 'translateX(' + (-newOffset) + 'px)';
 }
 function onPointerEnd(e) {
@@ -312,6 +325,6 @@ loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3.10 — peek + badge right + medal ribbons)');
+log('CC Ranking initialized (Phase 3.11 — peek + badge right + medal ribbons)');
 })();
 </script>
