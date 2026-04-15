@@ -7,7 +7,6 @@
 <script>
 (function(){
   var prop = (bm && bm.context && bm.context.property) ? bm.context.property : {};
-  var lastSerialized = '';
   function str(v, fallback) { return (v === undefined || v === null || v === '') ? fallback : v; }
   function num(v, fallback) { var n = parseFloat(v); return isNaN(n) ? fallback : n; }
   function buildCSS(p) {
@@ -40,39 +39,32 @@
     var STYLE_ID = 'gp-design-tokens-v1';
     var existing = document.getElementById(STYLE_ID);
     var css = buildCSS(prop);
+    var changed = false;
     if (existing) {
-      if (existing.textContent !== css) existing.textContent = css;
+      if (existing.textContent !== css) {
+        existing.textContent = css;
+        changed = true;
+      }
     } else {
       var style = document.createElement('style');
       style.id = STYLE_ID;
       style.setAttribute('data-gp-tokens', 'v3');
       style.textContent = css;
       document.head.appendChild(style);
+      changed = true;
     }
-    if (prop.developerMode && typeof console !== 'undefined' && console.info) {
+    if (changed && prop.developerMode && typeof console !== 'undefined' && console.info) {
       console.info('[GOLPRO Design Tokens v3] injected — accent: ' + str(prop.accentColor,'#1A4731') + ', font H2: ' + str(prop.fontFamilyH2,'(theme)'));
     }
   }
   injectOrUpdate();
-  /* Context change handler */
+  /* Context change handler — no polling, no bm.apply(). Pure passive update. */
   if (bm) {
     bm.onContextChange = function() {
       prop = (bm.context && bm.context.property) ? bm.context.property : {};
       injectOrUpdate();
     };
-    bm.onDestroy = function() { if (pollTimer) clearInterval(pollTimer); };
+    /* Leave style on destroy so other blocks remain themed. */
   }
-  /* Polling fallback: some builder preview modes don't trigger onContextChange consistently */
-  var pollTimer = setInterval(function(){
-    try {
-      var curr = (bm && bm.context && bm.context.property) ? bm.context.property : {};
-      var serialized = JSON.stringify(curr);
-      if (serialized !== lastSerialized) {
-        lastSerialized = serialized;
-        prop = curr;
-        injectOrUpdate();
-      }
-    } catch(e) {}
-  }, 500);
 })();
 </script>
