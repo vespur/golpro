@@ -13,7 +13,7 @@
 .ccRankToolbar__sort{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankToolbar__regionFilter{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankGrid{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
-.ccRankCarousel{position:relative;overflow:visible;}
+.ccRankCarousel{position:relative;overflow:visible;}.ccRankCarousel__viewport{overflow:hidden;position:relative;}
 .ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);will-change:transform;touch-action:pan-y;}
 .ccRankCarousel__track .ccCard{flex-shrink:0;min-width:0;box-sizing:border-box;}
 .ccRankCarousel__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.94);color:{{property.accentColor}};border:1px solid #E5E5E5;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;transition:background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;box-shadow:0 2px 10px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);}
@@ -200,7 +200,7 @@ var maxIdx = getMaxIndex(data.length);
 var dotsHtml = '<div class="ccRankCarousel__dots">';
 for (var di = 0; di <= maxIdx; di++) { dotsHtml += '<button class="ccRankCarousel__dot' + (di === 0 ? ' ccRankCarousel__dot--active' : '') + '" data-action="carousel-dot" data-index="' + di + '" aria-label="' + (di + 1) + '페이지"></button>'; }
 dotsHtml += '</div>';
-body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"15 18 9 12 15 6\"/></svg></button><div class="ccRankCarousel__track">' + ch + '</div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"9 18 15 12 9 6\"/></svg></button></div>' + dotsHtml;
+body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"15 18 9 12 15 6\"/></svg></button><div class="ccRankCarousel__viewport"><div class="ccRankCarousel__track">' + ch + '</div></div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"9 18 15 12 9 6\"/></svg></button></div>' + dotsHtml;
 state.carouselIndex = 0;
 requestAnimationFrame(function() { requestAnimationFrame(function() { sizeCarouselCards(); updateCarouselPosition(false); initCarouselTouch(); }); });
 } else { body.innerHTML = '<div class="ccRankGrid">' + ch + '</div>'; }
@@ -232,14 +232,20 @@ if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
 horizontalLocked = Math.abs(dx) > Math.abs(dy);
 if (!horizontalLocked) { isSwiping = false; return; }
 }
-if (horizontalLocked && e.cancelable) { e.preventDefault(); }
+if (e.cancelable) { e.preventDefault(); }
 touchDelta = dx;
 var gap = getGap();
 var cards = track.querySelectorAll('.ccCard');
 if (cards.length === 0) return;
 var cardW = cards[0].offsetWidth;
 var baseOffset = state.carouselIndex * (cardW + gap);
-track.style.transform = 'translateX(' + (-baseOffset + touchDelta) + 'px)';
+var maxIdx = getMaxIndex(cards.length);
+var maxOffset = maxIdx * (cardW + gap);
+var newOffset = baseOffset - touchDelta;
+/* Resistance at ends: don't let track move past boundaries */
+if (newOffset < 0) { newOffset = newOffset * 0.25; }
+else if (newOffset > maxOffset) { newOffset = maxOffset + (newOffset - maxOffset) * 0.25; }
+track.style.transform = 'translateX(' + (-newOffset) + 'px)';
 }
 function onPointerEnd(e) {
 if (e.pointerId !== activePointerId) return;
@@ -293,6 +299,6 @@ loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3.7 — card height + pointer swipe)');
+log('CC Ranking initialized (Phase 3.8 — overflow clip + bounds resistance)');
 })();
 </script>
