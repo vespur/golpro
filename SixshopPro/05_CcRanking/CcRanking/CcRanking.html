@@ -5,6 +5,12 @@
 .ccRankHeader__eyebrow{font-family:var(--font-family-body);font-weight:var(--font-weight-body);font-size:{{property.eyebrowSize}}px;color:{{property.accentColor}};text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
 .ccRankHeader__title{font-family:var(--font-family-heading);font-weight:var(--font-weight-heading);font-size:{{property.titleSize}}px;color:{{property.titleColor}};margin:0 0 4px 0;line-height:1.2;}
 .ccRankHeader__subtitle{font-family:var(--font-family-body);font-weight:var(--font-weight-body);font-size:{{property.subtitleSize}}px;color:{{property.subtitleColor}};margin:0;line-height:1.5;}
+.ccRankHeader__titleRow{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:4px;}
+.ccRankHeader__titleRow .ccRankHeader__title{margin:0;}
+.ccRankHeader__more{display:inline-flex;align-items:center;gap:4px;color:{{property.accentColor}};background:transparent;border:none;font-family:var(--font-family-body);font-weight:500;font-size:14px;padding:8px 12px;border-radius:8px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:background 0.18s ease, transform 0.18s ease;white-space:nowrap;}
+.ccRankHeader__more:hover{background:rgba(26,71,49,0.06);transform:translateX(1px);}
+.ccRankHeader__more svg{width:14px;height:14px;display:block;}
+@media (max-width:768px){.ccRankHeader__more{font-size:13px;padding:6px 8px;}}
 .ccRankToolbar{display:flex;align-items:center;gap:12px;margin-bottom:{{property.toolbarGap}}px;flex-wrap:wrap;}
 .ccRankToolbar__search{flex:1;min-width:200px;padding:10px 14px 10px 38px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);outline:none;transition:border-color 0.2s;box-sizing:border-box;}
 .ccRankToolbar__search:focus{border-color:{{property.accentColor}};}
@@ -13,8 +19,8 @@
 .ccRankToolbar__sort{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankToolbar__regionFilter{padding:10px 14px;border:1px solid {{property.borderColor}};border-radius:{{property.inputRadius}}px;background:{{property.inputBg}};color:{{property.inputColor}};font-size:14px;font-family:var(--font-family-body);font-weight:var(--font-weight-body);cursor:pointer;outline:none;}
 .ccRankGrid{display:grid;grid-template-columns:repeat({{property.gridCols}}, 1fr);gap:{{property.gridGap}}px;}
-.ccRankCarousel{position:relative;overflow:visible;}.ccRankCarousel__viewport{overflow:hidden;position:relative;}.ccRankCarousel__viewport::before,.ccRankCarousel__viewport::after{content:'';position:absolute;top:0;bottom:0;width:24px;pointer-events:none;z-index:2;transition:opacity 0.2s;}.ccRankCarousel__viewport::before{left:0;background:linear-gradient(to right,rgba(255,255,255,0.85),rgba(255,255,255,0));}.ccRankCarousel__viewport::after{right:0;background:linear-gradient(to left,rgba(255,255,255,0.85),rgba(255,255,255,0));}.ccRankCarousel__viewport.at-start::before{opacity:0;}.ccRankCarousel__viewport.at-end::after{opacity:0;}
-.ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);will-change:transform;touch-action:pan-y;padding-left:0;padding-right:0;box-sizing:border-box;}
+.ccRankCarousel{position:relative;overflow:visible;}.ccRankCarousel__viewport{overflow:hidden;position:relative;}.ccRankCarousel__viewport::before,.ccRankCarousel__viewport::after{content:'';position:absolute;top:0;bottom:0;width:20px;pointer-events:none;z-index:2;transition:opacity 0.2s;}.ccRankCarousel__viewport::before{left:0;background:linear-gradient(to right,rgba(255,255,255,0.85),rgba(255,255,255,0));}.ccRankCarousel__viewport::after{right:0;background:linear-gradient(to left,rgba(255,255,255,0.85),rgba(255,255,255,0));}.ccRankCarousel__viewport.at-start::before{opacity:0;}.ccRankCarousel__viewport.at-end::after{opacity:0;}
+.ccRankCarousel__track{display:flex;transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);will-change:transform;touch-action:pan-y;box-sizing:border-box;}
 .ccRankCarousel__track .ccCard{flex-shrink:0;min-width:0;box-sizing:border-box;}
 .ccRankCarousel__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.94);color:{{property.accentColor}};border:1px solid #E5E5E5;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;transition:background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;box-shadow:0 2px 10px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);}
 .ccRankCarousel__nav:hover{background:#FFFFFF;border-color:rgba(26,71,49,0.28);box-shadow:0 4px 14px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05);}
@@ -84,7 +90,7 @@
 }
 </style>
 <template>
-<div class="ccRankRoot">{{#if property.showHeader}}<div class="ccRankHeader">{{#if property.eyebrow}}<div class="ccRankHeader__eyebrow">{{property.eyebrow}}</div>{{/if}}{{#if property.headerTitle}}<h2 class="ccRankHeader__title">{{property.headerTitle}}</h2>{{/if}}{{#if property.headerSubtitle}}<p class="ccRankHeader__subtitle">{{property.headerSubtitle}}</p>{{/if}}</div>{{/if}}{{#if property.showToolbar}}<div class="ccRankToolbar"><div class="ccRankToolbar__searchWrap"><svg class="ccRankToolbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="ccRankToolbar__search" placeholder="골프장 검색..." data-action="search" /></div><select class="ccRankToolbar__sort" data-action="sort"><option value="rating">평점순</option><option value="name">이름순</option><option value="reviews">리뷰순</option></select><select class="ccRankToolbar__regionFilter" data-action="region"><option value="all">전체 지역</option></select></div>{{/if}}<div class="ccRankBody" data-mode="{{property.displayMode}}"></div></div>
+<div class="ccRankRoot">{{#if property.showHeader}}<div class="ccRankHeader">{{#if property.eyebrow}}<div class="ccRankHeader__eyebrow">{{property.eyebrow}}</div>{{/if}}{{#if property.headerTitle}}<div class="ccRankHeader__titleRow"><h2 class="ccRankHeader__title">{{property.headerTitle}}</h2>{{#if property.showMoreButton}}<a class="ccRankHeader__more" href="{{property.moreButtonUrl}}" data-action="more"><span>{{property.moreButtonLabel}}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></a>{{/if}}</div>{{/if}}{{#if property.headerSubtitle}}<p class="ccRankHeader__subtitle">{{property.headerSubtitle}}</p>{{/if}}</div>{{/if}}{{#if property.showToolbar}}<div class="ccRankToolbar"><div class="ccRankToolbar__searchWrap"><svg class="ccRankToolbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="ccRankToolbar__search" placeholder="골프장 검색..." data-action="search" /></div><select class="ccRankToolbar__sort" data-action="sort"><option value="rating">평점순</option><option value="name">이름순</option><option value="reviews">리뷰순</option></select><select class="ccRankToolbar__regionFilter" data-action="region"><option value="all">전체 지역</option></select></div>{{/if}}<div class="ccRankBody" data-mode="{{property.displayMode}}"></div></div>
 </template>
 <script>
 (function(){
@@ -160,15 +166,23 @@ var gap = getGap();
 var peek = getPeek();
 var tw = track.offsetWidth;
 if (tw <= 0) { setTimeout(sizeCarouselCards, 50); return; }
-/* Symmetric peek on both sides — active card(s) centered in viewport */
-track.style.paddingLeft = peek + 'px';
-track.style.paddingRight = peek + 'px';
+/* No track padding — offset math alone positions cards. cardW leaves 2*peek worth of edge-peek space. */
+track.style.paddingLeft = '0px';
+track.style.paddingRight = '0px';
 var usable = tw - (peek * 2);
 var cardWidth = (usable - gap * (visible - 1)) / visible;
+if (cardWidth < 80) cardWidth = 80;
 for (var i = 0; i < cards.length; i++) {
 cards[i].style.width = cardWidth + 'px';
 cards[i].style.marginRight = (i < cards.length - 1) ? gap + 'px' : '0';
 }
+}
+/* Single source of truth for track translate offset. Returns unsigned offset; applied as translateX(-offset). */
+function computeCarouselOffset(idx, maxIdx, cardW, gap, peek) {
+if (maxIdx <= 0) return 0;
+if (idx <= 0) return 0;
+if (idx >= maxIdx) return maxIdx * (cardW + gap) - 2 * peek;
+return idx * (cardW + gap) - peek;
 }
 function updateCarouselPosition(animate) {
 var track = container.querySelector('.ccRankCarousel__track');
@@ -181,14 +195,10 @@ if (state.carouselIndex < 0) state.carouselIndex = 0;
 var gap = getGap();
 var peek = getPeek();
 var cardW = cards[0].offsetWidth;
-var offset = state.carouselIndex * (cardW + gap);
-/* Edge alignment: at first index, flush-left (cancel left peek padding). At last index, flush-right. Middle: symmetric peek centered. */
-if (maxIdx > 0) {
-if (state.carouselIndex === 0) offset = -peek;
-else if (state.carouselIndex >= maxIdx) offset = maxIdx * (cardW + gap) + peek;
-}
-track.style.transition = animate !== false ? 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none';
-track.style.transform = 'translateX(-' + offset + 'px)';
+var offset = computeCarouselOffset(state.carouselIndex, maxIdx, cardW, gap, peek);
+track.style.transition = animate !== false ? 'transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)' : 'none';
+/* Signed translate value — avoid string sign concatenation bugs */
+track.style.transform = 'translateX(' + (-offset) + 'px)';
 /* Update nav disabled state */
 var prevBtn = container.querySelector('.ccRankCarousel__nav--prev');
 var nextBtn = container.querySelector('.ccRankCarousel__nav--next');
@@ -213,12 +223,23 @@ if (data.length === 0) { body.innerHTML = '<div class="ccRankEmpty"><div class="
 var ch = '';
 for (var i = 0; i < data.length; i++) ch += renderCard(data[i], i + 1);
 if (mode === 'carousel') {
-/* Build dots */
 var maxIdx = getMaxIndex(data.length);
-var dotsHtml = '<div class="ccRankCarousel__dots">';
+var showControls = maxIdx > 0;
+var dotsHtml = '';
+if (showControls) {
+dotsHtml = '<div class="ccRankCarousel__dots">';
 for (var di = 0; di <= maxIdx; di++) { dotsHtml += '<button class="ccRankCarousel__dot' + (di === 0 ? ' ccRankCarousel__dot--active' : '') + '" data-action="carousel-dot" data-index="' + di + '" aria-label="' + (di + 1) + '페이지"></button>'; }
 dotsHtml += '</div>';
-body.innerHTML = '<div class="ccRankCarousel"><button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"15 18 9 12 15 6\"/></svg></button><div class="ccRankCarousel__viewport"><div class="ccRankCarousel__track">' + ch + '</div></div><button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"9 18 15 12 9 6\"/></svg></button></div>' + dotsHtml;
+}
+var navHtml = '';
+if (showControls) {
+navHtml = '<button class="ccRankCarousel__nav ccRankCarousel__nav--prev ccRankCarousel__nav--disabled" data-action="carousel-prev" aria-label="이전"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"15 18 9 12 15 6\"/></svg></button>';
+}
+var navNextHtml = '';
+if (showControls) {
+navNextHtml = '<button class="ccRankCarousel__nav ccRankCarousel__nav--next" data-action="carousel-next" aria-label="다음"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"9 18 15 12 9 6\"/></svg></button>';
+}
+body.innerHTML = '<div class="ccRankCarousel" role="region" aria-roledescription="carousel" aria-label="CC 랭킹">' + navHtml + '<div class="ccRankCarousel__viewport"><div class="ccRankCarousel__track">' + ch + '</div></div>' + navNextHtml + '</div>' + dotsHtml;
 state.carouselIndex = 0;
 requestAnimationFrame(function() { requestAnimationFrame(function() { sizeCarouselCards(); updateCarouselPosition(false); initCarouselTouch(); }); });
 } else { body.innerHTML = '<div class="ccRankGrid">' + ch + '</div>'; }
@@ -256,19 +277,13 @@ var gap = getGap();
 var cards = track.querySelectorAll('.ccCard');
 if (cards.length === 0) return;
 var cardW = cards[0].offsetWidth;
-var baseOffset = state.carouselIndex * (cardW + gap);
-var maxIdx = getMaxIndex(cards.length);
-var maxOffset = maxIdx * (cardW + gap);
 var peek = getPeek();
-/* Align base offset with edge-adjusted render positions */
-if (maxIdx > 0) {
-if (state.carouselIndex === 0) baseOffset = -peek;
-else if (state.carouselIndex >= maxIdx) baseOffset = maxOffset + peek;
-}
-var minBound = (maxIdx > 0) ? -peek : 0;
-var maxBound = (maxIdx > 0) ? (maxOffset + peek) : maxOffset;
+var maxIdx = getMaxIndex(cards.length);
+var baseOffset = computeCarouselOffset(state.carouselIndex, maxIdx, cardW, gap, peek);
+var minBound = computeCarouselOffset(0, maxIdx, cardW, gap, peek);
+var maxBound = computeCarouselOffset(maxIdx, maxIdx, cardW, gap, peek);
 var newOffset = baseOffset - touchDelta;
-/* Resistance at ends: don't let track move past boundaries */
+/* Resistance at ends */
 if (newOffset < minBound) { newOffset = minBound + (newOffset - minBound) * 0.25; }
 else if (newOffset > maxBound) { newOffset = maxBound + (newOffset - maxBound) * 0.25; }
 track.style.transform = 'translateX(' + (-newOffset) + 'px)';
@@ -314,6 +329,7 @@ e.preventDefault();
 var pb = e.target.closest('[data-action="carousel-prev"]'); if (pb) { state.carouselIndex--; updateCarouselPosition(true); return; }
 var nb = e.target.closest('[data-action="carousel-next"]'); if (nb) { state.carouselIndex++; updateCarouselPosition(true); return; }
 var dot = e.target.closest('[data-action="carousel-dot"]'); if (dot) { state.carouselIndex = parseInt(dot.getAttribute('data-index'), 10) || 0; updateCarouselPosition(true); return; }
+var mb = e.target.closest('[data-action="more"]'); if (mb) { var url = mb.getAttribute('href'); if (url) { try { bm.do('go', url); } catch(_) { window.location.href = url; } } return; }
 var rb = e.target.closest('[data-action="rate"]'); if (rb) { bm.do('snackbar:open', { message: (rb.getAttribute('data-ccname') || '') + ' 평가 기능은 곧 추가됩니다!' }); return; }
 var lb = e.target.closest('a.ccCard__btn'); if (lb && lb.getAttribute('href') && lb.getAttribute('href') !== '#') { bm.do('go', lb.getAttribute('href')); }
 }, true);
@@ -325,6 +341,6 @@ loadData();
 pollTimer = setInterval(checkBridgeChanges, 3000);
 bm.onContextChange = function() { prop = context.property; renderAll(); };
 bm.onDestroy = function() { if (searchTimer) clearTimeout(searchTimer); if (loadRetryTimer) clearTimeout(loadRetryTimer); if (pollTimer) clearInterval(pollTimer); if (resizeTimer) clearTimeout(resizeTimer); if (resizeObs) resizeObs.disconnect(); };
-log('CC Ranking initialized (Phase 3.11 — peek + badge right + medal ribbons)');
+log('CC Ranking initialized (Phase 3.12 — clean offset math + 더 보기 button)');
 })();
 </script>
