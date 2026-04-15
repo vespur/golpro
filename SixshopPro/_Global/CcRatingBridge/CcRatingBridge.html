@@ -47,6 +47,12 @@
   var scanComplete = false;
   var currentScanPage = 1;
   var postsPerPage = 0;
+  var scanIterations = 0;
+  var MAX_ITERATIONS = 30;
+  var lastAppliedPage = 0;
+  var pendingApply = false;
+  var lastBoardId = null;
+  var lastBoardSnapshot = '';
 
   function parseMarkers(posts) {
     var ratings = [];
@@ -94,11 +100,24 @@
     isScanning = true;
     scanComplete = false;
     currentScanPage = 1;
+    scanIterations = 0;
+    lastAppliedPage = 0;
+    pendingApply = false;
     allCollectedPosts = [];
+    lastBoardId = board.id;
     collectCurrentPage();
   }
 
   function collectCurrentPage() {
+    /* Safety guard: prevent runaway loops */
+    if (scanComplete) return;
+    scanIterations++;
+    if (scanIterations > MAX_ITERATIONS) {
+      log('Max iterations reached, aborting scan');
+      finishScan();
+      return;
+    }
+
     var board = context.property.board;
     if (!board || !board.posts) {
       finishScan();
@@ -120,10 +139,23 @@
     var totalPages = postsPerPage > 0 ? Math.ceil(totalCount / postsPerPage) : 1;
 
     if (currentScanPage < totalPages && currentScanPage < maxPages && posts.length > 0) {
-      currentScanPage++;
+      var nextPage = currentScanPage + 1;
+      /* Skip if we've already requested this page (prevents re-entry loop) */
+      if (lastAppliedPage >= nextPage) {
+        log('Page', nextPage, 'already requested, skipping');
+        return;
+      }
+      currentScanPage = nextPage;
+      lastAppliedPage = nextPage;
+      pendingApply = true;
       setTimeout(function () {
-        bm.config('property:board.posts.page', currentScanPage);
-        bm.apply();
+        try {
+          bm.config('property:board.posts.page', nextPage);
+          bm.apply();
+        } catch (err) {
+          log('Apply error:', err);
+          finishScan();
+        }
       }, 0);
     } else {
       finishScan();
@@ -133,16 +165,45 @@
   function finishScan() {
     isScanning = false;
     scanComplete = true;
+    pendingApply = false;
     var ratings = parseMarkers(allCollectedPosts);
     writeStore(ratings);
     log('Scan complete.', ratings.length, 'ratings parsed');
   }
 
-  startScan();
+  function snapshotBoard() {
+    var board = context.property.board;
+    if (!board) return '';
+    return (board.id || '') + '|' + (board.posts && board.posts.count || 0) + '|' + (board.posts && board.posts.data && board.posts.data.length || 0);
+  }
 
+  /* Initial scan */
+  startScan();
+  lastBoardSnapshot = snapshotBoard();
+
+  /* Context change handler — ONLY consume expected apply from pagination.
+     Never call bm.apply() from here. Any apply happens inside setTimeout from collectCurrentPage. */
   bm.onContextChange = function () {
-    if (isScanning && !scanComplete) {
-      collectCurrentPage();
+    var board = context.property.board;
+    var newBoardId = board && board.id ? board.id : null;
+    var newSnapshot = snapshotBoard();
+
+    /* Board changed (different selection or newly selected) — restart scan */
+    if (newBoardId !== lastBoardId) {
+      lastBoardId = newBoardId;
+      lastBoardSnapshot = newSnapshot;
+      startScan();
+      return;
+    }
+
+    /* If scanning and our apply resolved (new page data arrived), continue */
+    if (isScanning && !scanComplete && pendingApply) {
+      if (newSnapshot !== lastBoardSnapshot) {
+        lastBoardSnapshot = newSnapshot;
+        pendingApply = false;
+        collectCurrentPage();
+      }
+      /* Else: context changed for another reason (not our page data) — ignore */
     }
   };
 
